@@ -11,7 +11,7 @@
 
     <artifactId>view</artifactId>
 
-    <packaging>pom</packaging>
+    <packaging>war</packaging>
 
     <properties>
         <maven.compiler.source>14</maven.compiler.source>
