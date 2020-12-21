@@ -1,4 +1,8 @@
 package com.example.users;
 
-public class Administrator {
+public class Administrator extends User {
+
+
+
+
 }

@@ -1,4 +1,5 @@
 package com.example.users;
 
-public class Student {
+public class Student extends User {
+
 }
