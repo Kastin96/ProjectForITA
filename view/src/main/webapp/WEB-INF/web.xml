@@ -4,5 +4,25 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
 
+    <servlet>
+        <servlet-name>Reg-result</servlet-name>
+        <jsp-file>/registration.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Reg-result</servlet-name>
+        <url-pattern>/reg-result</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Authentication</servlet-name>
+        <jsp-file>/authentication.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Authentication</servlet-name>
+        <url-pattern>/aut-result</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>
