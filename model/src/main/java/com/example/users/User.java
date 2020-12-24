@@ -1,6 +1,7 @@
 package com.example.users;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public abstract class User {
 
@@ -8,8 +9,10 @@ public abstract class User {
     private String password;
     private String fullName;
     private int age;
+    private UUID id;
 
     public User() {
+        this.id = UUID.randomUUID();
     }
 
     public User(String login, String password, String fullName, int age) {
@@ -17,6 +20,7 @@ public abstract class User {
         this.password = password;
         this.fullName = fullName;
         this.age = age;
+        this.id = UUID.randomUUID();
     }
 
     public String getLogin() {
@@ -49,6 +53,14 @@ public abstract class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     @Override
