@@ -1,19 +1,18 @@
 package com.example.database;
 
-import com.example.users.Student;
 import com.example.users.User;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class UserDataBase {
+public class UserDatabase {
 
-    private static volatile Map<UUID, Object> instance;
+    private static volatile Map<UUID, User> instance;
 
-    public static Map<UUID, Object> getInstance() {
+    public static Map<UUID, User> getInstance() {
         if (instance == null) {
-            synchronized (UserDataBase .class) {
+            synchronized (UserDatabase.class) {
                 if (instance == null) {
                     instance = new HashMap<>();
                 }
