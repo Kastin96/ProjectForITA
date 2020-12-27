@@ -1,8 +1,11 @@
 package com.example.hardcoremetod;
 
+import com.example.database.GroupsDatabase;
 import com.example.database.UserDatabase;
+import com.example.groups.Group;
 import com.example.users.Student;
 import com.example.users.Trainer;
+import com.example.users.User;
 import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
@@ -36,6 +39,15 @@ public class HardcoreMethod {
                 "testTrainerTestTrainer", ageTrainer, salaryList);
 
         UserDatabase.getInstance().put(trainer.getId(), trainer);
+
+        List<User> userList = new ArrayList<>();
+        userList.add(student);
+        userList.add(student2);
+        userList.add(student3);
+
+//        Group testGroup = new Group("testGroup", trainer, userList);
+//
+//        GroupsDatabase.getInstance().put(testGroup.getId(), testGroup);
 
     }
 
