@@ -5,6 +5,8 @@ import com.example.groups.Group;
 import com.example.search.SearchFromDatabase;
 import com.example.users.Trainer;
 import com.example.users.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,6 +21,7 @@ import java.util.*;
 
 @WebServlet(urlPatterns = "/addgrouppage")
 public class AddGroupController extends HttpServlet {
+    Logger log = LoggerFactory.getLogger(AddGroupController.class);
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,7 +42,6 @@ public class AddGroupController extends HttpServlet {
                 session.setAttribute("goodAddGroup", "The group has been successfully created! \n" +
                         "Added students: " + userList.size());
             }
-
         } else {
             session.setAttribute("badAddGroup", "The group name is already taken!");
         }
@@ -84,10 +86,14 @@ public class AddGroupController extends HttpServlet {
                         Group group = new Group(groupName, (Trainer) trainer, userList);
                         GroupsDatabase.getInstance().put(group.getId(), group);
 
+                        log.info("Group added = {}", group.getGroupName());
+
                         return true;
                     } else {
                         session.setAttribute("badAddGroup", "Something went wrong: try again!" +
                                 "No user found!");
+
+                        log.warn("Error: Group not created = {}", trainer.getLogin());
                     }
                 }
             } else {

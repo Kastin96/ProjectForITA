@@ -18,6 +18,7 @@ public class GroupsDatabase {
                 }
             }
         }
+
         return instance;
     }
 }

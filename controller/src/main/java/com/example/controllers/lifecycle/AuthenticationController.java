@@ -5,6 +5,8 @@ import com.example.hardcoremetod.HardcoreMethod;
 import com.example.users.Administrator;
 import com.example.users.Trainer;
 import com.example.users.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -22,6 +24,7 @@ import java.util.*;
 @WebInitParam(name = "adminLogin", value = "admin"),
 @WebInitParam(name = "adminPass", value = "admin")})
 public class AuthenticationController extends HttpServlet {
+    Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -61,14 +64,20 @@ public class AuthenticationController extends HttpServlet {
                         session.setAttribute("isAdmin", true);
                         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/adminpage");
                         requestDispatcher.forward(req, resp);
+
+                        log.info("Admin logged in = {}", user.getLogin());
                     } else if (user instanceof Trainer) {
                         session.setAttribute("isTrainer", true);
                         session.setAttribute("salaryList", ((Trainer) user).getSalaryList());
                         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/trainerpage");
                         requestDispatcher.forward(req, resp);
+
+                        log.info("Trainer logged in = {}", user.getLogin());
                     } else {
                         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/userpage");
                         requestDispatcher.forward(req, resp);
+
+                        log.info("Student logged in = {}", user.getLogin());
                     }
                 }
             }

@@ -1,6 +1,9 @@
 package com.example.controllers.salary;
 
+import com.example.controllers.lifecycle.AuthenticationController;
 import com.example.users.Trainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +16,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/addsalary")
 public class SalaryAddController extends HttpServlet {
+    Logger log = LoggerFactory.getLogger(SalaryAddController.class);
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,7 +28,11 @@ public class SalaryAddController extends HttpServlet {
         if (user instanceof Trainer){
             ((Trainer) user).addSalary(addSalary);
             session.setAttribute("salaryAdded", "Salary added to your list!");
+
+            log.info("Trainer added salary ={}", session.getAttribute("login"));
         } else {
+            log.warn("Error added salary ={}", session.getAttribute("login"));
+
             session.setAttribute("salaryAdded", "Error: Salary has not been added!");
         }
 

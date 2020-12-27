@@ -3,6 +3,8 @@ package com.example.controllers.lifecycle;
 import com.example.database.UserDatabase;
 import com.example.search.SearchFromDatabase;
 import com.example.users.Student;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +17,7 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/registration")
 public class RegistrationController extends HttpServlet {
+    Logger log = LoggerFactory.getLogger(RegistrationController.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,6 +35,8 @@ public class RegistrationController extends HttpServlet {
                 UserDatabase.getInstance().put(student.getId(), student);
 
                 session.setAttribute("goodRegistration", "Registration was successful!");
+
+                log.info("New Student added = {}", student);
 
                 resp.sendRedirect("/new/signin");
             } else {

@@ -41,7 +41,6 @@ public class MyGroupController extends HttpServlet {
 
         session.setAttribute("myGroupNamesListResult", groupsName);
 
-
         resp.sendRedirect("/new/mygroups");
     }
 
