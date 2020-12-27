@@ -1,7 +1,6 @@
 package com.example.salary;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AverageSalary {

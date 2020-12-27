@@ -6,49 +6,46 @@ import com.example.groups.Group;
 import com.example.users.Student;
 import com.example.users.Trainer;
 import com.example.users.User;
-import org.springframework.context.annotation.Bean;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class HardcoreMethod {
 
-    public static void run() {
-        Student student = new Student("test", "test", "testTest", 101);
-        Student student2 = new Student("test2", "test2", "testTest2", 102);
-        Student student3 = new Student("test3", "test3", "testTest3", 103);
+    public static void run(int amountUsers, int amountTrainers) {
 
-        UserDatabase.getInstance().put(student.getId(), student);
-        UserDatabase.getInstance().put(student2.getId(), student2);
-        UserDatabase.getInstance().put(student3.getId(), student3);
+        List<User> studentsList = new ArrayList<>();
+        for (int i = 0; i < amountUsers; i++) {
+            Student student = new Student("test" + i,
+                    "test" + i,
+                    "testTest" + i,
+                    i);
 
-        List<Integer> salaryList = new ArrayList<>();
-        salaryList.add(100);
-        salaryList.add(200);
-        salaryList.add(300);
-        salaryList.add(400);
-        salaryList.add(500);
-        salaryList.add(600);
+            studentsList.add(student);
+            UserDatabase.getInstance().put(student.getId(), student);
+        }
 
-        int ageTrainer = 50;
+        List<User> trainersList = new ArrayList<>();
+        for (int i = 0; i < amountTrainers; i++) {
+            Trainer trainer = new Trainer("testTrainer" + i,
+                    "testTrainer" + i,
+                    "testTrainerTestTrainer" + i,
+                    i, 100, 200, 300);
 
-        Trainer trainer = new Trainer("testTrainer", "testTrainer",
-                "testTrainerTestTrainer", ageTrainer, salaryList);
+            trainersList.add(trainer);
+            UserDatabase.getInstance().put(trainer.getId(), trainer);
+        }
 
-        UserDatabase.getInstance().put(trainer.getId(), trainer);
+        Group testGroup1 = new Group("testGroup1",
+                (Trainer) trainersList.get(0),
+                studentsList.subList(0, amountUsers / 2));
+        Group testGroup2 = new Group("testGroup2",
+                (Trainer) trainersList.get(1),
+                studentsList.subList(amountUsers / 2, amountUsers));
 
-        List<User> userList = new ArrayList<>();
-        userList.add(student);
-        userList.add(student2);
-        userList.add(student3);
-
-//        Group testGroup = new Group("testGroup", trainer, userList);
-//
-//        GroupsDatabase.getInstance().put(testGroup.getId(), testGroup);
-
+        GroupsDatabase.getInstance().put(testGroup1.getId(), testGroup1);
+        GroupsDatabase.getInstance().put(testGroup2.getId(), testGroup2);
     }
 
     public static void generateEmpty(int studentLimit, int trainerLimit) {

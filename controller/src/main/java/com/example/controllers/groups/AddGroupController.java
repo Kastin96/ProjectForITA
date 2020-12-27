@@ -77,7 +77,7 @@ public class AddGroupController extends HttpServlet {
 
         if (trainer != null) {
             if (trainer instanceof Trainer) {
-                if (SearchFromDatabase.findTrainerFromGroupDatabase(groupTrainer)) {
+                if (SearchFromDatabase.findFromGroupDatabase(groupTrainer)) {
                     session.setAttribute("badAddGroup", "The Trainer is busy!");
                 } else {
                     if (!userList.isEmpty()) {

@@ -15,7 +15,10 @@
         <a class="nav-link active" aria-current="page" href="/new/">Home</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/new/mygroups">My Groups</a>
+        <a class="nav-link" href="/new/mygroups">All Groups</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/new/addgroup">Add Group</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="/new/logout">Logout</a>

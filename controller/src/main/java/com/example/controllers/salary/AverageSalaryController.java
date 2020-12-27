@@ -20,6 +20,8 @@ public class AverageSalaryController extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        clearSessionAttribute(session);
+
         Object user = session.getAttribute("user");
 
         if (user instanceof Trainer){
@@ -29,5 +31,9 @@ public class AverageSalaryController extends HttpServlet {
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/salarylist");
         requestDispatcher.forward(req, resp);
+    }
+
+    private void clearSessionAttribute(HttpSession session){
+        session.removeAttribute("averageSalary");
     }
 }

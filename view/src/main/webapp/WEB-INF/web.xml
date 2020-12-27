@@ -25,6 +25,18 @@
         <url-pattern>/reg</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>AdminPage</servlet-name>
+        <jsp-file>/adminpage.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminPage</servlet-name>
+        <url-pattern>/adminpage</url-pattern>
+    </servlet-mapping>
+
+
     <servlet>
         <servlet-name>UserPage</servlet-name>
         <jsp-file>/userpage.jsp</jsp-file>
@@ -34,6 +46,7 @@
         <servlet-name>UserPage</servlet-name>
         <url-pattern>/userpage</url-pattern>
     </servlet-mapping>
+
 
     <servlet>
         <servlet-name>TrainerPage</servlet-name>
@@ -45,6 +58,7 @@
         <url-pattern>/trainerpage</url-pattern>
     </servlet-mapping>
 
+
     <servlet>
         <servlet-name>SalaryListPage</servlet-name>
         <jsp-file>/salarylistpage.jsp</jsp-file>
@@ -55,6 +69,7 @@
         <url-pattern>/salarylist</url-pattern>
     </servlet-mapping>
 
+
     <servlet>
         <servlet-name>AddGroupPage</servlet-name>
         <jsp-file>/addgrouppage.jsp</jsp-file>
@@ -63,6 +78,17 @@
     <servlet-mapping>
         <servlet-name>AddGroupPage</servlet-name>
         <url-pattern>/addgroup</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>MyGroupPage</servlet-name>
+        <jsp-file>/mygrouppage.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MyGroupPage</servlet-name>
+        <url-pattern>/mygroups</url-pattern>
     </servlet-mapping>
 
 </web-app>

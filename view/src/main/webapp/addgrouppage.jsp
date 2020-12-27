@@ -12,10 +12,13 @@
     <body>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/new/">Home</a>
+                <a class="nav-link" href="/new/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"href="/new/salarylist">Salary</a>
+                <a class="nav-link" href="/new/mygroups">All Groups</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/new/addgroup">Add Group</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/new/logout">Logout</a>
@@ -24,9 +27,9 @@
         <hr>
         <form action="addgrouppage" method="post">
             <div class="mb-3">
-                Enter user details : <input name="groupName" type="text" required placeholder="Group name">
+                Enter group details : <input name="groupName" type="text" required placeholder="Group name">
                 <input name="groupTrainer" type="text" required placeholder="Trainer's name">
-                <input name="groupUser" type="text" required placeholder="Students. The separator is a space! ' '">
+                <input name="groupUser" type="text" size="35" required placeholder="Students. The separator is a space! ' '">
                 <input type="submit" value="Add">
                 <div>
                     <% if (session.getAttribute("goodAddGroup") != null) { %>

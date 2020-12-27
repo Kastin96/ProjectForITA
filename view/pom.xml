@@ -13,6 +13,11 @@
 
     <packaging>war</packaging>
 
+    <properties>
+        <maven.compiler.source>14</maven.compiler.source>
+        <maven.compiler.target>14</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.example</groupId>
@@ -36,7 +41,6 @@
             <artifactId>spring-expression</artifactId>
             <version>5.2.11.RELEASE</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -73,9 +77,5 @@
         </plugins>
     </build>
 
-    <properties>
-        <maven.compiler.source>14</maven.compiler.source>
-        <maven.compiler.target>14</maven.compiler.target>
-    </properties>
 
 </project>

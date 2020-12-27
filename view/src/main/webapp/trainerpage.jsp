@@ -15,6 +15,9 @@
                 <a class="nav-link active" aria-current="page" href="/new/">Home</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="/new/mygroups">My Groups</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link"href="/new/salarylist">Salary</a>
             </li>
             <li class="nav-item">

@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="com.example.salary.AverageSalary" %>
 <!DOCTYPE html>
 <html lang="ru">
     <head>
@@ -17,7 +16,10 @@
                 <a class="nav-link" aria-current="page" href="/new/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="/new/salarylist">Salary</a>
+                <a class="nav-link" href="/new/mygroups">My Groups</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/new/salarylist">Salary</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/new/logout">Logout</a>
@@ -41,19 +43,18 @@
                     <li class="list-group-item"><input type="submit" value="Show average salary">
                         <% if (session.getAttribute("averageSalary") != null) { %>
                             <%= session.getAttribute("averageSalary")%>
-
                         <% } %>
                     </li>
                 </ul>
             </form>
         </div>
         <div class="mb-3">
-        <ul class="list-group">
-            <li class="list-group-item active" aria-current="true">Your salary list:</li>
-            <c:forEach var="salary" items="${salaryList}">
-                <li class="list-group-item"><c:out value="${salary}" /></li>
-            </c:forEach>
-        </ul>
+            <ul class="list-group">
+                <li class="list-group-item active" aria-current="true">Your salary list:</li>
+                <c:forEach var="salary" items="${salaryList}">
+                    <li class="list-group-item"><c:out value="${salary}" /></li>
+                </c:forEach>
+            </ul>
         </div>
     </body>
 </html>
