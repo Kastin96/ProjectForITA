@@ -29,7 +29,7 @@
                     <li class="list-group-item active" aria-current="true">Add salary:</li>
                     <li class="list-group-item">
                         <input name="addSalary" type="number" min="0" required placeholder="Salary">
-                        <input type="submit" required value="Add">
+                        <input type="submit" value="Add">
                     </li>
                 </ul>
             </form>
@@ -41,6 +41,7 @@
                     <li class="list-group-item"><input type="submit" value="Show average salary">
                         <% if (session.getAttribute("averageSalary") != null) { %>
                             <%= session.getAttribute("averageSalary")%>
+
                         <% } %>
                     </li>
                 </ul>
