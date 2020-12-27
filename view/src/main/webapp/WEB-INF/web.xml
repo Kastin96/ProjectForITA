@@ -55,4 +55,14 @@
         <url-pattern>/salarylist</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>AddGroupPage</servlet-name>
+        <jsp-file>/addgrouppage.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AddGroupPage</servlet-name>
+        <url-pattern>/addgroup</url-pattern>
+    </servlet-mapping>
+
 </web-app>
