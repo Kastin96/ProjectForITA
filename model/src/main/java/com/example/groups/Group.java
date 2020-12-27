@@ -15,8 +15,8 @@ public class Group {
     public Group() {
     }
 
-    public Group(UUID id, String groupName, Trainer trainer, List<User> userList) {
-        this.id = id;
+    public Group(String groupName, Trainer trainer, List<User> userList) {
+        this.id = UUID.randomUUID();
         this.groupName = groupName;
         this.trainer = trainer;
         this.userList = userList;
