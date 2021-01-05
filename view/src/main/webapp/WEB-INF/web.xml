@@ -4,5 +4,91 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
 
+    <servlet>
+        <servlet-name>SignIn</servlet-name>
+        <jsp-file>/authentication.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SignIn</servlet-name>
+        <url-pattern>/signin</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>Registration</servlet-name>
+        <jsp-file>/registration.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>Registration</servlet-name>
+        <url-pattern>/reg</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>AdminPage</servlet-name>
+        <jsp-file>/adminpage.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AdminPage</servlet-name>
+        <url-pattern>/adminpage</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>UserPage</servlet-name>
+        <jsp-file>/userpage.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserPage</servlet-name>
+        <url-pattern>/userpage</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>TrainerPage</servlet-name>
+        <jsp-file>/trainerpage.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>TrainerPage</servlet-name>
+        <url-pattern>/trainerpage</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>SalaryListPage</servlet-name>
+        <jsp-file>/salarylistpage.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SalaryListPage</servlet-name>
+        <url-pattern>/salarylist</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>AddGroupPage</servlet-name>
+        <jsp-file>/addgrouppage.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>AddGroupPage</servlet-name>
+        <url-pattern>/addgroup</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>MyGroupPage</servlet-name>
+        <jsp-file>/mygrouppage.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MyGroupPage</servlet-name>
+        <url-pattern>/mygroups</url-pattern>
+    </servlet-mapping>
 
 </web-app>
