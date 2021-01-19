@@ -1,6 +1,6 @@
 package com.example.controllers.lifecycle;
 
-import com.example.database.UserDatabase;
+import com.example.localdatabase.UserDatabase;
 import com.example.search.SearchFromDatabase;
 import com.example.users.Student;
 import org.slf4j.Logger;

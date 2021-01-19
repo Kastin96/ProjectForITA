@@ -1,6 +1,6 @@
 package com.example.controllers.groups;
 
-import com.example.database.GroupsDatabase;
+import com.example.localdatabase.GroupsDatabase;
 import com.example.groups.Group;
 import com.example.users.User;
 
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

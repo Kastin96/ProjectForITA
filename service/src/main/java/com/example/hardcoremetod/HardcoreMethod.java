@@ -1,7 +1,7 @@
 package com.example.hardcoremetod;
 
-import com.example.database.GroupsDatabase;
-import com.example.database.UserDatabase;
+import com.example.localdatabase.GroupsDatabase;
+import com.example.localdatabase.UserDatabase;
 import com.example.groups.Group;
 import com.example.users.Student;
 import com.example.users.Trainer;

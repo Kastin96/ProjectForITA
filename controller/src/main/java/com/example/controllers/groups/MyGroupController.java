@@ -1,6 +1,6 @@
 package com.example.controllers.groups;
 
-import com.example.database.GroupsDatabase;
+import com.example.localdatabase.GroupsDatabase;
 import com.example.groups.Group;
 import com.example.search.SearchFromDatabase;
 import com.example.users.Administrator;

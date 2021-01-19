@@ -1,18 +1,18 @@
-package com.example.database;
+package com.example.localdatabase;
 
-import com.example.groups.Group;
+import com.example.users.User;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class GroupsDatabase {
+public class UserDatabase {
 
-    private static volatile Map<UUID, Group> instance;
+    private static volatile Map<UUID, User> instance;
 
-    public static Map<UUID, Group> getInstance() {
+    public static Map<UUID, User> getInstance() {
         if (instance == null) {
-            synchronized (GroupsDatabase.class) {
+            synchronized (UserDatabase.class) {
                 if (instance == null) {
                     instance = new HashMap<>();
                 }
