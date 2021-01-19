@@ -1,6 +1,6 @@
 package com.example.controllers.lifecycle;
 
-import com.example.database.UserDatabase;
+import com.example.localdatabase.UserDatabase;
 import com.example.hardcoremetod.HardcoreMethod;
 import com.example.users.Administrator;
 import com.example.users.Trainer;
