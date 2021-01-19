@@ -1,3 +1,5 @@
+create database homework;
+
 create table roles(
 	id serial primary key,
 	role VARCHAR(45) not null
