@@ -26,10 +26,8 @@
 </ul>
 <div class="mb-3">
     <ul class="list-group">
-      <li class="list-group-item active" aria-current="true">Student information:</li>
+      <li class="list-group-item active" aria-current="true">Admin information:</li>
       <li class="list-group-item">Login: <%= session.getAttribute("login") %></li>
-      <li class="list-group-item">Name: <%= session.getAttribute("name") %></li>
-      <li class="list-group-item">Age: <%= session.getAttribute("age") %></li>
     </ul>
 </div>
 </body>
