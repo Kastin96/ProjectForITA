@@ -13,6 +13,8 @@ create table users (
 	id serial primary key,
 	login varchar(45) unique not null,
 	password varchar(45) not null,
+	full_name varchar(60),
+	age integer,
 	role integer not null,
 	foreign key (role) references roles (id)
 );
