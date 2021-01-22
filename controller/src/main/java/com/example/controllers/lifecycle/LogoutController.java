@@ -22,17 +22,6 @@ public class LogoutController extends HttpServlet {
         HttpSession session = req.getSession();
 
         log.info("User logged out: ={}", session.getAttribute("login"));
-
-        session.removeAttribute("user");
-        session.removeAttribute("userClass");
-        session.removeAttribute("id");
-        session.removeAttribute("login");
-        session.removeAttribute("name");
-        session.removeAttribute("age");
-        session.removeAttribute("isAdmin");
-        session.removeAttribute("isTrainer");
-        session.removeAttribute("salaryList");
-
         session.invalidate();
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
