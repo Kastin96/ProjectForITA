@@ -2,55 +2,37 @@ package com.example.groups;
 
 import com.example.users.Trainer;
 import com.example.users.User;
+import lombok.*;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-public class Group {
-    private UUID id;
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
+public class Group extends AbstractGroup {
     private String groupName;
     private Trainer trainer;
-    private List<User> userList;
+    private Set<User> userList = new LinkedHashSet<>();
 
-    public Group() {
+    public Group withId(Integer id){
+        setId(id);
+        return this;
     }
 
-    public Group(String groupName, Trainer trainer, List<User> userList) {
-        this.id = UUID.randomUUID();
-        this.groupName = groupName;
-        this.trainer = trainer;
-        this.userList = userList;
+    public Group withGroupName(String groupName){
+        setGroupName(groupName);
+        return this;
     }
 
-    public UUID getId() {
-        return id;
+    public Group withTrainer(Trainer trainer){
+        setGroupName(groupName);
+        return this;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
-
-    public Trainer getTrainer() {
-        return trainer;
-    }
-
-    public void setTrainer(Trainer trainer) {
-        this.trainer = trainer;
-    }
-
-    public List<User> getUserList() {
-        return userList;
-    }
-
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public Group withUserList(Set<User> userList){
+        setUserList(userList);
+        return this;
     }
 }
