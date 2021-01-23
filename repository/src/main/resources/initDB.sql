@@ -26,7 +26,7 @@ insert into users (login, password, role) values ('user', 'user', 3);
 create table groups (
 	id serial primary key,
 	group_name varchar(45) not null,
-	trainer_id integer not null,
+	trainer_id integer unique not null,
 	foreign key (trainer_id) references users (id)
 );
 

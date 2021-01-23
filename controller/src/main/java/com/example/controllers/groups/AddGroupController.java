@@ -83,10 +83,10 @@ public class AddGroupController extends HttpServlet {
                     session.setAttribute("badAddGroup", "The Trainer is busy!");
                 } else {
                     if (!userList.isEmpty()) {
-                        Group group = new Group(groupName, (Trainer) trainer, userList);
-                        GroupsDatabase.getInstance().put(group.getId(), group);
+//                        Group group = new Group(groupName, (Trainer) trainer, userList);
+//                        GroupsDatabase.getInstance().put(group.getId(), group);
 
-                        log.info("Group added = {}", group.getGroupName());
+//                        log.info("Group added = {}", group.getGroupName());
 
                         return true;
                     } else {

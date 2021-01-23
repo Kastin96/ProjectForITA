@@ -1,6 +1,6 @@
 package com.example.controllers.lifecycle;
 
-import com.example.controllerservice.RegistrationService;
+import com.example.controllerservice.lifecycle.RegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

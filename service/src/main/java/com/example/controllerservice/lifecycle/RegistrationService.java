@@ -1,4 +1,4 @@
-package com.example.controllerservice;
+package com.example.controllerservice.lifecycle;
 
 import com.example.database.StudentRepositoryPostgres;
 import com.example.users.Student;

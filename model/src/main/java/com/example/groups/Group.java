@@ -27,7 +27,7 @@ public class Group extends AbstractGroup {
     }
 
     public Group withTrainer(Trainer trainer){
-        setGroupName(groupName);
+        setTrainer(trainer);
         return this;
     }
 

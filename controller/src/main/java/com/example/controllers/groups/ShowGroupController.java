@@ -32,7 +32,7 @@ public class ShowGroupController extends HttpServlet {
             if (uuidGroupEntry.getValue().getGroupName().equalsIgnoreCase(showGroupName)) {
 
                 for (User user : uuidGroupEntry.getValue().getUserList()) {
-                    userNameList.add(user.getFullName());
+//                    userNameList.add(user.getFullName());
                 }
 
                 session.setAttribute("showGroupUserListName", userNameList);

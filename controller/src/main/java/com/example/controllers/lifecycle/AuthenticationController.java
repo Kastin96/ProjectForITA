@@ -1,9 +1,7 @@
 package com.example.controllers.lifecycle;
 
-import com.example.controllerservice.AuthenticationService;
-import com.example.controllerservice.InitAdmin;
-import com.example.localdatabase.UserDatabase;
-import com.example.hardcoremetod.HardcoreMethod;
+import com.example.controllerservice.lifecycle.AuthenticationService;
+import com.example.controllerservice.lifecycle.InitAdmin;
 import com.example.users.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +25,7 @@ public class AuthenticationController extends HttpServlet {
     Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 
     @Override
-    public void init(ServletConfig config){
+    public void init(ServletConfig config) {
         String adminLogin = config.getInitParameter("adminLogin");
         String adminPass = config.getInitParameter("adminPass");
 
@@ -69,7 +67,7 @@ public class AuthenticationController extends HttpServlet {
                         requestDispatcher.forward(req, resp);
 
                         log.info("Trainer logged in = {}", user.getLogin());
-                    } else if (user instanceof Student){
+                    } else if (user instanceof Student) {
                         session.setAttribute("name", ((Student) user).getFullName());
                         session.setAttribute("age", ((Student) user).getAge());
                         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/userpage");
@@ -79,6 +77,7 @@ public class AuthenticationController extends HttpServlet {
                     }
                 }
             }
+        } else {
             session.setAttribute("badAuthentication", "You entered incorrect login information!");
         }
         resp.sendRedirect("/new");
