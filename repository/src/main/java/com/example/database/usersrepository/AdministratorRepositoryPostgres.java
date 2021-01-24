@@ -1,7 +1,6 @@
-package com.example.database;
+package com.example.database.usersrepository;
 
 import com.example.users.Administrator;
-import com.example.users.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -1,5 +1,6 @@
 package com.example.controllers.groups;
 
+import com.example.controllerservice.groups.MyGroupService;
 import com.example.localdatabase.GroupsDatabase;
 import com.example.groups.Group;
 import com.example.search.SearchFromDatabase;
@@ -22,24 +23,14 @@ public class MyGroupController extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Object user = session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
+        final List<String> groupNameList = MyGroupService.getGroupNameList((User) user);
 
-        List<String> groupsName = new ArrayList<>();
-        for (Map.Entry<UUID, Group> uuidGroupEntry : GroupsDatabase.getInstance().entrySet()) {
-            if (user instanceof Administrator) {
-                groupsName.add(uuidGroupEntry.getValue().getGroupName());
-            } else  {
-                for (Group group : SearchFromDatabase.findUserFromGroupDatabase((User) user)) {
-                    groupsName.add(group.getGroupName());
-                }
-            }
-        }
-
-        if (groupsName.isEmpty()){
+        if (groupNameList.isEmpty()){
             session.setAttribute("notFoundGroup", "You are not a member of any group!");
         }
 
-        session.setAttribute("myGroupNamesListResult", groupsName);
+        session.setAttribute("myGroupNamesListResult", groupNameList);
 
         resp.sendRedirect("/new/mygroups");
     }

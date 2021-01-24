@@ -1,4 +1,4 @@
-package com.example.database;
+package com.example.database.usersrepository;
 
 public enum Roles {
     ADMIN("admin"),

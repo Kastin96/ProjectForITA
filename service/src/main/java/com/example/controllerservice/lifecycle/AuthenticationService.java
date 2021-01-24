@@ -1,9 +1,8 @@
 package com.example.controllerservice.lifecycle;
 
-import com.example.database.*;
+import com.example.database.usersrepository.UserRepositoryPostgres;
 import com.example.users.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 public class AuthenticationService {

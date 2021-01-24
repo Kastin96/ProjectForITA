@@ -45,38 +45,36 @@ public class AuthenticationController extends HttpServlet {
         if (userByLogin.isPresent()) {
             final User user = userByLogin.get();
 
-            if (user.getLogin().equalsIgnoreCase(login)) {
-                if (user.getPassword().equals(password)) {
-                    session.setAttribute("user", user);
-                    session.setAttribute("userClass", user.getClass());
-                    session.setAttribute("id", user.getId());
-                    session.setAttribute("login", user.getLogin());
+            session.setAttribute("user", user);
+            session.setAttribute("userClass", user.getClass());
+            session.setAttribute("id", user.getId());
+            session.setAttribute("login", user.getLogin());
 
-                    if (user instanceof Administrator) {
-                        session.setAttribute("isAdmin", true);
-                        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/adminpage");
-                        requestDispatcher.forward(req, resp);
+            if (user instanceof Administrator) {
+                session.setAttribute("isAdmin", true);
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/adminpage");
+                requestDispatcher.forward(req, resp);
 
-                        log.info("Admin logged in = {}", user.getLogin());
-                    } else if (user instanceof Trainer) {
-                        session.setAttribute("isTrainer", true);
-                        session.setAttribute("salaryList", ((Trainer) user).getSalaryList());
-                        session.setAttribute("name", ((Trainer) user).getFullName());
-                        session.setAttribute("age", ((Trainer) user).getAge());
-                        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/trainerpage");
-                        requestDispatcher.forward(req, resp);
+                log.info("Admin logged in = {}", user.getLogin());
+            } else if (user instanceof Trainer) {
+                session.setAttribute("isTrainer", true);
+                session.setAttribute("salaryList", ((Trainer) user).getSalaryList());
+                session.setAttribute("name", ((Trainer) user).getFullName());
+                session.setAttribute("age", ((Trainer) user).getAge());
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/trainerpage");
+                requestDispatcher.forward(req, resp);
 
-                        log.info("Trainer logged in = {}", user.getLogin());
-                    } else if (user instanceof Student) {
-                        session.setAttribute("name", ((Student) user).getFullName());
-                        session.setAttribute("age", ((Student) user).getAge());
-                        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/userpage");
-                        requestDispatcher.forward(req, resp);
+                log.info("Trainer logged in = {}", user.getLogin());
+            } else if (user instanceof Student) {
+                session.setAttribute("name", ((Student) user).getFullName());
+                session.setAttribute("age", ((Student) user).getAge());
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/userpage");
+                requestDispatcher.forward(req, resp);
 
-                        log.info("Student logged in = {}", user.getLogin());
-                    }
-                }
+                log.info("Student logged in = {}", user.getLogin());
             }
+
+
         } else {
             session.setAttribute("badAuthentication", "You entered incorrect login information!");
         }

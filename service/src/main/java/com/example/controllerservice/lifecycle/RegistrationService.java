@@ -1,6 +1,6 @@
 package com.example.controllerservice.lifecycle;
 
-import com.example.database.StudentRepositoryPostgres;
+import com.example.database.usersrepository.StudentRepositoryPostgres;
 import com.example.users.Student;
 
 public class RegistrationService {
