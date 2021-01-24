@@ -10,8 +10,8 @@ import java.util.*;
 public class StudentRepositoryPostgres extends AbstractRepositoryPostgres<Student> {
     Logger log = LoggerFactory.getLogger(StudentRepositoryPostgres.class);
 
-    private final String SAVE_STUDENT_SQL = "insert into users (login, password, full_name, age, role) "
-            + "values (?, ?, ?, ?, 3)";
+    private final String SAVE_STUDENT_SQL = "INSERT INTO users (login, password, full_name, age, role) "
+            + "VALUES (?, ?, ?, ?, 3)";
     private final String WHERE_ROLE_SQL = " WHERE role=3;";
 
     private static volatile StudentRepositoryPostgres instance;

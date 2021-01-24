@@ -10,8 +10,8 @@ import java.util.*;
 public class AdministratorRepositoryPostgres extends AbstractRepositoryPostgres<Administrator> {
     Logger log = LoggerFactory.getLogger(AdministratorRepositoryPostgres.class);
 
-    private final String SAVE_STUDENT_SQL = "insert into users (login, password, role) "
-            + "values (?, ?, 1)";
+    private final String SAVE_STUDENT_SQL = "INSERT INTO users (login, password, role) "
+            + "VALUES (?, ?, 1)";
     private final String WHERE_ROLE_SQL = " WHERE role=1;";
 
     private static volatile AdministratorRepositoryPostgres instance;

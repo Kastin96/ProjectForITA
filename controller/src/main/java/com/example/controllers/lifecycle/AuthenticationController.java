@@ -63,7 +63,7 @@ public class AuthenticationController extends HttpServlet {
                 session.setAttribute("isTrainer", true);
                 session.setAttribute("salaryList", ((Trainer) user).getSalaryList());
                 BigDecimal averageSalary = AverageSalaryCounter.count(user);
-                if (averageSalary != null){
+                if (averageSalary != null) {
                     session.setAttribute("averageSalary", averageSalary);
                 }
                 session.setAttribute("name", ((Trainer) user).getFullName());

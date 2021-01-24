@@ -75,7 +75,6 @@ public class UserRepositoryPostgres {
                     return StudentRepositoryPostgres.getInstance().find(userId);
                 }
             }
-
         } catch (SQLException sqlException) {
             log.error("Error checking User role from database");
         }

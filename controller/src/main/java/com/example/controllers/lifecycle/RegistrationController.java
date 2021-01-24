@@ -37,6 +37,5 @@ public class RegistrationController extends HttpServlet {
 
             resp.sendRedirect("/new/reg");
         }
-
     }
 }

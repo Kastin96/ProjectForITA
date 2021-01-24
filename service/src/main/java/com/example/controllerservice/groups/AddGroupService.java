@@ -35,23 +35,19 @@ public class AddGroupService {
                         GroupsRepositoryPostgres.getInstance().save(group);
 
                         log.info("Group added = {}", group.getGroupName());
-
                         return true;
                     } else {
                         req.setAttribute("badAddGroup", "Something went wrong: try again! " +
                                 "No user found!");
-
                         log.warn("Error: Group not created = {}", trainer.getLogin());
                     }
                 }
             } else {
                 req.setAttribute("badAddGroup", "The trainer is incorrect!");
             }
-
         } catch (NoSuchElementException noSuchElementException) {
             req.setAttribute("badAddGroup", "The trainer is incorrect!");
         }
-
         return false;
     }
 
@@ -65,7 +61,6 @@ public class AddGroupService {
                 log.warn("Error splitted users for new Group");
             }
         }
-
         return userSet;
     }
 

@@ -40,7 +40,7 @@ public class ShowGroupController extends HttpServlet {
             req.setAttribute("notFoundGroupToShow", showGroupName + " - Not found!");
         }
 
-        getServletContext().getRequestDispatcher("/mygrouppage.jsp").forward(req,resp);
+        getServletContext().getRequestDispatcher("/mygrouppage.jsp").forward(req, resp);
     }
 
 

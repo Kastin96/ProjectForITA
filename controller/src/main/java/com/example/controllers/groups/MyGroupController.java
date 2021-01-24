@@ -26,13 +26,13 @@ public class MyGroupController extends HttpServlet {
         User user = (User) session.getAttribute("user");
         final List<String> groupNameList = MyGroupService.getGroupNameList(user);
 
-        if (groupNameList.isEmpty()){
+        if (groupNameList.isEmpty()) {
             req.setAttribute("notFoundGroup", "You are not a member of any group!");
         }
 
         req.setAttribute("myGroupNamesListResult", groupNameList);
 
-        getServletContext().getRequestDispatcher("/mygrouppage.jsp").forward(req,resp);
+        getServletContext().getRequestDispatcher("/mygrouppage.jsp").forward(req, resp);
     }
 
 

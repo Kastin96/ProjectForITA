@@ -16,22 +16,22 @@ public class Group extends AbstractGroup {
     private Trainer trainer;
     private Set<User> userList = new LinkedHashSet<>();
 
-    public Group withId(Integer id){
+    public Group withId(Integer id) {
         setId(id);
         return this;
     }
 
-    public Group withGroupName(String groupName){
+    public Group withGroupName(String groupName) {
         setGroupName(groupName);
         return this;
     }
 
-    public Group withTrainer(Trainer trainer){
+    public Group withTrainer(Trainer trainer) {
         setTrainer(trainer);
         return this;
     }
 
-    public Group withUserList(Set<User> userList){
+    public Group withUserList(Set<User> userList) {
         setUserList(userList);
         return this;
     }

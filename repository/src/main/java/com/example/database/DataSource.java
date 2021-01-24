@@ -34,7 +34,6 @@ public class DataSource {
                 }
             }
         }
-
         return instance;
     }
 

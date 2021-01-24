@@ -21,7 +21,6 @@ public class SessionController extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         HardcoreMethod.run(20, 5);
         super.init(config);
-
     }
 
     @Override
@@ -32,14 +31,14 @@ public class SessionController extends HttpServlet {
         if (session.isNew()) {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/signin");
             requestDispatcher.forward(req, resp);
-        } else  {
+        } else {
             if (userClass == Administrator.class) {
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/adminpage");
                 requestDispatcher.forward(req, resp);
-            } else if (userClass == Trainer.class){
+            } else if (userClass == Trainer.class) {
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/trainerpage");
                 requestDispatcher.forward(req, resp);
-            } else if (userClass == Student.class){
+            } else if (userClass == Student.class) {
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/userpage");
                 requestDispatcher.forward(req, resp);
             } else {

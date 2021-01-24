@@ -23,17 +23,17 @@ public class Trainer extends User {
         this.salaryList.add(salary);
     }
 
-    public Trainer withId(Integer id){
+    public Trainer withId(Integer id) {
         setId(id);
         return this;
     }
 
-    public Trainer withLogin(String login){
+    public Trainer withLogin(String login) {
         setLogin(login);
         return this;
     }
 
-    public Trainer withPassword(String password){
+    public Trainer withPassword(String password) {
         setPassword(password);
         return this;
     }
@@ -43,17 +43,17 @@ public class Trainer extends User {
         return this;
     }
 
-    public Trainer withFullName(String fullName){
+    public Trainer withFullName(String fullName) {
         setFullName(fullName);
         return this;
     }
 
-    public Trainer withSalaryList(List<Integer> salaryList){
+    public Trainer withSalaryList(List<Integer> salaryList) {
         setSalaryList(salaryList);
         return this;
     }
 
-    public Trainer withAge(int age){
+    public Trainer withAge(int age) {
         setAge(age);
         return this;
     }

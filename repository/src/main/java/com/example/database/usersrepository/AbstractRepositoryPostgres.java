@@ -36,7 +36,6 @@ public abstract class AbstractRepositoryPostgres<T extends User> implements Repo
             ResultSet rs = ps.executeQuery();
             final List<T> persons = getPersons(rs);
             return persons.stream().findFirst();
-
         } catch (SQLException sqlException) {
             log.error("Error reading from database");
         }
@@ -52,7 +51,6 @@ public abstract class AbstractRepositoryPostgres<T extends User> implements Repo
              PreparedStatement ps = con.prepareStatement(SQL)) {
             ResultSet rs = ps.executeQuery();
             return getPersons(rs);
-
         } catch (SQLException sqlException) {
             log.error("Error reading from database");
         }
@@ -65,9 +63,7 @@ public abstract class AbstractRepositoryPostgres<T extends User> implements Repo
              PreparedStatement ps = con.prepareStatement(getSaveSql())) {
             prepareForSave(entity, ps);
             ps.executeUpdate();
-
             return true;
-
         } catch (SQLException sqlException) {
             log.error("Error saving to database");
             return false;
@@ -80,9 +76,7 @@ public abstract class AbstractRepositoryPostgres<T extends User> implements Repo
              PreparedStatement ps = con.prepareStatement(REMOVE_FROM_USERS_BY_ID)) {
             ps.setInt(1, id);
             ps.executeUpdate();
-
             return true;
-
         } catch (SQLException sqlException) {
             log.error("Error removing from database");
             return false;
@@ -105,7 +99,7 @@ public abstract class AbstractRepositoryPostgres<T extends User> implements Repo
         return result;
     }
 
-    public Optional<T> getPersonByLogin (String login){
+    public Optional<T> getPersonByLogin(String login) {
         try (Connection con = DataSource.getInstance().getConnection();
              PreparedStatement ps = con.prepareStatement(SELECT_USER_BY_LOGIN)) {
             ps.setString(1, login.toLowerCase());
@@ -118,5 +112,4 @@ public abstract class AbstractRepositoryPostgres<T extends User> implements Repo
         }
         return Optional.empty();
     }
-
 }

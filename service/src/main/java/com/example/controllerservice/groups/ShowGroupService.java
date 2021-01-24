@@ -8,7 +8,7 @@ import java.util.*;
 
 public class ShowGroupService {
 
-    public static List<String> getUserNameList(String groupName){
+    public static List<String> getUserNameList(String groupName) {
         List<String> userNameList = new ArrayList<>();
         final Integer idGroup = GroupsRepositoryPostgres.getInstance().getIdGroupByName(groupName);
         final Optional<Group> group = GroupsRepositoryPostgres.getInstance().find(idGroup);
@@ -18,9 +18,9 @@ public class ShowGroupService {
         return userNameList;
     }
 
-    public static Optional<Group> getGroupByName(String groupName){
+    public static Optional<Group> getGroupByName(String groupName) {
         final Integer idGroupByName = GroupsRepositoryPostgres.getInstance().getIdGroupByName(groupName);
-        if (idGroupByName != null){
+        if (idGroupByName != null) {
             return GroupsRepositoryPostgres.getInstance().find(idGroupByName);
         }
         return Optional.empty();

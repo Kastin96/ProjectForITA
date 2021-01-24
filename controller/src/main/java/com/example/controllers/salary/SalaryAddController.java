@@ -31,13 +31,13 @@ public class SalaryAddController extends HttpServlet {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
 
-        if (user instanceof Trainer){
+        if (user instanceof Trainer) {
             final boolean isAdd = SalaryAddService.add(user, addSalary);
             if (isAdd) {
                 session.setAttribute("salaryAdded", "Salary added to your list!");
                 session.setAttribute("salaryList", SalaryShowService.getSalaryList(user));
                 BigDecimal averageSalary = AverageSalaryCounter.count(user);
-                if (averageSalary != null){
+                if (averageSalary != null) {
                     session.setAttribute("averageSalary", averageSalary);
                 }
                 log.info("Trainer added salary ={}", session.getAttribute("login"));

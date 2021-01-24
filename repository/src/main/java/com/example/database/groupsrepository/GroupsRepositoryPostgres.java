@@ -26,7 +26,6 @@ public class GroupsRepositoryPostgres implements Repository<Group> {
     private static final String SELECT_ID_BY_NAME = "SELECT * FROM groups WHERE group_name = ?;";
     private static final String REMOVE_GROUP_BY_ID = "DELETE FROM groups WHERE id = ?;";
 
-
     private volatile static GroupsRepositoryPostgres instance;
 
     public static GroupsRepositoryPostgres getInstance() {
@@ -53,7 +52,6 @@ public class GroupsRepositoryPostgres implements Repository<Group> {
                         .withTrainer(getTrainer(rs))
                         .withUserList(getUserSetByGroupId(rs.getInt("id"))));
             }
-
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
             log.error("Error reading Group from database");
@@ -187,6 +185,4 @@ public class GroupsRepositoryPostgres implements Repository<Group> {
         }
         return result;
     }
-
-
 }

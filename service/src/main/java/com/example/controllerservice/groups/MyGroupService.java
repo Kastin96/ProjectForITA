@@ -15,7 +15,6 @@ public class MyGroupService {
         if (user instanceof Student) {
             final List<Group> groupListByUserId = GroupsRepositoryPostgres.getInstance()
                     .getGroupListByUserId(user.getId());
-
             groupNameList = groupListByUserId
                     .stream()
                     .map(Group::getGroupName)

@@ -67,7 +67,7 @@ public class TrainerRepositoryPostgres extends AbstractRepositoryPostgres<Traine
         return WHERE_ROLE_SQL;
     }
 
-    public List<Integer> getSalaryList(Integer id){
+    public List<Integer> getSalaryList(Integer id) {
         List<Integer> result = new ArrayList<>();
         try (Connection con = DataSource.getInstance().getConnection();
              PreparedStatement ps = con.prepareStatement(SELECT_SALARY_LIST)) {
@@ -76,21 +76,20 @@ public class TrainerRepositoryPostgres extends AbstractRepositoryPostgres<Traine
             while (rs.next()) {
                 result.add(rs.getInt("salary"));
             }
-
         } catch (SQLException sqlException) {
             log.error("Error added salaryList from trainer_salary");
-        } catch (NoSuchElementException noSuchElementException){
+        } catch (NoSuchElementException noSuchElementException) {
             log.error("Error noSuchElementException from trainer_salary");
         }
         return result;
     }
 
-    public BigDecimal getAverageSalary(Integer id){
+    public BigDecimal getAverageSalary(Integer id) {
         try (Connection con = DataSource.getInstance().getConnection();
              PreparedStatement ps = con.prepareStatement(SELECT_AVG_SALARY)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()){
+            if (rs.next()) {
                 return rs.getBigDecimal("avg");
             }
         } catch (SQLException sqlException) {
@@ -99,7 +98,7 @@ public class TrainerRepositoryPostgres extends AbstractRepositoryPostgres<Traine
         return BigDecimal.valueOf(0);
     }
 
-    public boolean addSalary(Integer id, Integer salary){
+    public boolean addSalary(Integer id, Integer salary) {
         try (Connection con = DataSource.getInstance().getConnection();
              PreparedStatement ps = con.prepareStatement(ADD_SALARY)) {
             ps.setInt(1, id);

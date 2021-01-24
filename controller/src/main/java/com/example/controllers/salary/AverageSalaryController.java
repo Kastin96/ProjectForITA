@@ -26,17 +26,16 @@ public class AverageSalaryController extends HttpServlet {
 
         User user = (User) session.getAttribute("user");
 
-        if (user instanceof Trainer){
+        if (user instanceof Trainer) {
             BigDecimal averageSalary = AverageSalaryCounter.count(user);
-            if (averageSalary != null){
+            if (averageSalary != null) {
                 session.setAttribute("averageSalary", averageSalary);
             }
         }
-
         resp.sendRedirect("/new/salarylist");
     }
 
-    private void clearSessionAttribute(HttpSession session){
+    private void clearSessionAttribute(HttpSession session) {
         session.removeAttribute("averageSalary");
     }
 }
