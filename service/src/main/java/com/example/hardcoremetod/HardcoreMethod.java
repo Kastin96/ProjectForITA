@@ -12,7 +12,11 @@ public class HardcoreMethod {
 
     public static void run(Integer amountStudent, Integer amountTrainer) {
 
+
         for (int i = 1; i <= amountStudent; i++) {
+            if (StudentRepositoryPostgres.getInstance().findAll().size() >= amountStudent) {
+                break;
+            }
             StudentRepositoryPostgres.getInstance().save(new Student()
                     .withLogin("user" + i)
                     .withPassword("user" + i)
@@ -21,6 +25,9 @@ public class HardcoreMethod {
         }
 
         for (int i = 1; i <= amountTrainer; i++) {
+            if (TrainerRepositoryPostgres.getInstance().findAll().size() >= amountTrainer) {
+                break;
+            }
             TrainerRepositoryPostgres.getInstance().save(new Trainer()
                     .withLogin("trainer" + i)
                     .withPassword("trainer" + i)
@@ -36,6 +43,9 @@ public class HardcoreMethod {
         }
 
         for (int i = 1; i <= amountStudent / amountTrainer; i++) {
+            if (GroupsRepositoryPostgres.getInstance().findAll().size() >= (amountStudent / amountTrainer)) {
+                break;
+            }
             int index = 1;
             GroupsRepositoryPostgres.getInstance().save(new Group()
                     .withGroupName("testGroup" + i)

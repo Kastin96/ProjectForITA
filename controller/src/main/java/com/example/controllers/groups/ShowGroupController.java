@@ -3,6 +3,7 @@ package com.example.controllers.groups;
 import com.example.controllerservice.groups.ShowGroupService;
 import com.example.groups.Group;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +17,7 @@ import java.util.*;
 public class ShowGroupController extends HttpServlet {
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        HttpSession session = req.getSession();
-        clearSessionAttribute(session);
-
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String showGroupName = req.getParameter("showGroupName");
         List<String> userNameList;
         try {
@@ -30,27 +28,19 @@ public class ShowGroupController extends HttpServlet {
             if (groupByName.isPresent()) {
                 final Group group = groupByName.get();
                 if (!userNameList.isEmpty()) {
-                    session.setAttribute("showGroupUserListName", userNameList);
+                    req.setAttribute("showGroupUserListName", userNameList);
                 }
-                session.setAttribute("showGroupName",
+                req.setAttribute("showGroupName",
                         group.getGroupName());
-                session.setAttribute("showGroupTrainerName",
+                req.setAttribute("showGroupTrainerName",
                         group.getTrainer().getLogin());
             }
 
         } catch (NullPointerException exception) {
-            session.setAttribute("notFoundGroupToShow", showGroupName + " - Not found!");
+            req.setAttribute("notFoundGroupToShow", showGroupName + " - Not found!");
         }
 
-        resp.sendRedirect("/new/mygroups");
-    }
-
-    private void clearSessionAttribute(HttpSession session) {
-        session.removeAttribute("showGroupUserListName");
-        session.removeAttribute("showGroupName");
-        session.removeAttribute("showGroupTrainerName");
-        session.removeAttribute("notFoundGroupToShow");
-
+        getServletContext().getRequestDispatcher("/mygrouppage.jsp").forward(req,resp);
     }
 
 

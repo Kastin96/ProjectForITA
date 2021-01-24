@@ -32,19 +32,18 @@
                 <input name="groupUser" type="text" size="35" required placeholder="Students. The separator is a space! ' '">
                 <input type="submit" value="Add">
                 <div>
-                    <% if (session.getAttribute("goodAddGroup") != null) { %>
+                    <% if (request.getAttribute("goodAddGroup") != null) { %>
                         <hr>
                         <div class="alert alert-success" role="alert">
-                            <%= session.getAttribute("goodAddGroup")%>
-
+                            <%= request.getAttribute("goodAddGroup")%>
                         </div>
                     <% } %>
                 </div>
                 <div>
-                    <% if (session.getAttribute("badAddGroup") != null) { %>
+                    <% if (request.getAttribute("badAddGroup") != null) { %>
                         <hr>
                         <div class="alert alert-danger" role="alert">
-                            <%= session.getAttribute("badAddGroup")%>
+                            <%= request.getAttribute("badAddGroup")%>
                         </div>
                     <% } %>
                 </div>

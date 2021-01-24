@@ -30,30 +30,20 @@ public class AddGroupController extends HttpServlet {
         String groupTrainer = req.getParameter("groupTrainer");
         String groupUser = req.getParameter("groupUser");
 
-        HttpSession session = req.getSession();
-        session.removeAttribute("goodAddGroup");
-        session.removeAttribute("badAddGroup");
-
         if (!AddGroupService.checkGroupName(groupName)) {
             String splitter = " ";
             Set<User> userList = AddGroupService.getListOfUniqueUsersFromString(groupUser, splitter);
 
-            boolean resultAddGroup = AddGroupService.addNewGroup(session, groupName, groupTrainer, userList);
+            boolean resultAddGroup = AddGroupService.addNewGroup(req, groupName, groupTrainer, userList);
 
             if (resultAddGroup) {
-                session.setAttribute("goodAddGroup", "The group has been successfully created! \n" +
+                req.setAttribute("goodAddGroup", "The group has been successfully created! \n" +
                         "Added students: " + userList.size());
             }
         } else {
-            session.setAttribute("badAddGroup", "The group name is already taken!");
+            req.setAttribute("badAddGroup", "The group name is already taken!");
         }
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/addgroup");
-        requestDispatcher.forward(req, resp);
-
+        getServletContext().getRequestDispatcher("/addgrouppage.jsp").forward(req,resp);
     }
-
-
-
-
 }

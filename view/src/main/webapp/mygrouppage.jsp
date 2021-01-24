@@ -44,7 +44,7 @@
                         <input type="text" name="showGroupName" required placeholder="Group name">
                         <input type="submit" value="show">
                     </li>
-                    <% if (session.getAttribute("showGroupName") != null) { %>
+                    <% if (request.getAttribute("showGroupName") != null) { %>
                         <li class="list-group-item">Group Name: <c:out value="${showGroupName}"/></li>
                         <li class="list-group-item">Trainer: <c:out value="${showGroupTrainerName}"/></li>
                         <c:forEach var="UserListName" items="${showGroupUserListName}">
@@ -52,10 +52,10 @@
                         </c:forEach>
                     <% } %>
                 </ul>
-                <% if (session.getAttribute("notFoundGroupToShow") != null) { %>
+                <% if (request.getAttribute("notFoundGroupToShow") != null) { %>
                     <hr>
                     <div class="alert alert-danger" role="alert">
-                        <%= session.getAttribute("notFoundGroupToShow")%>
+                        <%= request.getAttribute("notFoundGroupToShow")%>
                     </div>
                 <% } %>
             </form>
@@ -69,10 +69,10 @@
                         <li class="list-group-item">Group: <c:out value="${valueNameGroup}"/></li>
                     </c:forEach>
                 </ul>
-                <% if (session.getAttribute("notFoundGroup") != null) { %>
+                <% if (request.getAttribute("notFoundGroup") != null) { %>
                     <hr>
                     <div class="alert alert-danger" role="alert">
-                        <%= session.getAttribute("notFoundGroup")%>
+                        <%= request.getAttribute("notFoundGroup")%>
                     </div>
                 <% } %>
             </form>

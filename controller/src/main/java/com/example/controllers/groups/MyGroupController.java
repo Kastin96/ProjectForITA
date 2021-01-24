@@ -24,15 +24,15 @@ public class MyGroupController extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        final List<String> groupNameList = MyGroupService.getGroupNameList((User) user);
+        final List<String> groupNameList = MyGroupService.getGroupNameList(user);
 
         if (groupNameList.isEmpty()){
-            session.setAttribute("notFoundGroup", "You are not a member of any group!");
+            req.setAttribute("notFoundGroup", "You are not a member of any group!");
         }
 
-        session.setAttribute("myGroupNamesListResult", groupNameList);
+        req.setAttribute("myGroupNamesListResult", groupNameList);
 
-        resp.sendRedirect("/new/mygroups");
+        getServletContext().getRequestDispatcher("/mygrouppage.jsp").forward(req,resp);
     }
 
 

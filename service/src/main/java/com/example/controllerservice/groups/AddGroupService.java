@@ -10,20 +10,21 @@ import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 
 public class AddGroupService {
     private final static Logger log = LoggerFactory.getLogger(AddGroupService.class);
 
-    public static boolean addNewGroup(HttpSession session, String groupName, String groupTrainer, Set<User> userList) {
+    public static boolean addNewGroup(HttpServletRequest req, String groupName, String groupTrainer, Set<User> userList) {
 
         try {
             User trainer = TrainerRepositoryPostgres.getInstance().getPersonByLogin(groupTrainer).get();
 
             if (trainer instanceof Trainer) {
                 if (!GroupsRepositoryPostgres.getInstance().getGroupListByTrainerId(trainer.getId()).isEmpty()) {
-                    session.setAttribute("badAddGroup", "The Trainer is busy!");
+                    req.setAttribute("badAddGroup", "The Trainer is busy!");
                 } else {
                     if (!userList.isEmpty()) {
                         Group group = new Group()
@@ -37,18 +38,18 @@ public class AddGroupService {
 
                         return true;
                     } else {
-                        session.setAttribute("badAddGroup", "Something went wrong: try again! " +
+                        req.setAttribute("badAddGroup", "Something went wrong: try again! " +
                                 "No user found!");
 
                         log.warn("Error: Group not created = {}", trainer.getLogin());
                     }
                 }
             } else {
-                session.setAttribute("badAddGroup", "The trainer is incorrect!");
+                req.setAttribute("badAddGroup", "The trainer is incorrect!");
             }
 
         } catch (NoSuchElementException noSuchElementException) {
-            session.setAttribute("badAddGroup", "The trainer is incorrect!");
+            req.setAttribute("badAddGroup", "The trainer is incorrect!");
         }
 
         return false;
