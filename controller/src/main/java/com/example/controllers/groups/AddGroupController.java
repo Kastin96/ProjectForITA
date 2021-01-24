@@ -44,6 +44,6 @@ public class AddGroupController extends HttpServlet {
             req.setAttribute("badAddGroup", "The group name is already taken!");
         }
 
-        getServletContext().getRequestDispatcher("/addgrouppage.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/addgroup").forward(req, resp);
     }
 }

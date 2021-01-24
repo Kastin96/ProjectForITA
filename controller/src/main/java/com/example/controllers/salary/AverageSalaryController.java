@@ -20,7 +20,7 @@ import java.math.BigDecimal;
 public class AverageSalaryController extends HttpServlet {
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         HttpSession session = req.getSession();
         clearSessionAttribute(session);
 
@@ -32,7 +32,8 @@ public class AverageSalaryController extends HttpServlet {
                 session.setAttribute("averageSalary", averageSalary);
             }
         }
-        resp.sendRedirect("/new/salarylist");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/salarylist");
+        requestDispatcher.forward(req, resp);
     }
 
     private void clearSessionAttribute(HttpSession session) {

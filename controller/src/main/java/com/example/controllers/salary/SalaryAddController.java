@@ -47,7 +47,6 @@ public class SalaryAddController extends HttpServlet {
 
             session.setAttribute("salaryAdded", "Error: Salary has not been added!");
         }
-
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/salarylist");
         requestDispatcher.forward(req, resp);
     }

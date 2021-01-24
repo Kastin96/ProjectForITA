@@ -32,7 +32,7 @@ public class MyGroupController extends HttpServlet {
 
         req.setAttribute("myGroupNamesListResult", groupNameList);
 
-        getServletContext().getRequestDispatcher("/mygrouppage.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/mygroups").forward(req, resp);
     }
 
 

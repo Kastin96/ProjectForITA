@@ -13,27 +13,27 @@
     <body>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" href="/new/">Home</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}">Home</a>
             </li>
             <% if (session.getAttribute("isAdmin") != null) { %>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/new/mygroups">All Groups</a>
+                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/mygroups">All Groups</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/new/addgroup">Add Group</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/addgroup">Add Group</a>
                 </li>
             <% } else { %>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/new/mygroups">My Groups</a>
+                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/mygroups">My Groups</a>
             </li>
             <% } %>
             <% if (session.getAttribute("isTrainer") != null) { %>
                 <li class="nav-item">
-                    <a class="nav-link"href="/new/salarylist">Salary</a>
+                    <a class="nav-link"href="${pageContext.request.contextPath}/salarylist">Salary</a>
                 </li>
             <% } %>
             <li class="nav-item">
-                <a class="nav-link" href="/new/logout">Logout</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/logout">Logout</a>
             </li>
         </ul>
         <div class="mb-3">

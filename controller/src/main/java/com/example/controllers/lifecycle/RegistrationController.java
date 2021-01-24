@@ -4,6 +4,8 @@ import com.example.controllerservice.lifecycle.RegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +19,7 @@ public class RegistrationController extends HttpServlet {
     Logger log = LoggerFactory.getLogger(RegistrationController.class);
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         HttpSession session = req.getSession();
 
         String login = req.getParameter("login");
@@ -28,14 +30,16 @@ public class RegistrationController extends HttpServlet {
         final boolean isGoodReg = RegistrationService.registration(login, password, name, age);
 
         if (isGoodReg) {
-            session.setAttribute("goodRegistration", "Registration was successful!");
+            req.setAttribute("goodRegistration", "Registration was successful!");
             log.info("New Student added = {}", login);
 
-            resp.sendRedirect("/new/signin");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/signin");
+            requestDispatcher.forward(req, resp);
         } else {
-            session.setAttribute("badRegistration", "This login is already in use!");
+            req.setAttribute("badRegistration", "This login is already in use!");
 
-            resp.sendRedirect("/new/reg");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/reg");
+            requestDispatcher.forward(req, resp);
         }
     }
 }

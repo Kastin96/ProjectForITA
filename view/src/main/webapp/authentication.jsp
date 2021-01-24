@@ -13,10 +13,10 @@
         <hr>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/new/">SignIn</a>
+                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}">SignIn</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/new/reg">Registration</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/reg">Registration</a>
             </li>
         </ul>
         <hr>
@@ -27,18 +27,18 @@
                 <input type="password" name="password" placeholder="Password" autocomplete="on">
                 <input type="submit" value="Sign in">
                 <div>
-                    <% if (session.getAttribute("badAuthentication") != null) { %>
+                    <% if (request.getAttribute("badAuthentication") != null) { %>
                         <hr>
                         <div class="alert alert-danger" role="alert">
-                            <%= session.getAttribute("badAuthentication")%>
+                            <%= request.getAttribute("badAuthentication")%>
                         </div>
                     <% } %>
                 </div>
                 <div>
-                    <% if (session.getAttribute("goodRegistration") != null) { %>
+                    <% if (request.getAttribute("goodRegistration") != null) { %>
                         <hr>
                         <div class="alert alert-success" role="alert">
-                            <%= session.getAttribute("goodRegistration")%>
+                            <%= request.getAttribute("goodRegistration")%>
                         </div>
                     <% } %>
                 </div>

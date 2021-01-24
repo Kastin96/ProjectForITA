@@ -80,11 +80,11 @@ public class AuthenticationController extends HttpServlet {
 
                 log.info("Student logged in = {}", user.getLogin());
             }
-
-
         } else {
-            session.setAttribute("badAuthentication", "You entered incorrect login information!");
+            req.setAttribute("badAuthentication", "You entered incorrect login information!");
         }
-        resp.sendRedirect("/new");
+
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/signin");
+        requestDispatcher.forward(req, resp);
     }
 }
