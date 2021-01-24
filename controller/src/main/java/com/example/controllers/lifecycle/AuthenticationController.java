@@ -3,6 +3,7 @@ package com.example.controllers.lifecycle;
 import com.example.controllerservice.lifecycle.AuthenticationService;
 import com.example.controllerservice.lifecycle.InitAdmin;
 import com.example.controllerservice.salary.AverageSalaryCounter;
+import com.example.hardcoremetod.HardcoreMethod;
 import com.example.users.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

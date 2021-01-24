@@ -1,11 +1,11 @@
 package com.example.controllers.lifecycle;
 
+import com.example.hardcoremetod.HardcoreMethod;
 import com.example.users.Administrator;
 import com.example.users.Student;
 import com.example.users.Trainer;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +16,13 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/")
 public class SessionController extends HttpServlet {
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        HardcoreMethod.run(20, 5);
+        super.init(config);
+
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
