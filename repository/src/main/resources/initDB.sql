@@ -23,6 +23,18 @@ insert into users (login, password, role) values ('admin', 'admin', 1);
 insert into users (login, password, role) values ('trainer', 'trainer', 2);
 insert into users (login, password, role) values ('user', 'user', 3);
 
+create table trainer_salary (
+	id serial primary key,
+	trainer_id integer not null,
+	foreign key (trainer_id) references users (id),
+	salary integer not null
+
+);
+
+insert into trainer_salary (trainer_id, salary) values (2, 1000);
+
+insert into trainer_salary (trainer_id, salary) values (2, 700);
+
 create table groups (
 	id serial primary key,
 	group_name varchar(45) unique not null,

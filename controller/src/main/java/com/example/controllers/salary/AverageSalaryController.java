@@ -1,7 +1,9 @@
 package com.example.controllers.salary;
 
+import com.example.controllerservice.salary.AverageSalaryCounter;
 import com.example.salary.AverageSalary;
 import com.example.users.Trainer;
+import com.example.users.User;
 
 
 import javax.servlet.RequestDispatcher;
@@ -18,19 +20,20 @@ import java.math.BigDecimal;
 public class AverageSalaryController extends HttpServlet {
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         HttpSession session = req.getSession();
         clearSessionAttribute(session);
 
-        Object user = session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
 
         if (user instanceof Trainer){
-            BigDecimal averageSalary = AverageSalary.getCount(((Trainer) user).getSalaryList());
-            session.setAttribute("averageSalary", averageSalary);
+            BigDecimal averageSalary = AverageSalaryCounter.count(user);
+            if (averageSalary != null){
+                session.setAttribute("averageSalary", averageSalary);
+            }
         }
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/salarylist");
-        requestDispatcher.forward(req, resp);
+        resp.sendRedirect("/new/salarylist");
     }
 
     private void clearSessionAttribute(HttpSession session){

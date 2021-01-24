@@ -2,6 +2,7 @@ package com.example.controllers.lifecycle;
 
 import com.example.controllerservice.lifecycle.AuthenticationService;
 import com.example.controllerservice.lifecycle.InitAdmin;
+import com.example.controllerservice.salary.AverageSalaryCounter;
 import com.example.users.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 @WebServlet(name = "UserServlet", urlPatterns = "/authentication", initParams = {
@@ -59,6 +61,10 @@ public class AuthenticationController extends HttpServlet {
             } else if (user instanceof Trainer) {
                 session.setAttribute("isTrainer", true);
                 session.setAttribute("salaryList", ((Trainer) user).getSalaryList());
+                BigDecimal averageSalary = AverageSalaryCounter.count(user);
+                if (averageSalary != null){
+                    session.setAttribute("averageSalary", averageSalary);
+                }
                 session.setAttribute("name", ((Trainer) user).getFullName());
                 session.setAttribute("age", ((Trainer) user).getAge());
                 RequestDispatcher requestDispatcher = req.getRequestDispatcher("/trainerpage");

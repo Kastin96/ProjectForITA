@@ -40,7 +40,7 @@
             <form action="countaveragesalary" method="post">
                 <ul class="list-group">
                     <li class="list-group-item active" aria-current="true">Your average salary:</li>
-                    <li class="list-group-item"><input type="submit" value="Show average salary">
+                    <li class="list-group-item">
                         <% if (session.getAttribute("averageSalary") != null) { %>
                             <%= session.getAttribute("averageSalary")%>
                         <% } %>

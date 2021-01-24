@@ -48,6 +48,11 @@ public class Trainer extends User {
         return this;
     }
 
+    public Trainer withSalaryList(List<Integer> salaryList){
+        setSalaryList(salaryList);
+        return this;
+    }
+
     public Trainer withAge(int age){
         setAge(age);
         return this;
