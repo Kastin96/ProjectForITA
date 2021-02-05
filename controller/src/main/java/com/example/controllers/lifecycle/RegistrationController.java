@@ -1,11 +1,10 @@
 package com.example.controllers.lifecycle;
 
-import com.example.database.UserDatabase;
-import com.example.search.SearchFromDatabase;
-import com.example.users.Student;
+import com.example.controllerservice.lifecycle.RegistrationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,34 +19,27 @@ public class RegistrationController extends HttpServlet {
     Logger log = LoggerFactory.getLogger(RegistrationController.class);
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         HttpSession session = req.getSession();
 
         String login = req.getParameter("login");
         String password = req.getParameter("password");
         String name = req.getParameter("name");
+        Integer age = Integer.parseInt(req.getParameter("age"));
 
-        try {
-            int age = Integer.parseInt(req.getParameter("age"));
+        final boolean isGoodReg = RegistrationService.registration(login, password, name, age);
 
-            if (SearchFromDatabase.findUserFromUserDatabase(login) == null) {
-                Student student = new Student(login, password, name, age);
-                UserDatabase.getInstance().put(student.getId(), student);
+        if (isGoodReg) {
+            req.setAttribute("goodRegistration", "Registration was successful!");
+            log.info("New Student added = {}", login);
 
-                session.setAttribute("goodRegistration", "Registration was successful!");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/signin");
+            requestDispatcher.forward(req, resp);
+        } else {
+            req.setAttribute("badRegistration", "This login is already in use!");
 
-                log.info("New Student added = {}", student);
-
-                resp.sendRedirect("/new/signin");
-            } else {
-                session.setAttribute("badRegistration", "This login is already in use!");
-
-                resp.sendRedirect("/new/reg");
-            }
-        } catch (NumberFormatException e) {
-            session.setAttribute("badRegistration", "Age error: Number must be entered!");
-
-            resp.sendRedirect("/new/reg");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/reg");
+            requestDispatcher.forward(req, resp);
         }
     }
 }

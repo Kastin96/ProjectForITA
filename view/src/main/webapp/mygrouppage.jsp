@@ -13,27 +13,27 @@
     <body>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" href="/new/">Home</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}">Home</a>
             </li>
             <% if (session.getAttribute("isAdmin") != null) { %>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/new/mygroups">All Groups</a>
+                    <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/mygroups">All Groups</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/new/addgroup">Add Group</a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/addgroup">Add Group</a>
                 </li>
             <% } else { %>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/new/mygroups">My Groups</a>
+                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/mygroups">My Groups</a>
             </li>
             <% } %>
             <% if (session.getAttribute("isTrainer") != null) { %>
                 <li class="nav-item">
-                    <a class="nav-link"href="/new/salarylist">Salary</a>
+                    <a class="nav-link"href="${pageContext.request.contextPath}/salarylist">Salary</a>
                 </li>
             <% } %>
             <li class="nav-item">
-                <a class="nav-link" href="/new/logout">Logout</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/logout">Logout</a>
             </li>
         </ul>
         <div class="mb-3">
@@ -44,7 +44,7 @@
                         <input type="text" name="showGroupName" required placeholder="Group name">
                         <input type="submit" value="show">
                     </li>
-                    <% if (session.getAttribute("showGroupName") != null) { %>
+                    <% if (request.getAttribute("showGroupName") != null) { %>
                         <li class="list-group-item">Group Name: <c:out value="${showGroupName}"/></li>
                         <li class="list-group-item">Trainer: <c:out value="${showGroupTrainerName}"/></li>
                         <c:forEach var="UserListName" items="${showGroupUserListName}">
@@ -52,10 +52,10 @@
                         </c:forEach>
                     <% } %>
                 </ul>
-                <% if (session.getAttribute("notFoundGroupToShow") != null) { %>
+                <% if (request.getAttribute("notFoundGroupToShow") != null) { %>
                     <hr>
                     <div class="alert alert-danger" role="alert">
-                        <%= session.getAttribute("notFoundGroupToShow")%>
+                        <%= request.getAttribute("notFoundGroupToShow")%>
                     </div>
                 <% } %>
             </form>
@@ -69,10 +69,10 @@
                         <li class="list-group-item">Group: <c:out value="${valueNameGroup}"/></li>
                     </c:forEach>
                 </ul>
-                <% if (session.getAttribute("notFoundGroup") != null) { %>
+                <% if (request.getAttribute("notFoundGroup") != null) { %>
                     <hr>
                     <div class="alert alert-danger" role="alert">
-                        <%= session.getAttribute("notFoundGroup")%>
+                        <%= request.getAttribute("notFoundGroup")%>
                     </div>
                 <% } %>
             </form>

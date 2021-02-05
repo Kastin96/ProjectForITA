@@ -15,10 +15,10 @@
 <hr>
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="/new/">SignIn</a>
+        <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}">SignIn</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="/new/reg">Registration</a>
+        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/reg">Registration</a>
     </li>
 </ul>
 <hr>
@@ -30,10 +30,10 @@
         <input name="age" type="number" min="0" required placeholder="Age">
         <input type="submit">
         <div>
-            <% if (session.getAttribute("badRegistration") != null) { %>
+            <% if (request.getAttribute("badRegistration") != null) { %>
             <hr>
             <div class="alert alert-danger" role="alert">
-                <%= session.getAttribute("badRegistration")%>
+                <%= request.getAttribute("badRegistration")%>
             </div>
             <% } %>
         </div>

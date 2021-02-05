@@ -13,16 +13,16 @@
     <body>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/new/">Home</a>
+                <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/new/mygroups">My Groups</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/mygroups">My Groups</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/new/salarylist">Salary</a>
+                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/salarylist">Salary</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/new/logout">Logout</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/logout">Logout</a>
             </li>
         </ul>
         <div class="mb-3">
@@ -40,7 +40,7 @@
             <form action="countaveragesalary" method="post">
                 <ul class="list-group">
                     <li class="list-group-item active" aria-current="true">Your average salary:</li>
-                    <li class="list-group-item"><input type="submit" value="Show average salary">
+                    <li class="list-group-item">
                         <% if (session.getAttribute("averageSalary") != null) { %>
                             <%= session.getAttribute("averageSalary")%>
                         <% } %>

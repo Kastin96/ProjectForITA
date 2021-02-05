@@ -1,6 +1,7 @@
 package com.example.controllers.groups;
 
-import com.example.database.GroupsDatabase;
+import com.example.controllerservice.groups.MyGroupService;
+import com.example.localdatabase.GroupsDatabase;
 import com.example.groups.Group;
 import com.example.search.SearchFromDatabase;
 import com.example.users.Administrator;
@@ -22,26 +23,16 @@ public class MyGroupController extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Object user = session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
+        final List<String> groupNameList = MyGroupService.getGroupNameList(user);
 
-        List<String> groupsName = new ArrayList<>();
-        for (Map.Entry<UUID, Group> uuidGroupEntry : GroupsDatabase.getInstance().entrySet()) {
-            if (user instanceof Administrator) {
-                groupsName.add(uuidGroupEntry.getValue().getGroupName());
-            } else  {
-                for (Group group : SearchFromDatabase.findUserFromGroupDatabase((User) user)) {
-                    groupsName.add(group.getGroupName());
-                }
-            }
+        if (groupNameList.isEmpty()) {
+            req.setAttribute("notFoundGroup", "You are not a member of any group!");
         }
 
-        if (groupsName.isEmpty()){
-            session.setAttribute("notFoundGroup", "You are not a member of any group!");
-        }
+        req.setAttribute("myGroupNamesListResult", groupNameList);
 
-        session.setAttribute("myGroupNamesListResult", groupsName);
-
-        resp.sendRedirect("/new/mygroups");
+        getServletContext().getRequestDispatcher("/mygroups").forward(req, resp);
     }
 
 

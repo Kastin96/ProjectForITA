@@ -1,8 +1,7 @@
 package com.example.controllers.groups;
 
-import com.example.database.GroupsDatabase;
+import com.example.controllerservice.groups.ShowGroupService;
 import com.example.groups.Group;
-import com.example.users.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,53 +9,38 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 
 @WebServlet(urlPatterns = "/showgroupspage")
 public class ShowGroupController extends HttpServlet {
 
     @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        clearSessionAttribute(session);
-
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String showGroupName = req.getParameter("showGroupName");
-        List<String> userNameList = new ArrayList<>();
+        List<String> userNameList;
+        try {
+            userNameList = ShowGroupService.getUserNameList(showGroupName);
 
-        for (Map.Entry<UUID, Group> uuidGroupEntry : GroupsDatabase.getInstance().entrySet()) {
-            if (uuidGroupEntry.getValue().getGroupName().equalsIgnoreCase(showGroupName)) {
+            final Optional<Group> groupByName = ShowGroupService.getGroupByName(showGroupName);
 
-                for (User user : uuidGroupEntry.getValue().getUserList()) {
-                    userNameList.add(user.getFullName());
+            if (groupByName.isPresent()) {
+                final Group group = groupByName.get();
+                if (!userNameList.isEmpty()) {
+                    req.setAttribute("showGroupUserListName", userNameList);
                 }
-
-                session.setAttribute("showGroupUserListName", userNameList);
-                session.setAttribute("showGroupName",
-                        uuidGroupEntry.getValue().getGroupName());
-                session.setAttribute("showGroupTrainerName",
-                        uuidGroupEntry.getValue().getTrainer().getFullName());
+                req.setAttribute("showGroupName",
+                        group.getGroupName());
+                req.setAttribute("showGroupTrainerName",
+                        group.getTrainer().getLogin());
             }
+
+        } catch (NullPointerException exception) {
+            req.setAttribute("notFoundGroupToShow", showGroupName + " - Not found!");
         }
 
-        if (userNameList.isEmpty()) {
-            session.setAttribute("notFoundGroupToShow", showGroupName + " - Not found!");
-        }
-
-        resp.sendRedirect("/new/mygroups");
-    }
-
-    private void clearSessionAttribute(HttpSession session){
-        session.removeAttribute("showGroupUserListName");
-        session.removeAttribute("showGroupName");
-        session.removeAttribute("showGroupTrainerName");
-        session.removeAttribute("notFoundGroupToShow");
-
+        getServletContext().getRequestDispatcher("/mygroups").forward(req, resp);
     }
 
 

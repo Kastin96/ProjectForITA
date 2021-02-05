@@ -1,10 +1,10 @@
 package com.example.controllers.lifecycle;
 
-import com.example.database.UserDatabase;
+import com.example.controllerservice.lifecycle.AuthenticationService;
+import com.example.controllerservice.lifecycle.InitAdmin;
+import com.example.controllerservice.salary.AverageSalaryCounter;
 import com.example.hardcoremetod.HardcoreMethod;
-import com.example.users.Administrator;
-import com.example.users.Trainer;
-import com.example.users.User;
+import com.example.users.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,30 +18,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 
 @WebServlet(name = "UserServlet", urlPatterns = "/authentication", initParams = {
-@WebInitParam(name = "adminLogin", value = "admin"),
-@WebInitParam(name = "adminPass", value = "admin")})
+        @WebInitParam(name = "adminLogin", value = "admin"),
+        @WebInitParam(name = "adminPass", value = "admin")})
 public class AuthenticationController extends HttpServlet {
     Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
-        HardcoreMethod.run(20, 5);
-
+    public void init(ServletConfig config) {
         String adminLogin = config.getInitParameter("adminLogin");
         String adminPass = config.getInitParameter("adminPass");
 
-        Administrator administrator = new Administrator(adminLogin,
-                adminPass,
-                "adminAdmin",
-                24);
-
-        UserDatabase.getInstance().put(administrator.getId(), administrator);
+        InitAdmin.init(adminLogin, adminPass);
     }
 
-     @Override
+    @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String login = req.getParameter("login");
@@ -49,40 +43,48 @@ public class AuthenticationController extends HttpServlet {
 
         HttpSession session = req.getSession();
 
-        for (Map.Entry<UUID, User> userEntry : UserDatabase.getInstance().entrySet()) {
-            User user = userEntry.getValue();
-            if (user.getLogin().equalsIgnoreCase(login)) {
-                if (user.getPassword().equals(password)) {
-                    session.setAttribute("user", user);
-                    session.setAttribute("userClass", user.getClass());
-                    session.setAttribute("id", user.getId());
-                    session.setAttribute("login", user.getLogin());
-                    session.setAttribute("name", user.getFullName());
-                    session.setAttribute("age", user.getAge());
+        final Optional<? extends User> userByLogin = AuthenticationService.getUserByLogin(login, password);
 
-                    if (user instanceof Administrator) {
-                        session.setAttribute("isAdmin", true);
-                        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/adminpage");
-                        requestDispatcher.forward(req, resp);
+        if (userByLogin.isPresent()) {
+            final User user = userByLogin.get();
 
-                        log.info("Admin logged in = {}", user.getLogin());
-                    } else if (user instanceof Trainer) {
-                        session.setAttribute("isTrainer", true);
-                        session.setAttribute("salaryList", ((Trainer) user).getSalaryList());
-                        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/trainerpage");
-                        requestDispatcher.forward(req, resp);
+            session.setAttribute("user", user);
+            session.setAttribute("userClass", user.getClass());
+            session.setAttribute("id", user.getId());
+            session.setAttribute("login", user.getLogin());
 
-                        log.info("Trainer logged in = {}", user.getLogin());
-                    } else {
-                        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/userpage");
-                        requestDispatcher.forward(req, resp);
+            if (user instanceof Administrator) {
+                session.setAttribute("isAdmin", true);
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/adminpage");
+                requestDispatcher.forward(req, resp);
 
-                        log.info("Student logged in = {}", user.getLogin());
-                    }
+                log.info("Admin logged in = {}", user.getLogin());
+            } else if (user instanceof Trainer) {
+                session.setAttribute("isTrainer", true);
+                session.setAttribute("salaryList", ((Trainer) user).getSalaryList());
+                BigDecimal averageSalary = AverageSalaryCounter.count(user);
+                if (averageSalary != null) {
+                    session.setAttribute("averageSalary", averageSalary);
                 }
+                session.setAttribute("name", ((Trainer) user).getFullName());
+                session.setAttribute("age", ((Trainer) user).getAge());
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/trainerpage");
+                requestDispatcher.forward(req, resp);
+
+                log.info("Trainer logged in = {}", user.getLogin());
+            } else if (user instanceof Student) {
+                session.setAttribute("name", ((Student) user).getFullName());
+                session.setAttribute("age", ((Student) user).getAge());
+                RequestDispatcher requestDispatcher = req.getRequestDispatcher("/userpage");
+                requestDispatcher.forward(req, resp);
+
+                log.info("Student logged in = {}", user.getLogin());
             }
-            session.setAttribute("badAuthentication", "You entered incorrect login information!");
+        } else {
+            req.setAttribute("badAuthentication", "You entered incorrect login information!");
         }
-        resp.sendRedirect("/new");
+
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/signin");
+        requestDispatcher.forward(req, resp);
     }
 }

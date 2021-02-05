@@ -12,24 +12,22 @@
 <body>
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link active" aria-current="page" href="/new/">Home</a>
+        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}">Home</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/new/mygroups">All Groups</a>
+        <a class="nav-link" href="${pageContext.request.contextPath}/mygroups">All Groups</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/new/addgroup">Add Group</a>
+        <a class="nav-link" href="${pageContext.request.contextPath}/addgroup">Add Group</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="/new/logout">Logout</a>
+        <a class="nav-link" href="${pageContext.request.contextPath}/logout">Logout</a>
     </li>
 </ul>
 <div class="mb-3">
     <ul class="list-group">
-      <li class="list-group-item active" aria-current="true">Student information:</li>
+      <li class="list-group-item active" aria-current="true">Admin information:</li>
       <li class="list-group-item">Login: <%= session.getAttribute("login") %></li>
-      <li class="list-group-item">Name: <%= session.getAttribute("name") %></li>
-      <li class="list-group-item">Age: <%= session.getAttribute("age") %></li>
     </ul>
 </div>
 </body>

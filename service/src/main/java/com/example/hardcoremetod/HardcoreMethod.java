@@ -1,80 +1,63 @@
 package com.example.hardcoremetod;
 
-import com.example.database.GroupsDatabase;
-import com.example.database.UserDatabase;
+import com.example.database.groupsrepository.GroupsRepositoryPostgres;
+import com.example.database.usersrepository.*;
 import com.example.groups.Group;
 import com.example.users.Student;
 import com.example.users.Trainer;
-import com.example.users.User;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class HardcoreMethod {
 
-    public static void run(int amountUsers, int amountTrainers) {
+    public static void run(Integer amountStudent, Integer amountTrainer) {
 
-        List<User> studentsList = new ArrayList<>();
-        for (int i = 0; i < amountUsers; i++) {
-            Student student = new Student("test" + i,
-                    "test" + i,
-                    "testTest" + i,
-                    i);
 
-            studentsList.add(student);
-            UserDatabase.getInstance().put(student.getId(), student);
+        for (int i = 1; i <= amountStudent; i++) {
+            if (StudentRepositoryPostgres.getInstance().findAll().size() >= amountStudent) {
+                break;
+            }
+            StudentRepositoryPostgres.getInstance().save(new Student()
+                    .withLogin("user" + i)
+                    .withPassword("user" + i)
+                    .withFullName("TEST User" + i)
+                    .withAge(i + 10));
         }
 
-        List<User> trainersList = new ArrayList<>();
-        for (int i = 0; i < amountTrainers; i++) {
-            Trainer trainer = new Trainer("testTrainer" + i,
-                    "testTrainer" + i,
-                    "testTrainerTestTrainer" + i,
-                    i, 100, 200, 300);
+        for (int i = 1; i <= amountTrainer; i++) {
+            if (TrainerRepositoryPostgres.getInstance().findAll().size() >= amountTrainer) {
+                break;
+            }
+            TrainerRepositoryPostgres.getInstance().save(new Trainer()
+                    .withLogin("trainer" + i)
+                    .withPassword("trainer" + i)
+                    .withFullName("TEST Trainer" + i)
+                    .withAge(i + 20));
 
-            trainersList.add(trainer);
-            UserDatabase.getInstance().put(trainer.getId(), trainer);
+            final Optional<Trainer> personByLogin = TrainerRepositoryPostgres.getInstance()
+                    .getPersonByLogin("trainer" + i);
+
+            TrainerRepositoryPostgres.getInstance().addSalary(personByLogin.get().getId(), 1000);
+            TrainerRepositoryPostgres.getInstance().addSalary(personByLogin.get().getId(), 1200);
+            TrainerRepositoryPostgres.getInstance().addSalary(personByLogin.get().getId(), 1500);
         }
 
-        Group testGroup1 = new Group("testGroup1",
-                (Trainer) trainersList.get(0),
-                studentsList.subList(0, amountUsers / 2));
-        Group testGroup2 = new Group("testGroup2",
-                (Trainer) trainersList.get(1),
-                studentsList.subList(amountUsers / 2, amountUsers));
+        for (int i = 1; i <= amountStudent / amountTrainer; i++) {
+            if (GroupsRepositoryPostgres.getInstance().findAll().size() >= (amountStudent / amountTrainer)) {
+                break;
+            }
+            int index = 1;
+            GroupsRepositoryPostgres.getInstance().save(new Group()
+                    .withGroupName("testGroup" + i)
+                    .withTrainer(TrainerRepositoryPostgres.getInstance().getPersonByLogin("trainer" + i).get())
+                    .withUserList(Set.of(UserRepositoryPostgres.getInstance().getUserByLogin("user" + index++).get(),
+                            UserRepositoryPostgres.getInstance().getUserByLogin("user" + index++).get(),
+                            UserRepositoryPostgres.getInstance().getUserByLogin("user" + index++).get(),
+                            UserRepositoryPostgres.getInstance().getUserByLogin("user" + index++).get(),
+                            UserRepositoryPostgres.getInstance().getUserByLogin("user" + index).get())));
+        }
 
-        GroupsDatabase.getInstance().put(testGroup1.getId(), testGroup1);
-        GroupsDatabase.getInstance().put(testGroup2.getId(), testGroup2);
     }
 
-    public static void generateEmpty(int studentLimit, int trainerLimit) {
-        generateEmptyStudent(studentLimit);
-        generateEmptyTrainer(trainerLimit);
-    }
 
-    public static void generateEmptyStudent(int studentsLimit) {
-        List<Student> collectedStudent = Stream
-                .generate(Student::new)
-                .limit(studentsLimit)
-                .collect(Collectors.toList());
-
-        collectedStudent.forEach(student -> UserDatabase
-                .getInstance()
-                .put(student.getId(), student)
-        );
-    }
-
-    public static void generateEmptyTrainer(int trainersLimit) {
-
-        List<Trainer> collectedStudent = Stream
-                .generate(Trainer::new)
-                .limit(trainersLimit)
-                .collect(Collectors.toList());
-
-        collectedStudent.forEach(trainer -> UserDatabase
-                .getInstance()
-                .put(trainer.getId(), trainer)
-        );
-    }
 }
