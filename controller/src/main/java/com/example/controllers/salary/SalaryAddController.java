@@ -1,8 +1,6 @@
 package com.example.controllers.salary;
 
-import com.example.controllers.lifecycle.AuthenticationController;
 import com.example.controllerservice.salary.AverageSalaryCounter;
-import com.example.database.usersrepository.TrainerRepositoryPostgres;
 import com.example.salary.SalaryAddService;
 import com.example.salary.SalaryShowService;
 import com.example.users.Trainer;

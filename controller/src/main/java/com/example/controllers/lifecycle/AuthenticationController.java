@@ -3,8 +3,10 @@ package com.example.controllers.lifecycle;
 import com.example.controllerservice.lifecycle.AuthenticationService;
 import com.example.controllerservice.lifecycle.InitAdmin;
 import com.example.controllerservice.salary.AverageSalaryCounter;
-import com.example.hardcoremetod.HardcoreMethod;
-import com.example.users.*;
+import com.example.users.Administrator;
+import com.example.users.Student;
+import com.example.users.Trainer;
+import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Optional;
 
 @WebServlet(name = "UserServlet", urlPatterns = "/authentication", initParams = {
         @WebInitParam(name = "adminLogin", value = "admin"),

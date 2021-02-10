@@ -1,10 +1,6 @@
 package com.example.controllers.groups;
 
 import com.example.controllerservice.groups.MyGroupService;
-import com.example.localdatabase.GroupsDatabase;
-import com.example.groups.Group;
-import com.example.search.SearchFromDatabase;
-import com.example.users.Administrator;
 import com.example.users.User;
 
 import javax.servlet.ServletException;
@@ -14,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
 
 
 @WebServlet(urlPatterns = "/mygroupspage")

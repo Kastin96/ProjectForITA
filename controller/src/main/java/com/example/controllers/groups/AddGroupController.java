@@ -1,23 +1,17 @@
 package com.example.controllers.groups;
 
 import com.example.controllerservice.groups.AddGroupService;
-import com.example.localdatabase.GroupsDatabase;
-import com.example.groups.Group;
-import com.example.search.SearchFromDatabase;
-import com.example.users.Trainer;
 import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.*;
+import java.util.Set;
 
 
 @WebServlet(urlPatterns = "/addgrouppage")

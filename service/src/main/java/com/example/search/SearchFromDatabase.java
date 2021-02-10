@@ -1,8 +1,8 @@
 package com.example.search;
 
+import com.example.groups.Group;
 import com.example.localdatabase.GroupsDatabase;
 import com.example.localdatabase.UserDatabase;
-import com.example.groups.Group;
 import com.example.users.Trainer;
 import com.example.users.User;
 

@@ -1,18 +1,20 @@
 package com.example.controllerservice.groups;
 
 import com.example.database.groupsrepository.GroupsRepositoryPostgres;
-import com.example.database.usersrepository.*;
+import com.example.database.usersrepository.TrainerRepositoryPostgres;
+import com.example.database.usersrepository.UserRepositoryPostgres;
 import com.example.groups.Group;
-import com.example.localdatabase.GroupsDatabase;
-import com.example.search.SearchFromDatabase;
 import com.example.users.Trainer;
 import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
 
 public class AddGroupService {
     private final static Logger log = LoggerFactory.getLogger(AddGroupService.class);

@@ -1,7 +1,7 @@
 package com.example.controllerservice.lifecycle;
 
 import com.example.database.usersrepository.UserRepositoryPostgres;
-import com.example.users.*;
+import com.example.users.User;
 
 import java.util.Optional;
 

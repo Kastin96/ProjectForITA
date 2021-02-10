@@ -1,12 +1,15 @@
 package com.example.database.usersrepository;
 
 import com.example.database.DataSource;
-import com.example.users.*;
+import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Optional;
 
 public class UserRepositoryPostgres {
     Logger log = LoggerFactory.getLogger(UserRepositoryPostgres.class);

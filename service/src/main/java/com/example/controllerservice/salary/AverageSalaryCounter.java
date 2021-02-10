@@ -1,7 +1,6 @@
 package com.example.controllerservice.salary;
 
 import com.example.database.usersrepository.TrainerRepositoryPostgres;
-import com.example.users.Trainer;
 import com.example.users.User;
 
 import java.math.BigDecimal;

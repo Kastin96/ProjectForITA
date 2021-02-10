@@ -1,10 +1,8 @@
 package com.example.controllers.salary;
 
 import com.example.controllerservice.salary.AverageSalaryCounter;
-import com.example.salary.AverageSalary;
 import com.example.users.Trainer;
 import com.example.users.User;
-
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

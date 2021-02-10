@@ -1,12 +1,15 @@
 package com.example.hardcoremetod;
 
 import com.example.database.groupsrepository.GroupsRepositoryPostgres;
-import com.example.database.usersrepository.*;
+import com.example.database.usersrepository.StudentRepositoryPostgres;
+import com.example.database.usersrepository.TrainerRepositoryPostgres;
+import com.example.database.usersrepository.UserRepositoryPostgres;
 import com.example.groups.Group;
 import com.example.users.Student;
 import com.example.users.Trainer;
 
-import java.util.*;
+import java.util.Optional;
+import java.util.Set;
 
 public class HardcoreMethod {
 

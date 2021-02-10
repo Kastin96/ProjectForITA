@@ -1,7 +1,5 @@
 package com.example.database;
 
-import com.example.users.User;
-
 import java.util.List;
 import java.util.Optional;
 

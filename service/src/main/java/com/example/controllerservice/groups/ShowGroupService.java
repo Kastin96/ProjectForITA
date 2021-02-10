@@ -4,7 +4,9 @@ import com.example.database.groupsrepository.GroupsRepositoryPostgres;
 import com.example.groups.Group;
 import com.example.users.User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class ShowGroupService {
 

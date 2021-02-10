@@ -2,7 +2,9 @@ package com.example.controllerservice.groups;
 
 import com.example.database.groupsrepository.GroupsRepositoryPostgres;
 import com.example.groups.Group;
-import com.example.users.*;
+import com.example.users.Student;
+import com.example.users.Trainer;
+import com.example.users.User;
 
 import java.util.ArrayList;
 import java.util.List;
