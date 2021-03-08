@@ -2,11 +2,11 @@ package com.example.database.groupsrepository;
 
 import com.example.database.DataSource;
 import com.example.database.Repository;
+import com.example.database.usersrepository.StudentRepositoryPostgres;
 import com.example.database.usersrepository.TrainerRepositoryPostgres;
-import com.example.database.usersrepository.UserRepositoryPostgres;
 import com.example.groups.Group;
+import com.example.users.Student;
 import com.example.users.Trainer;
-import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,7 +57,7 @@ public class GroupsRepositoryPostgres implements Repository<Group> {
                         .withId(rs.getInt("id"))
                         .withGroupName(rs.getString("group_name"))
                         .withTrainer(getTrainer(rs))
-                        .withUserList(getUserSetByGroupId(rs.getInt("id"))));
+                        .withUsers(getUserSetByGroupId(rs.getInt("id"))));
             }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
@@ -97,48 +97,44 @@ public class GroupsRepositoryPostgres implements Repository<Group> {
     }
 
     @Override
-    public boolean remove(Integer id) {
+    public void remove(Integer id) {
         try (Connection con = DataSource.getInstance().getConnection();
              PreparedStatement ps = con.prepareStatement(REMOVE_GROUP_BY_ID)) {
             ps.setInt(1, id);
             ps.executeUpdate();
-            return true;
         } catch (SQLException sqlException) {
             log.error("Error removing Group from database");
         }
-        return false;
     }
 
-    private boolean saveUserSet(Group entity) throws SQLException {
+    private void saveUserSet(Group entity) throws SQLException {
         try (Connection con = DataSource.getInstance().getConnection();
              PreparedStatement ps = con.prepareStatement(SAVE_USER_SET)) {
-            for (User user : entity.getUserList()) {
+            for (Student user : entity.getStudents()) {
                 ps.setInt(1, user.getId());
                 ps.setInt(2, getIdGroupByName(entity.getGroupName()));
                 ps.executeUpdate();
             }
-            return true;
         } catch (SQLException sqlException) {
             log.error("Error saveUserSet Group from database");
         }
-        return false;
     }
 
-    public Set<User> getUserSetByGroupId(Integer id) throws SQLException {
-        Set<User> userSet = new LinkedHashSet<>();
+    public Set<Student> getUserSetByGroupId(Integer id) throws SQLException {
+        Set<Student> result = new LinkedHashSet<>();
         try (Connection con = DataSource.getInstance().getConnection();
              PreparedStatement ps = con.prepareStatement(SELECT_GROUP_USER_BY_ID)) {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                userSet.add(UserRepositoryPostgres.getInstance()
+                result.add(StudentRepositoryPostgres.getInstance()
                         .find(rs.getInt("user_id"))
                         .get());
             }
         } catch (SQLException sqlException) {
             log.error("Error getUserSetByGroupId Group from database");
         }
-        return userSet;
+        return result;
     }
 
     private Trainer getTrainer(ResultSet rs) throws SQLException {

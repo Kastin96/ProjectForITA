@@ -11,7 +11,5 @@ public interface Repository<T> {
 
     boolean save(T entity);
 
-    //    boolean update(T entity);
-
-    boolean remove(Integer id);
+    void remove(Integer id);
 }

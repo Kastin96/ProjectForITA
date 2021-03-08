@@ -17,8 +17,8 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
-public class AddGroupService {
-    private final static Logger log = LoggerFactory.getLogger(AddGroupService.class);
+public class AddGroupServiceByHibernate {
+    private final static Logger log = LoggerFactory.getLogger(AddGroupServiceByHibernate.class);
 
     public static boolean addNewGroup(HttpServletRequest req, String groupName, String groupTrainer, Set<Student> userList) {
 

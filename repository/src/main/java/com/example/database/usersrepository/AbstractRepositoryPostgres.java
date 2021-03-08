@@ -76,15 +76,13 @@ public abstract class AbstractRepositoryPostgres<T extends User> implements Repo
     }
 
     @Override
-    public boolean remove(Integer id) {
+    public void remove(Integer id) {
         try (Connection con = DataSource.getInstance().getConnection();
              PreparedStatement ps = con.prepareStatement(REMOVE_FROM_USERS_BY_ID)) {
             ps.setInt(1, id);
             ps.executeUpdate();
-            return true;
         } catch (SQLException sqlException) {
             log.error("Error removing from database");
-            return false;
         }
     }
 

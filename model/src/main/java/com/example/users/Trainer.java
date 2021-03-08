@@ -1,29 +1,58 @@
 package com.example.users;
 
+import com.example.groups.Group;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.CollectionType;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.SecondaryTable;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Entity
+@Table(name = "users")
 public class Trainer extends User {
 
+    @Column(name = "full_name")
     private String fullName;
-    private int age;
+    private Integer age;
 
+    @ElementCollection(targetClass = Integer.class, fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "trainer_salary",
+            joinColumns = @JoinColumn(name = "trainer_id")
+    )
+    @Column(name = "salary")
     private List<Integer> salaryList = new ArrayList<>();
 
-    public void addSalary(int salary) {
-        this.salaryList.add(salary);
-    }
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id", referencedColumnName = "trainer_id", insertable = false, updatable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Group group;
 
     public Trainer withId(Integer id) {
         setId(id);
@@ -45,6 +74,11 @@ public class Trainer extends User {
         return this;
     }
 
+    public Trainer withRoleNumber(Integer role) {
+        setRoleNumber(role);
+        return this;
+    }
+
     public Trainer withFullName(String fullName) {
         setFullName(fullName);
         return this;
@@ -55,7 +89,12 @@ public class Trainer extends User {
         return this;
     }
 
-    public Trainer withAge(int age) {
+    public Trainer withGroup(Group group){
+        setGroup(group);
+        return this;
+    }
+
+    public Trainer withAge(Integer age) {
         setAge(age);
         return this;
     }

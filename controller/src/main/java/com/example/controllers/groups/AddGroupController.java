@@ -1,6 +1,7 @@
 package com.example.controllers.groups;
 
 import com.example.controllerservice.groups.AddGroupService;
+import com.example.users.Student;
 import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class AddGroupController extends HttpServlet {
 
         if (!AddGroupService.checkGroupName(groupName)) {
             String splitter = " ";
-            Set<User> userList = AddGroupService.getListOfUniqueUsersFromString(groupUser, splitter);
+            Set<Student> userList = AddGroupService.getListOfUniqueUsersFromString(groupUser, splitter);
 
             boolean resultAddGroup = AddGroupService.addNewGroup(req, groupName, groupTrainer, userList);
 
