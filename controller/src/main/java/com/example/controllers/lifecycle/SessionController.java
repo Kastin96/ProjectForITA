@@ -1,5 +1,6 @@
 package com.example.controllers.lifecycle;
 
+import com.example.controllerservice.lifecycle.InitAdmin;
 import com.example.hardcoremetod.HardcoreMethod;
 import com.example.users.Administrator;
 import com.example.users.Student;
@@ -8,6 +9,7 @@ import com.example.users.Trainer;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +18,18 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-@WebServlet(urlPatterns = "/")
+@WebServlet(urlPatterns = "/", initParams = {
+        @WebInitParam(name = "adminLogin", value = "admin"),
+        @WebInitParam(name = "adminPass", value = "admin")})
 public class SessionController extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
+        String adminLogin = config.getInitParameter("adminLogin");
+        String adminPass = config.getInitParameter("adminPass");
+
+        InitAdmin.init(adminLogin, adminPass);
+
         HardcoreMethod.run(20, 5);
         super.init(config);
     }

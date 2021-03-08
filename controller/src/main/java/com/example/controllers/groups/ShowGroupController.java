@@ -3,6 +3,7 @@ package com.example.controllers.groups;
 import com.example.controllerservice.groups.ShowGroupService;
 import com.example.groups.Group;
 
+import javax.persistence.NoResultException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,9 +22,11 @@ public class ShowGroupController extends HttpServlet {
         String showGroupName = req.getParameter("showGroupName");
         List<String> userNameList;
         try {
-            userNameList = ShowGroupService.getUserNameList(showGroupName);
+//            userNameList = ShowGroupService.getUserNameList(showGroupName);
+            userNameList = ShowGroupService.getUserNameListFromHibernate(showGroupName);
 
-            final Optional<Group> groupByName = ShowGroupService.getGroupByName(showGroupName);
+//            final Optional<Group> groupByName = ShowGroupService.getGroupByName(showGroupName);
+            final Optional<Group> groupByName = ShowGroupService.getGroupByNameFromHibernate(showGroupName);
 
             if (groupByName.isPresent()) {
                 final Group group = groupByName.get();
@@ -36,7 +39,7 @@ public class ShowGroupController extends HttpServlet {
                         group.getTrainer().getLogin());
             }
 
-        } catch (NullPointerException exception) {
+        } catch (NullPointerException | NoResultException exception) {
             req.setAttribute("notFoundGroupToShow", showGroupName + " - Not found!");
         }
 

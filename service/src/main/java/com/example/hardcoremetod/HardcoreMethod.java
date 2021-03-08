@@ -53,11 +53,11 @@ public class HardcoreMethod {
             GroupsRepositoryPostgres.getInstance().save(new Group()
                     .withGroupName("testGroup" + i)
                     .withTrainer(TrainerRepositoryPostgres.getInstance().getPersonByLogin("trainer" + i).get())
-                    .withUserList(Set.of(UserRepositoryPostgres.getInstance().getUserByLogin("user" + index++).get(),
-                            UserRepositoryPostgres.getInstance().getUserByLogin("user" + index++).get(),
-                            UserRepositoryPostgres.getInstance().getUserByLogin("user" + index++).get(),
-                            UserRepositoryPostgres.getInstance().getUserByLogin("user" + index++).get(),
-                            UserRepositoryPostgres.getInstance().getUserByLogin("user" + index).get())));
+                    .withUsers(Set.of((Student) UserRepositoryPostgres.getInstance().getUserByLogin("user" + index++).get(),
+                            (Student) UserRepositoryPostgres.getInstance().getUserByLogin("user" + index++).get(),
+                            (Student) UserRepositoryPostgres.getInstance().getUserByLogin("user" + index++).get(),
+                            (Student) UserRepositoryPostgres.getInstance().getUserByLogin("user" + index++).get(),
+                            (Student) UserRepositoryPostgres.getInstance().getUserByLogin("user" + index).get())));
         }
 
     }

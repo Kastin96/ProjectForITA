@@ -27,7 +27,8 @@ public class RegistrationController extends HttpServlet {
         String name = req.getParameter("name");
         Integer age = Integer.parseInt(req.getParameter("age"));
 
-        final boolean isGoodReg = RegistrationService.registration(login, password, name, age);
+//        final boolean isGoodReg = RegistrationService.registrationStudentByPostgres(login, password, name, age);
+        final boolean isGoodReg = RegistrationService.registrationStudentByHibernate(login, password, name, age);
 
         if (isGoodReg) {
             req.setAttribute("goodRegistration", "Registration was successful!");

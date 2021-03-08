@@ -23,19 +23,9 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Optional;
 
-@WebServlet(name = "UserServlet", urlPatterns = "/authentication", initParams = {
-        @WebInitParam(name = "adminLogin", value = "admin"),
-        @WebInitParam(name = "adminPass", value = "admin")})
+@WebServlet(name = "UserServlet", urlPatterns = "/authentication")
 public class AuthenticationController extends HttpServlet {
     Logger log = LoggerFactory.getLogger(AuthenticationController.class);
-
-    @Override
-    public void init(ServletConfig config) {
-        String adminLogin = config.getInitParameter("adminLogin");
-        String adminPass = config.getInitParameter("adminPass");
-
-        InitAdmin.init(adminLogin, adminPass);
-    }
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,7 +35,8 @@ public class AuthenticationController extends HttpServlet {
 
         HttpSession session = req.getSession();
 
-        final Optional<? extends User> userByLogin = AuthenticationService.getUserByLogin(login, password);
+//        final Optional<? extends User> userByLogin = AuthenticationService.getUserByLogin(login, password);
+        final Optional<? extends User> userByLogin = AuthenticationService.getUserByLoginFromHibernate(login, password);
 
         if (userByLogin.isPresent()) {
             final User user = userByLogin.get();
