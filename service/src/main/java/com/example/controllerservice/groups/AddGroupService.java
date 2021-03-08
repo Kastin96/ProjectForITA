@@ -1,15 +1,22 @@
 package com.example.controllerservice.groups;
 
+import com.example.controllerservice.basicuser.BasicUserService;
+import com.example.database.groupsrepository.GroupsRepositoryHibernate;
 import com.example.database.groupsrepository.GroupsRepositoryPostgres;
+import com.example.database.usersrepository.BasicUserRepositoryHibernate;
+import com.example.database.usersrepository.StudentRepositoryHibernate;
+import com.example.database.usersrepository.TrainerRepositoryHibernate;
 import com.example.database.usersrepository.TrainerRepositoryPostgres;
 import com.example.database.usersrepository.UserRepositoryPostgres;
 import com.example.groups.Group;
+import com.example.users.BasicUser;
 import com.example.users.Student;
 import com.example.users.Trainer;
 import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
 import java.util.Locale;
@@ -33,7 +40,7 @@ public class AddGroupService {
                         Group group = new Group()
                                 .withGroupName(groupName)
                                 .withTrainer((Trainer) trainer)
-                                .withUsers(userList);
+                                .withStudents(userList);
 
                         GroupsRepositoryPostgres.getInstance().save(group);
 
@@ -54,6 +61,48 @@ public class AddGroupService {
         return false;
     }
 
+    public static boolean addNewGroupByHibernate(HttpServletRequest req, String groupName, String groupTrainer, Set<Student> userList) {
+        try {
+            final Optional<? extends User> trainer = BasicUserService.findUserWithRoleByLogin(groupTrainer);
+            if (trainer.isPresent()) {
+                if (trainer.get() instanceof Trainer) {
+                    if (((Trainer) trainer.get()).getGroup() != null) {
+                        req.setAttribute("badAddGroup", "The Trainer is busy!");
+                    } else {
+                        if (!userList.isEmpty()) {
+                            Group group = new Group()
+                                    .withGroupName(groupName)
+                                    .withTrainer((Trainer) trainer.get());
+                            GroupsRepositoryHibernate.getInstance().save(group);
+
+                            final Optional<Group> byGroupName = GroupsRepositoryHibernate.getInstance().findByGroupName(groupName);
+
+                            if (byGroupName.isPresent()){
+                                for (Student student : userList) {
+                                    final Set<Group> groups = student.getGroups();
+                                    groups.add(byGroupName.get());
+
+                                    StudentRepositoryHibernate.getInstance().save(student);
+                                }
+                            }
+                            log.info("Group added = {}", group.getGroupName());
+                            return true;
+                        } else {
+                            req.setAttribute("badAddGroup", "Something went wrong: try again! " +
+                                    "No user found!");
+                            log.warn("Error: Group not created = {}", trainer.get().getLogin());
+                        }
+                    }
+                } else {
+                    req.setAttribute("badAddGroup", "The trainer is incorrect!");
+                }
+            }
+        } catch (NoSuchElementException | NoResultException exception) {
+            req.setAttribute("badAddGroup", "The trainer is incorrect!");
+        }
+        return false;
+    }
+
     public static Set<Student> getListOfUniqueUsersFromString(String groupUser, String splitter) {
         Set<Student> userSet = new HashSet<>();
         for (String splittedUser : groupUser.split(splitter)) {
@@ -61,6 +110,23 @@ public class AddGroupService {
                 Student user = (Student) UserRepositoryPostgres.getInstance().getUserByLogin(splittedUser.toLowerCase(Locale.ROOT)).get();
                 userSet.add(user);
             } catch (NoSuchElementException noSuchElementException) {
+                log.warn("Error splitted users for new Group");
+            }
+        }
+        return userSet;
+    }
+
+    public static Set<Student> getListOfUniqueUsersFromStringByHibernate(String groupUser, String splitter) {
+        Set<Student> userSet = new HashSet<>();
+        for (String splittedUser : groupUser.split(splitter)) {
+            try {
+                final Optional<? extends User> userByLogin = BasicUserService.findUserWithRoleByLogin(splittedUser);
+                if (userByLogin.isPresent()) {
+                    if (userByLogin.get() instanceof Student) {
+                        userSet.add((Student) userByLogin.get());
+                    }
+                }
+            } catch (NoSuchElementException | NoResultException exception) {
                 log.warn("Error splitted users for new Group");
             }
         }
@@ -79,5 +145,21 @@ public class AddGroupService {
             log.warn("Error checkGroupName");
         }
         return false;
+    }
+
+    public static boolean checkGroupNameByHibernate(String groupName) {
+        try {
+            try {
+                final Optional<Group> byGroupName = GroupsRepositoryHibernate.getInstance().findByGroupName(groupName);
+                if (byGroupName.isPresent()){
+                    return true;
+                }
+            } catch (NoResultException e){
+                return false;
+            }
+        } catch (NullPointerException exception) {
+            log.warn("Error checkGroupName");
+        }
+        return true;
     }
 }

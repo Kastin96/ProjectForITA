@@ -3,6 +3,7 @@ package com.example.database.groupsrepository;
 import com.example.database.EntityManagerHelper;
 import com.example.database.Repository;
 import com.example.groups.Group;
+import com.example.users.Student;
 import com.example.users.User;
 import org.hibernate.HibernateException;
 
@@ -11,6 +12,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 
 public abstract class AbstractGroupRepositoryHibernate<T extends Group> implements Repository<T> {
@@ -56,6 +58,11 @@ public abstract class AbstractGroupRepositoryHibernate<T extends Group> implemen
             final EntityManager entityManager = helper.getEntityManager();
             final EntityTransaction transaction = entityManager.getTransaction();
             transaction.begin();
+
+            final Set<Student> students = entity.getStudents();
+            for (Student student : students) {
+                entityManager.refresh(student);
+            }
 
             if (entity.getId() == null) {
                 entityManager.persist(entity);

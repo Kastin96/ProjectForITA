@@ -41,7 +41,7 @@ public class Trainer extends User {
     private String fullName;
     private Integer age;
 
-    @ElementCollection(targetClass = Integer.class, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = Integer.class)
     @CollectionTable(
             name = "trainer_salary",
             joinColumns = @JoinColumn(name = "trainer_id")

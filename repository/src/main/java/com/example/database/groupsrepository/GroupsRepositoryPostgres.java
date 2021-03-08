@@ -57,7 +57,7 @@ public class GroupsRepositoryPostgres implements Repository<Group> {
                         .withId(rs.getInt("id"))
                         .withGroupName(rs.getString("group_name"))
                         .withTrainer(getTrainer(rs))
-                        .withUsers(getUserSetByGroupId(rs.getInt("id"))));
+                        .withStudents(getUserSetByGroupId(rs.getInt("id"))));
             }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

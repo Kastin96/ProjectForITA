@@ -34,7 +34,7 @@ public class Student extends User {
     private String fullName;
     private Integer age;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "group_users",
             joinColumns = @JoinColumn(name = "user_id"),

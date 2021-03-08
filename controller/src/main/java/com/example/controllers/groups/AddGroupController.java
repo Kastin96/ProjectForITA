@@ -25,11 +25,14 @@ public class AddGroupController extends HttpServlet {
         String groupTrainer = req.getParameter("groupTrainer");
         String groupUser = req.getParameter("groupUser");
 
-        if (!AddGroupService.checkGroupName(groupName)) {
+//        if (!AddGroupService.checkGroupName(groupName)) {
+        if (!AddGroupService.checkGroupNameByHibernate(groupName)) {
             String splitter = " ";
-            Set<Student> userList = AddGroupService.getListOfUniqueUsersFromString(groupUser, splitter);
+//            Set<Student> userList = AddGroupService.getListOfUniqueUsersFromString(groupUser, splitter);
+            Set<Student> userList = AddGroupService.getListOfUniqueUsersFromStringByHibernate(groupUser, splitter);
 
-            boolean resultAddGroup = AddGroupService.addNewGroup(req, groupName, groupTrainer, userList);
+//            boolean resultAddGroup = AddGroupService.addNewGroup(req, groupName, groupTrainer, userList);
+            boolean resultAddGroup = AddGroupService.addNewGroupByHibernate(req, groupName, groupTrainer, userList);
 
             if (resultAddGroup) {
                 req.setAttribute("goodAddGroup", "The group has been successfully created! \n" +

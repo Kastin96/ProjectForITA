@@ -8,8 +8,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,7 +37,8 @@ public class Group extends AbstractGroup implements Serializable {
     @JoinColumn(name = "trainer_id")
     private Trainer trainer;
 
-    @ManyToMany(mappedBy = "groups", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER)
+    @Cascade({CascadeType.SAVE_UPDATE})
     private Set<Student> students = new LinkedHashSet<>();
 
     public Group withId(Integer id) {
@@ -54,7 +56,7 @@ public class Group extends AbstractGroup implements Serializable {
         return this;
     }
 
-    public Group withUsers(Set<Student> students) {
+    public Group withStudents(Set<Student> students) {
         setStudents(students);
         return this;
     }
