@@ -2,7 +2,6 @@ package com.example.groups;
 
 import com.example.users.Student;
 import com.example.users.Trainer;
-import com.example.users.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,7 +25,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true, exclude = {"students", "trainer"})
-@ToString(callSuper = true,  exclude = {"students", "trainer"})
+@ToString(callSuper = true, exclude = {"students", "trainer"})
 @Entity
 @Table(name = "groups")
 public class Group extends AbstractGroup implements Serializable {

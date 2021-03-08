@@ -1,23 +1,19 @@
 package com.example.database.usersrepository;
 
 import com.example.users.Administrator;
-import com.example.users.Student;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
-import java.util.Optional;
 
-public class AdministratorRepositoryHibernate extends AbstractRepositoryHibernate<Administrator>{
+public class AdministratorRepositoryHibernate extends AbstractRepositoryHibernate<Administrator> {
     private static volatile AdministratorRepositoryHibernate instance;
 
     public AdministratorRepositoryHibernate() {
     }
 
-    public static AdministratorRepositoryHibernate getInstance(){
-        if (instance == null){
-            synchronized (AdministratorRepositoryHibernate.class){
-                if (instance == null){
+    public static AdministratorRepositoryHibernate getInstance() {
+        if (instance == null) {
+            synchronized (AdministratorRepositoryHibernate.class) {
+                if (instance == null) {
                     instance = new AdministratorRepositoryHibernate();
                 }
             }

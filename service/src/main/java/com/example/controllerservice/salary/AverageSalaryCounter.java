@@ -17,9 +17,9 @@ public class AverageSalaryCounter {
 
     public static BigDecimal countByHibernate(User user) {
         final Optional<Trainer> trainer = TrainerRepositoryHibernate.getInstance().find(user.getId());
-        if (trainer.isPresent()){
+        if (trainer.isPresent()) {
             final List<Integer> salaryList = trainer.get().getSalaryList();
-            if (!salaryList.isEmpty()){
+            if (!salaryList.isEmpty()) {
                 return AverageSalary.count(salaryList);
             }
         }

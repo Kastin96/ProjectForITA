@@ -4,7 +4,6 @@ import com.example.database.EntityManagerHelper;
 import com.example.database.Repository;
 import com.example.groups.Group;
 import com.example.users.Student;
-import com.example.users.User;
 import org.hibernate.HibernateException;
 
 import javax.persistence.EntityManager;
@@ -73,7 +72,7 @@ public abstract class AbstractGroupRepositoryHibernate<T extends Group> implemen
             transaction.commit();
             entityManager.close();
             return true;
-        } catch (HibernateException he){
+        } catch (HibernateException he) {
             return false;
         }
     }

@@ -26,7 +26,7 @@ public class AverageSalaryController extends HttpServlet {
 
         if (user instanceof Trainer) {
 //            BigDecimal averageSalary = AverageSalaryCounter.count(user);
-            BigDecimal averageSalary = AverageSalaryCounter.countByHibernate(user) ;
+            BigDecimal averageSalary = AverageSalaryCounter.countByHibernate(user);
             if (averageSalary != null) {
                 session.setAttribute("averageSalary", averageSalary);
             }

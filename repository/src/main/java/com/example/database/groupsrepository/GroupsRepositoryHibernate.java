@@ -1,9 +1,6 @@
 package com.example.database.groupsrepository;
 
-import com.example.database.usersrepository.AbstractRepositoryHibernate;
 import com.example.groups.Group;
-import com.example.users.BasicUser;
-import com.example.users.Trainer;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -21,10 +18,10 @@ public class GroupsRepositoryHibernate extends AbstractGroupRepositoryHibernate<
     public GroupsRepositoryHibernate() {
     }
 
-    public static GroupsRepositoryHibernate getInstance(){
-        if (instance == null){
-            synchronized (GroupsRepositoryHibernate.class){
-                if (instance == null){
+    public static GroupsRepositoryHibernate getInstance() {
+        if (instance == null) {
+            synchronized (GroupsRepositoryHibernate.class) {
+                if (instance == null) {
                     instance = new GroupsRepositoryHibernate();
                 }
             }

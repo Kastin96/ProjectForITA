@@ -1,7 +1,6 @@
 package com.example.controllers.lifecycle;
 
 import com.example.controllerservice.lifecycle.AuthenticationService;
-import com.example.controllerservice.lifecycle.InitAdmin;
 import com.example.controllerservice.salary.AverageSalaryCounter;
 import com.example.users.Administrator;
 import com.example.users.Student;
@@ -11,9 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -56,7 +53,7 @@ public class AuthenticationController extends HttpServlet {
                 session.setAttribute("isTrainer", true);
                 session.setAttribute("salaryList", ((Trainer) user).getSalaryList());
 //                BigDecimal averageSalary = AverageSalaryCounter.count(user);
-                BigDecimal averageSalary = AverageSalaryCounter.countByHibernate(user) ;
+                BigDecimal averageSalary = AverageSalaryCounter.countByHibernate(user);
                 if (averageSalary != null) {
                     session.setAttribute("averageSalary", averageSalary);
                 }

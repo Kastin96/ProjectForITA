@@ -8,7 +8,6 @@ import com.example.groups.Group;
 import com.example.users.Student;
 import com.example.users.Trainer;
 import com.example.users.User;
-import org.hibernate.Hibernate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,7 @@ public class MyGroupService {
         List<String> groupNameList = new ArrayList<>();
         if (user instanceof Student) {
             final Optional<Student> student = StudentRepositoryHibernate.getInstance().find(user.getId());
-            if (student.isPresent()){
+            if (student.isPresent()) {
                 final Set<Group> groups = student.get().getGroups();
                 for (Group group : groups) {
                     groupNameList.add(group.getGroupName());
@@ -57,9 +56,9 @@ public class MyGroupService {
             }
         } else if (user instanceof Trainer) {
             final Optional<Trainer> trainer = TrainerRepositoryHibernate.getInstance().find(user.getId());
-            if (trainer.isPresent()){
+            if (trainer.isPresent()) {
                 final Group group = trainer.get().getGroup();
-                if (group != null){
+                if (group != null) {
                     groupNameList.add(group.getGroupName());
                 }
             }

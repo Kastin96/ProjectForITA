@@ -14,9 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -72,7 +70,7 @@ public class Student extends User {
         return this;
     }
 
-    public Student withGroups(Set<Group> groups){
+    public Student withGroups(Set<Group> groups) {
         setGroups(groups);
         return this;
     }

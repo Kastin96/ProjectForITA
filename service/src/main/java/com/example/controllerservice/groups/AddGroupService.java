@@ -3,13 +3,10 @@ package com.example.controllerservice.groups;
 import com.example.controllerservice.basicuser.BasicUserService;
 import com.example.database.groupsrepository.GroupsRepositoryHibernate;
 import com.example.database.groupsrepository.GroupsRepositoryPostgres;
-import com.example.database.usersrepository.BasicUserRepositoryHibernate;
 import com.example.database.usersrepository.StudentRepositoryHibernate;
-import com.example.database.usersrepository.TrainerRepositoryHibernate;
 import com.example.database.usersrepository.TrainerRepositoryPostgres;
 import com.example.database.usersrepository.UserRepositoryPostgres;
 import com.example.groups.Group;
-import com.example.users.BasicUser;
 import com.example.users.Student;
 import com.example.users.Trainer;
 import com.example.users.User;
@@ -77,7 +74,7 @@ public class AddGroupService {
 
                             final Optional<Group> byGroupName = GroupsRepositoryHibernate.getInstance().findByGroupName(groupName);
 
-                            if (byGroupName.isPresent()){
+                            if (byGroupName.isPresent()) {
                                 for (Student student : userList) {
                                     final Set<Group> groups = student.getGroups();
                                     groups.add(byGroupName.get());
@@ -151,10 +148,10 @@ public class AddGroupService {
         try {
             try {
                 final Optional<Group> byGroupName = GroupsRepositoryHibernate.getInstance().findByGroupName(groupName);
-                if (byGroupName.isPresent()){
+                if (byGroupName.isPresent()) {
                     return true;
                 }
-            } catch (NoResultException e){
+            } catch (NoResultException e) {
                 return false;
             }
         } catch (NullPointerException exception) {

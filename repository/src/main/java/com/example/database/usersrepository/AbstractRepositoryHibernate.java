@@ -2,9 +2,7 @@ package com.example.database.usersrepository;
 
 import com.example.database.EntityManagerHelper;
 import com.example.database.Repository;
-import com.example.users.Administrator;
 import com.example.users.User;
-import org.hibernate.HibernateException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;

@@ -2,7 +2,6 @@ package com.example.controllers.groups;
 
 import com.example.controllerservice.groups.AddGroupService;
 import com.example.users.Student;
-import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

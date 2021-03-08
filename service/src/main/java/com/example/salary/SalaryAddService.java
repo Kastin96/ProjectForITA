@@ -16,7 +16,7 @@ public class SalaryAddService {
 
     public static boolean addByHibernate(User user, Integer salary) {
         final Optional<Trainer> foundedTrainer = TrainerRepositoryHibernate.getInstance().find(user.getId());
-        if(foundedTrainer.isPresent()){
+        if (foundedTrainer.isPresent()) {
             final Trainer trainer = foundedTrainer.get();
             final List<Integer> salaryList = trainer.getSalaryList();
             salaryList.add(salary);

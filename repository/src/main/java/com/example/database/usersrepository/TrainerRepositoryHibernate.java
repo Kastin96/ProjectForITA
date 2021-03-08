@@ -1,13 +1,8 @@
 package com.example.database.usersrepository;
 
-import com.example.users.Student;
 import com.example.users.Trainer;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.util.Optional;
 
 public class TrainerRepositoryHibernate extends AbstractRepositoryHibernate<Trainer> {
     private static volatile TrainerRepositoryHibernate instance;
