@@ -49,7 +49,7 @@ public class Trainer extends User {
     @Column(name = "salary")
     private List<Integer> salaryList = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id", referencedColumnName = "trainer_id", insertable = false, updatable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Group group;

@@ -20,7 +20,8 @@ public class MyGroupController extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("user");
-        final List<String> groupNameList = MyGroupService.getGroupNameList(user);
+//        final List<String> groupNameList = MyGroupService.getGroupNameList(user);
+        final List<String> groupNameList = MyGroupService.getGroupNameListByHibernate(user);
 
         if (groupNameList.isEmpty()) {
             req.setAttribute("notFoundGroup", "You are not a member of any group!");
