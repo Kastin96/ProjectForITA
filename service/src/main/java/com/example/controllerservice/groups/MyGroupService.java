@@ -2,22 +2,24 @@ package com.example.controllerservice.groups;
 
 import com.example.database.groupsrepository.GroupsRepositoryHibernate;
 import com.example.database.groupsrepository.GroupsRepositoryPostgres;
-import com.example.database.usersrepository.StudentRepositoryHibernate;
-import com.example.database.usersrepository.TrainerRepositoryHibernate;
 import com.example.groups.Group;
 import com.example.users.Student;
 import com.example.users.Trainer;
 import com.example.users.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class MyGroupService {
+    @Autowired
+    private GroupsRepositoryHibernate groupRepository;
 
-    public static List<String> getGroupNameList(User user) {
+    public List<String> getGroupNameList(User user) {
         List<String> groupNameList;
         if (user instanceof Student) {
             final List<Group> groupListByUserId = GroupsRepositoryPostgres.getInstance()
@@ -44,26 +46,24 @@ public class MyGroupService {
         return groupNameList;
     }
 
-    public static List<String> getGroupNameListByHibernate(User user) {
+    public List<String> getGroupNameListByHibernate(User user) {
         List<String> groupNameList = new ArrayList<>();
         if (user instanceof Student) {
-            final Optional<Student> student = StudentRepositoryHibernate.getInstance().find(user.getId());
-            if (student.isPresent()) {
-                final Set<Group> groups = student.get().getGroups();
-                for (Group group : groups) {
+            final Optional<List<Group>> allGroupByUser = groupRepository.findAllGroupByUser((Student) user);
+            if (allGroupByUser.isPresent()) {
+                for (Group group : allGroupByUser.get()) {
                     groupNameList.add(group.getGroupName());
                 }
             }
         } else if (user instanceof Trainer) {
-            final Optional<Trainer> trainer = TrainerRepositoryHibernate.getInstance().find(user.getId());
-            if (trainer.isPresent()) {
-                final Group group = trainer.get().getGroup();
-                if (group != null) {
+            final Optional<List<Group>> allGroupByUser = groupRepository.findAllGroupByUser((Trainer) user);
+            if (allGroupByUser.isPresent()) {
+                for (Group group : allGroupByUser.get()) {
                     groupNameList.add(group.getGroupName());
                 }
             }
         } else {
-            groupNameList = GroupsRepositoryHibernate.getInstance().findAllGroupName();
+            groupNameList = groupRepository.findAllGroupName();
         }
         return groupNameList;
     }

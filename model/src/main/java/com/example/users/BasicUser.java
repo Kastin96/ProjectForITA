@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -14,6 +15,7 @@ import javax.persistence.Table;
 @ToString(callSuper = true)
 @Entity
 @Table(name = "users")
+@Component
 public class BasicUser extends User {
 
     public BasicUser withId(Integer id) {

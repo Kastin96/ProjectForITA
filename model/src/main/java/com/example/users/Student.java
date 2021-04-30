@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,6 +27,7 @@ import java.util.Set;
 @ToString(callSuper = true)
 @Entity
 @Table(name = "users")
+@Component
 public class Student extends User {
 
     @Column(name = "full_name")

@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -15,14 +17,19 @@
         <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}">Home</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link"  href="${pageContext.request.contextPath}/signin">Sign in</a>
+        <a class="nav-link" href="${pageContext.request.contextPath}/mygroups">My Groups</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="${pageContext.request.contextPath}/logout">Logout</a>
+    </li>
 </ul>
-<hr>
-<form>
-    <div class="mb-3">
-        How did you get here?
-    </div>
-</form>
-<hr>
+<div class="mb-3">
+    <ul class="list-group">
+      <li class="list-group-item active" aria-current="true">Student information:</li>
+      <li class="list-group-item">Login: <c:out value="${user.login}"/></li>
+      <li class="list-group-item">Name: <c:out value="${user.fullName}"/></li>
+      <li class="list-group-item">Age: <c:out value="${user.age}"/></li>
+    </ul>
+</div>
 </body>
 </html>

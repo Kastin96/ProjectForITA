@@ -2,45 +2,52 @@ package com.example.controllers.groups;
 
 import com.example.controllerservice.groups.AddGroupService;
 import com.example.users.Student;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.Set;
 
+@Controller
+@RequestMapping("/addgroup")
+public class AddGroupController {
+    @Autowired
+    private AddGroupService addGroupService;
 
-@WebServlet(urlPatterns = "/addgrouppage")
-public class AddGroupController extends HttpServlet {
-    Logger log = LoggerFactory.getLogger(AddGroupController.class);
+    @GetMapping
+    public ModelAndView showAddGroupPage() {
+        final ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("addgrouppage");
+        return modelAndView;
+    }
 
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String groupName = req.getParameter("groupName");
-        String groupTrainer = req.getParameter("groupTrainer");
-        String groupUser = req.getParameter("groupUser");
+    @PostMapping
+    public ModelAndView addGroup(@RequestParam(name = "groupName") String groupName,
+                                 @RequestParam(name = "groupTrainer") String groupTrainer,
+                                 @RequestParam(name = "groupUser") String groupUser) {
+        final ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("addgrouppage");
 
-//        if (!AddGroupService.checkGroupName(groupName)) {
-        if (!AddGroupService.checkGroupNameByHibernate(groupName)) {
+        if (!addGroupService.checkGroupNameByHibernate(groupName)) {
             String splitter = " ";
-//            Set<Student> userList = AddGroupService.getListOfUniqueUsersFromString(groupUser, splitter);
-            Set<Student> userList = AddGroupService.getListOfUniqueUsersFromStringByHibernate(groupUser, splitter);
+            Set<Student> userList = addGroupService.getListOfUniqueUsersFromStringByHibernate(groupUser, splitter);
 
-//            boolean resultAddGroup = AddGroupService.addNewGroup(req, groupName, groupTrainer, userList);
-            boolean resultAddGroup = AddGroupService.addNewGroupByHibernate(req, groupName, groupTrainer, userList);
+            boolean resultAddGroup = addGroupService.addNewGroupByHibernate(modelAndView, groupName, groupTrainer, userList);
 
             if (resultAddGroup) {
-                req.setAttribute("goodAddGroup", "The group has been successfully created! \n" +
+                modelAndView.addObject("goodAddGroup", "The group has been successfully created! \n" +
                         "Added students: " + userList.size());
+            } else {
+                modelAndView.addObject("badAddGroup", "No available trainer with this name has been found!!");
             }
         } else {
-            req.setAttribute("badAddGroup", "The group name is already taken!");
+            modelAndView.addObject("badAddGroup", "The group name is already taken!");
         }
 
-        getServletContext().getRequestDispatcher("/addgroup").forward(req, resp);
+        return modelAndView;
     }
 }

@@ -2,49 +2,46 @@ package com.example.controllers.groups;
 
 import com.example.controllerservice.groups.ShowGroupService;
 import com.example.groups.Group;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.NoResultException;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+@Controller
+@RequestMapping(path = "/showgroupspage")
+public class ShowGroupController {
+    @Autowired
+    private ShowGroupService showGroupService;
 
-@WebServlet(urlPatterns = "/showgroupspage")
-public class ShowGroupController extends HttpServlet {
+    @PostMapping
+    protected ModelAndView showGroupByName(@RequestParam(name = "showGroupName") String groupName) {
+        final ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("mygrouppage");
 
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        String showGroupName = req.getParameter("showGroupName");
         List<String> userNameList;
-        try {
-//            userNameList = ShowGroupService.getUserNameList(showGroupName);
-            userNameList = ShowGroupService.getUserNameListFromHibernate(showGroupName);
 
-//            final Optional<Group> groupByName = ShowGroupService.getGroupByName(showGroupName);
-            final Optional<Group> groupByName = ShowGroupService.getGroupByNameFromHibernate(showGroupName);
+        try {
+            userNameList = showGroupService.getUserNameListFromHibernate(groupName);
+            final Optional<Group> groupByName = showGroupService.getGroupByNameFromHibernate(groupName);
 
             if (groupByName.isPresent()) {
                 final Group group = groupByName.get();
                 if (!userNameList.isEmpty()) {
-                    req.setAttribute("showGroupUserListName", userNameList);
+                    modelAndView.addObject("showGroupUserListName", userNameList);
                 }
-                req.setAttribute("showGroupName",
-                        group.getGroupName());
-                req.setAttribute("showGroupTrainerName",
-                        group.getTrainer().getLogin());
+                modelAndView.addObject("showGroupName", group.getGroupName());
+                modelAndView.addObject("showGroupTrainerName", group.getTrainer().getLogin());
             }
 
         } catch (NullPointerException | NoResultException exception) {
-            req.setAttribute("notFoundGroupToShow", showGroupName + " - Not found!");
+            modelAndView.addObject("notFoundGroupToShow", groupName + " - Not found!");
         }
-
-        getServletContext().getRequestDispatcher("/mygroups").forward(req, resp);
+        return modelAndView;
     }
-
-
 }

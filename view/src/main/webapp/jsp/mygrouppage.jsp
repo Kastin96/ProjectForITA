@@ -1,4 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ru">
     <head>
@@ -61,21 +62,18 @@
             </form>
         </div>
         <div class="mb-3">
-            <form action="mygroupspage" method="post">
-                <ul class="list-group">
-                    <li class="list-group-item active" aria-current="true">My Groups: </li>
-                    <li class="list-group-item"><input type="submit" value="show"></li>
-                    <c:forEach var="valueNameGroup" items="${myGroupNamesListResult}">
-                        <li class="list-group-item">Group: <c:out value="${valueNameGroup}"/></li>
-                    </c:forEach>
-                </ul>
-                <% if (request.getAttribute("notFoundGroup") != null) { %>
-                    <hr>
-                    <div class="alert alert-danger" role="alert">
-                        <%= request.getAttribute("notFoundGroup")%>
-                    </div>
-                <% } %>
-            </form>
+            <ul class="list-group">
+                <li class="list-group-item active" aria-current="true">My Groups: </li>
+                <c:forEach var="valueNameGroup" items="${myGroupNamesListResult}">
+                    <li class="list-group-item">Group: <c:out value="${valueNameGroup}"/></li>
+                </c:forEach>
+            </ul>
+            <c:if test="${not empty notFoundGroup}">
+                <hr>
+                <div class="alert alert-success" role="alert">
+                    <c:out value="${notFoundGroup}"/>
+                </div>
+            </c:if>
         </div>
         <hr>
     </body>
