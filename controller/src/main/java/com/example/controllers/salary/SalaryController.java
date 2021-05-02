@@ -5,6 +5,7 @@ import com.example.controllerservice.salary.SalaryAddService;
 import com.example.controllerservice.salary.SalaryShowService;
 import com.example.users.Trainer;
 import com.example.users.User;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,17 +20,16 @@ import java.util.List;
 
 @Controller
 @RequestMapping(path = "/salarylist")
+@AllArgsConstructor
 public class SalaryController {
-    @Autowired
+
     private AverageSalaryCounter averageSalaryCounter;
-    @Autowired
     private SalaryAddService salaryAddService;
-    @Autowired
     private SalaryShowService salaryShowService;
 
     @GetMapping
     public ModelAndView showAverageSalary(HttpSession session) {
-        final User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         final ModelAndView modelAndView = new ModelAndView();
 
         if (user instanceof Trainer) {
@@ -49,7 +49,7 @@ public class SalaryController {
 
     @PostMapping
     public ModelAndView addSalaryToTrainer(@RequestParam(name = "addSalary") Integer addSalary, HttpSession session) {
-        final User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         final ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("salarylistpage");
 

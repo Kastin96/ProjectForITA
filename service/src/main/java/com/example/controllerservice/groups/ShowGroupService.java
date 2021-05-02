@@ -1,10 +1,10 @@
 package com.example.controllerservice.groups;
 
-import com.example.database.groupsrepository.GroupsRepositoryHibernate;
-import com.example.database.groupsrepository.GroupsRepositoryPostgres;
+import com.example.database.postgres.GroupsRepositoryPostgres;
 import com.example.groups.Group;
+import com.example.repositoryaccess.GroupService;
 import com.example.users.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @Service
 public class ShowGroupService {
-    @Autowired
-    private GroupsRepositoryHibernate groupRepository;
+    private GroupService groupService;
 
     public List<String> getUserNameList(String groupName) {
         List<String> userNameList = new ArrayList<>();
@@ -30,7 +30,7 @@ public class ShowGroupService {
     public List<String> getUserNameListFromHibernate(String groupName) {
         List<String> userNameList = new ArrayList<>();
 
-        final Optional<Group> group = groupRepository.findByGroupName(groupName);
+        final Optional<Group> group = groupService.findByGroupName(groupName);
         if (group.isPresent()) {
             userNameList = group.get().getStudents()
                     .stream()
@@ -49,6 +49,6 @@ public class ShowGroupService {
     }
 
     public Optional<Group> getGroupByNameFromHibernate(String groupName) {
-        return groupRepository.findByGroupName(groupName);
+        return groupService.findByGroupName(groupName);
     }
 }

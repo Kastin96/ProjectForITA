@@ -1,4 +1,4 @@
-package com.example.database.usersrepository;
+package com.example.database.postgres;
 
 import com.example.database.DataSource;
 import com.example.users.Trainer;

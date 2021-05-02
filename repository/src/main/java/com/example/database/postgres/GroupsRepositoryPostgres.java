@@ -1,9 +1,7 @@
-package com.example.database.groupsrepository;
+package com.example.database.postgres;
 
 import com.example.database.DataSource;
-import com.example.database.Repository;
-import com.example.database.usersrepository.StudentRepositoryPostgres;
-import com.example.database.usersrepository.TrainerRepositoryPostgres;
+import com.example.dao.Repository;
 import com.example.groups.Group;
 import com.example.users.Student;
 import com.example.users.Trainer;

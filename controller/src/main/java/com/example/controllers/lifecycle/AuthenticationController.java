@@ -6,6 +6,7 @@ import com.example.users.Administrator;
 import com.example.users.Student;
 import com.example.users.Trainer;
 import com.example.users.User;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +21,10 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(path = "/authentication")
+@AllArgsConstructor
 public class AuthenticationController {
 
-    @Autowired
     private AuthenticationService authService;
-    @Autowired
     private AverageSalaryCounter averageSalaryCounter;
 
     @GetMapping()
@@ -56,11 +56,6 @@ public class AuthenticationController {
 
                 session.setAttribute("user", trainer);
                 session.setAttribute("isTrainer", true);
-
-                BigDecimal averageSalary = averageSalaryCounter.countByHibernate(trainer);
-                if (averageSalary != null) {
-                    modelAndView.addObject("averageSalary", averageSalary);
-                }
 
                 modelAndView.setViewName("trainerpage");
             } else if (user instanceof Student) {

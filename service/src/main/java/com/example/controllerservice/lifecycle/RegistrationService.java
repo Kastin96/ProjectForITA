@@ -1,15 +1,15 @@
 package com.example.controllerservice.lifecycle;
 
-import com.example.database.usersrepository.StudentRepositoryHibernate;
-import com.example.database.usersrepository.StudentRepositoryPostgres;
+import com.example.repositoryaccess.StudentService;
+import com.example.database.postgres.StudentRepositoryPostgres;
 import com.example.users.Student;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 public class RegistrationService {
-    @Autowired
-    private StudentRepositoryHibernate studentRepository;
+    public StudentService studentService;
 
     public boolean registrationStudentByPostgres(String login, String password, String fullName, Integer age) {
         return StudentRepositoryPostgres.getInstance().save(new Student()
@@ -20,7 +20,7 @@ public class RegistrationService {
     }
 
     public boolean registrationStudentByHibernate(String login, String password, String fullName, Integer age) {
-        return studentRepository.save(new Student()
+        return studentService.save(new Student()
                 .withRoleNumber(3)
                 .withLogin(login)
                 .withPassword(password)

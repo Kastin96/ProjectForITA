@@ -1,12 +1,12 @@
 package com.example.controllerservice.groups;
 
-import com.example.database.groupsrepository.GroupsRepositoryHibernate;
-import com.example.database.groupsrepository.GroupsRepositoryPostgres;
+import com.example.database.postgres.GroupsRepositoryPostgres;
 import com.example.groups.Group;
+import com.example.repositoryaccess.GroupService;
 import com.example.users.Student;
 import com.example.users.Trainer;
 import com.example.users.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,10 +14,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @Service
 public class MyGroupService {
-    @Autowired
-    private GroupsRepositoryHibernate groupRepository;
+    private GroupService groupService;
 
     public List<String> getGroupNameList(User user) {
         List<String> groupNameList;
@@ -49,21 +49,21 @@ public class MyGroupService {
     public List<String> getGroupNameListByHibernate(User user) {
         List<String> groupNameList = new ArrayList<>();
         if (user instanceof Student) {
-            final Optional<List<Group>> allGroupByUser = groupRepository.findAllGroupByUser((Student) user);
+            final Optional<List<Group>> allGroupByUser = groupService.findAllGroupByUser((Student) user);
             if (allGroupByUser.isPresent()) {
                 for (Group group : allGroupByUser.get()) {
                     groupNameList.add(group.getGroupName());
                 }
             }
         } else if (user instanceof Trainer) {
-            final Optional<List<Group>> allGroupByUser = groupRepository.findAllGroupByUser((Trainer) user);
+            final Optional<List<Group>> allGroupByUser = groupService.findAllGroupByUser((Trainer) user);
             if (allGroupByUser.isPresent()) {
                 for (Group group : allGroupByUser.get()) {
                     groupNameList.add(group.getGroupName());
                 }
             }
         } else {
-            groupNameList = groupRepository.findAllGroupName();
+            groupNameList = groupService.findAllGroupName();
         }
         return groupNameList;
     }

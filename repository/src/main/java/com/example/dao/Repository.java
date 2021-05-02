@@ -1,4 +1,4 @@
-package com.example.database;
+package com.example.dao;
 
 import java.util.List;
 import java.util.Optional;

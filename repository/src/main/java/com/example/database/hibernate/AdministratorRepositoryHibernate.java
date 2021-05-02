@@ -1,14 +1,13 @@
-package com.example.database.usersrepository;
+package com.example.database.hibernate;
 
+import com.example.dao.AdministratorRepository;
 import com.example.users.Administrator;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.TypedQuery;
 
-@Slf4j
 @Component
-public class AdministratorRepositoryHibernate extends AbstractRepositoryHibernate<Administrator> {
+public class AdministratorRepositoryHibernate extends AbstractRepositoryHibernate<Administrator> implements AdministratorRepository {
 
     @Override
     protected TypedQuery<Administrator> getQuery() {

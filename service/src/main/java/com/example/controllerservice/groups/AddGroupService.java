@@ -1,18 +1,17 @@
 package com.example.controllerservice.groups;
 
-import com.example.controllerservice.basicuser.BasicUserService;
-import com.example.database.groupsrepository.GroupsRepositoryHibernate;
-import com.example.database.groupsrepository.GroupsRepositoryPostgres;
-import com.example.database.usersrepository.StudentRepositoryHibernate;
-import com.example.database.usersrepository.TrainerRepositoryPostgres;
-import com.example.database.usersrepository.UserRepositoryPostgres;
+import com.example.controllerservice.basicuser.DispenserUserWithRole;
+import com.example.repositoryaccess.GroupService;
+import com.example.repositoryaccess.StudentService;
+import com.example.database.postgres.GroupsRepositoryPostgres;
+import com.example.database.postgres.TrainerRepositoryPostgres;
+import com.example.database.postgres.UserRepositoryPostgres;
 import com.example.groups.Group;
 import com.example.users.Student;
 import com.example.users.Trainer;
 import com.example.users.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,16 +23,13 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
+@Slf4j
+@AllArgsConstructor
 @Service
 public class AddGroupService {
-    private final Logger log = LoggerFactory.getLogger(AddGroupService.class);
-
-    @Autowired
-    private GroupsRepositoryHibernate groupsRepository;
-    @Autowired
-    private StudentRepositoryHibernate studentRepository;
-    @Autowired
-    private BasicUserService basicUserService;
+    private GroupService groupService;
+    private StudentService studentService;
+    private DispenserUserWithRole dispenserUserWithRole;
 
 
     public boolean addNewGroup(HttpServletRequest req, String groupName, String groupTrainer, Set<Student> userList) {
@@ -72,7 +68,8 @@ public class AddGroupService {
 
     public boolean addNewGroupByHibernate(ModelAndView modelAndView, String groupName, String groupTrainer, Set<Student> userList) {
         try {
-            final Optional<? extends User> trainer = basicUserService.findUserWithRoleByLogin(groupTrainer);
+            final Optional<? extends User> trainer = dispenserUserWithRole.getUserByLogin(groupTrainer);
+            log.info("Trainer info: {}", trainer.get());
             if (trainer.isPresent()) {
                 if (trainer.get() instanceof Trainer) {
                     if (((Trainer) trainer.get()).getGroup() != null) {
@@ -82,16 +79,16 @@ public class AddGroupService {
                             Group group = new Group()
                                     .withGroupName(groupName)
                                     .withTrainer((Trainer) trainer.get());
-                            groupsRepository.save(group);
+                            groupService.save(group);
 
-                            final Optional<Group> byGroupName = groupsRepository.findByGroupName(groupName);
+                            final Optional<Group> byGroupName = groupService.findByGroupName(groupName);
 
                             if (byGroupName.isPresent()) {
                                 for (Student student : userList) {
                                     final Set<Group> groups = student.getGroups();
                                     groups.add(byGroupName.get());
 
-                                    studentRepository.save(student);
+                                    studentService.save(student);
                                 }
                             }
                             log.info("Group added = {}", group.getGroupName());
@@ -107,7 +104,7 @@ public class AddGroupService {
                 }
             }
         } catch (NoSuchElementException | NoResultException exception) {
-            modelAndView.addObject("badAddGroup", "The trainer is incorrect!");
+            modelAndView.addObject("badAddGroup", "The trainer is incorrect! - NoResultException!!");
         }
         return false;
     }
@@ -129,7 +126,7 @@ public class AddGroupService {
         Set<Student> userSet = new HashSet<>();
         for (String splittedUser : groupUser.split(splitter)) {
             try {
-                final Optional<? extends User> userByLogin = basicUserService.findUserWithRoleByLogin(splittedUser);
+                final Optional<? extends User> userByLogin = dispenserUserWithRole.getUserByLogin(splittedUser);
                 if (userByLogin.isPresent()) {
                     if (userByLogin.get() instanceof Student) {
                         userSet.add((Student) userByLogin.get());
@@ -159,7 +156,7 @@ public class AddGroupService {
     public boolean checkGroupNameByHibernate(String groupName) {
         try {
             try {
-                final Optional<Group> byGroupName = groupsRepository.findByGroupName(groupName);
+                final Optional<Group> byGroupName = groupService.findByGroupName(groupName);
                 if (byGroupName.isPresent()) {
                     return true;
                 }
