@@ -15,7 +15,7 @@ import java.util.Optional;
 public class SalaryShowService {
     private TrainerService trainerService;
 
-    public List<Integer> getSalaryListByHibernate(User user) {
+    public List<Integer> getSalaryList(User user) {
         List<Integer> result = new ArrayList<>();
         final Optional<Trainer> trainer = trainerService.find(user.getId());
         if (trainer.isPresent()){

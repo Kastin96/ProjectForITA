@@ -57,7 +57,7 @@ public class SalaryController {
 
             if (isAdd) {
                 modelAndView.addObject("salaryAdded", "Salary added to your list!");
-                modelAndView.addObject("salaryList", salaryShowService.getSalaryListByHibernate(user));
+                modelAndView.addObject("salaryList", salaryShowService.getSalaryList(user));
 
                 BigDecimal averageSalary = averageSalaryCounter.count(user);
                 if (averageSalary != null) {
