@@ -29,16 +29,16 @@ public class AddGroupService {
     public boolean addNewGroup(ModelAndView modelAndView, String groupName, String groupTrainer, Set<Student> userList) {
         try {
             final Optional<? extends User> trainer = dispenserUserWithRole.getUserByLogin(groupTrainer);
-            log.info("Trainer info: {}", trainer.get());
             if (trainer.isPresent()) {
                 if (trainer.get() instanceof Trainer) {
                     if (((Trainer) trainer.get()).getGroup() != null) {
                         modelAndView.addObject("badAddGroup", "The Trainer is busy!");
                     } else {
                         if (!userList.isEmpty()) {
-                            Group group = new Group()
-                                    .withGroupName(groupName)
-                                    .withTrainer((Trainer) trainer.get());
+                            Group group = Group.builder()
+                                    .groupName(groupName)
+                                    .trainer((Trainer) trainer.get())
+                                    .build();
                             groupService.save(group);
 
                             final Optional<Group> byGroupName = groupService.findByGroupName(groupName);

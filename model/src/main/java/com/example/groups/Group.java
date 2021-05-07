@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.stereotype.Component;
@@ -30,6 +31,7 @@ import java.util.Set;
 @Entity
 @Table(name = "groups")
 @Component
+@SuperBuilder
 public class Group extends AbstractGroup implements Serializable {
     @Column(name = "group_name")
     private String groupName;
@@ -41,24 +43,4 @@ public class Group extends AbstractGroup implements Serializable {
     @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER)
     @Cascade({CascadeType.SAVE_UPDATE})
     private Set<Student> students = new LinkedHashSet<>();
-
-    public Group withId(Integer id) {
-        setId(id);
-        return this;
-    }
-
-    public Group withGroupName(String groupName) {
-        setGroupName(groupName);
-        return this;
-    }
-
-    public Group withTrainer(Trainer trainer) {
-        setTrainer(trainer);
-        return this;
-    }
-
-    public Group withStudents(Set<Student> students) {
-        setStudents(students);
-        return this;
-    }
 }

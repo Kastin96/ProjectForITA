@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.CascadeType;
@@ -28,6 +30,7 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @Component
+@SuperBuilder
 public class Student extends User {
 
     @Column(name = "full_name")
@@ -41,45 +44,5 @@ public class Student extends User {
             inverseJoinColumns = @JoinColumn(name = "group_id")
     )
     private Set<Group> groups = new LinkedHashSet<>();
-
-    public Student withId(Integer id) {
-        setId(id);
-        return this;
-    }
-
-    public Student withLogin(String login) {
-        setLogin(login);
-        return this;
-    }
-
-    public Student withPassword(String password) {
-        setPassword(password);
-        return this;
-    }
-
-    public Student withRoleNumber(Integer role) {
-        setRoleNumber(role);
-        return this;
-    }
-
-    public Student withRole(String role) {
-        setRole(role);
-        return this;
-    }
-
-    public Student withFullName(String fullName) {
-        setFullName(fullName);
-        return this;
-    }
-
-    public Student withGroups(Set<Group> groups) {
-        setGroups(groups);
-        return this;
-    }
-
-    public Student withAge(Integer age) {
-        setAge(age);
-        return this;
-    }
 
 }

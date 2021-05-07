@@ -66,11 +66,6 @@ public class GroupsRepositoryHibernate implements GroupRepository {
         try {
             final EntityManager entityManager = helper.getEntityManager();
 
-            final Set<Student> students = entity.getStudents();
-            for (Student student : students) {
-                entityManager.refresh(student);
-            }
-
             if (entity.getId() == null) {
                 entityManager.persist(entity);
             } else {

@@ -35,11 +35,12 @@ public class AdministratorRepositoryPostgres extends AbstractRepositoryPostgres<
     protected List<Administrator> getPersons(ResultSet rs) throws SQLException {
         List<Administrator> result = new ArrayList<>();
         while (rs.next()) {
-            result.add(new Administrator()
-                    .withId(rs.getInt("id"))
-                    .withLogin(rs.getString("login"))
-                    .withPassword(rs.getString("password"))
-                    .withRole(getRoleByID(rs.getInt("id"))));
+            result.add(Administrator.builder()
+                    .id(rs.getInt("id"))
+                    .login(rs.getString("login"))
+                    .password(rs.getString("password"))
+                    .role(getRoleByID(rs.getInt("id")))
+                    .build());
         }
         return result;
     }
