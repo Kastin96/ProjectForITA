@@ -6,12 +6,14 @@ import com.example.aspects.JpaTransaction;
 import com.example.users.Trainer;
 import com.example.users.User;
 import lombok.extern.slf4j.Slf4j;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +34,6 @@ public abstract class AbstractRepositoryHibernate<T extends User> implements Rep
     @Override
     @JpaTransaction
     public Optional<T> find(Integer id) {
-
         Optional<T> result;
 
         result = Optional.ofNullable(getQuery().setParameter("id", id).getSingleResult());
@@ -53,17 +54,18 @@ public abstract class AbstractRepositoryHibernate<T extends User> implements Rep
     @Override
     @JpaTransaction
     public boolean save(T entity) {
+        try {
+            EntityManager entityManager = helper.getEntityManager();
 
-        EntityManager entityManager = helper.getEntityManager();
-
-        if (entity.getId() == null) {
-            entityManager.persist(entity);
-        } else {
-            final T merge = entityManager.merge(entity);
+            if (entity.getId() == null) {
+                entityManager.persist(entity);
+            } else {
+                entityManager.merge(entity);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-
-        return true;
-
     }
 
     @Override

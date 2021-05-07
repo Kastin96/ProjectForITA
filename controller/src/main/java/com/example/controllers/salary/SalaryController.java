@@ -34,7 +34,7 @@ public class SalaryController {
         if (user instanceof Trainer) {
             final List<Integer> salaryList = ((Trainer) user).getSalaryList();
             if (!salaryList.isEmpty()) {
-                modelAndView.addObject("salaryList", salaryList);
+                modelAndView.addObject("salaryList", salaryShowService.getSalaryList(user));
             }
 
             BigDecimal averageSalary = averageSalaryCounter.count(user);
