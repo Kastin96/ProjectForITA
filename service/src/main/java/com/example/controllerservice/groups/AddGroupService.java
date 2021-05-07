@@ -1,12 +1,9 @@
 package com.example.controllerservice.groups;
 
 import com.example.controllerservice.basicuser.DispenserUserWithRole;
+import com.example.groups.Group;
 import com.example.repositoryaccess.GroupService;
 import com.example.repositoryaccess.StudentService;
-import com.example.database.postgres.GroupsRepositoryPostgres;
-import com.example.database.postgres.TrainerRepositoryPostgres;
-import com.example.database.postgres.UserRepositoryPostgres;
-import com.example.groups.Group;
 import com.example.users.Student;
 import com.example.users.Trainer;
 import com.example.users.User;
@@ -16,9 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.NoResultException;
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
@@ -31,42 +26,7 @@ public class AddGroupService {
     private StudentService studentService;
     private DispenserUserWithRole dispenserUserWithRole;
 
-
-    public boolean addNewGroup(HttpServletRequest req, String groupName, String groupTrainer, Set<Student> userList) {
-
-        try {
-            User trainer = TrainerRepositoryPostgres.getInstance().getPersonByLogin(groupTrainer).get();
-
-            if (trainer instanceof Trainer) {
-                if (!GroupsRepositoryPostgres.getInstance().getGroupListByTrainerId(trainer.getId()).isEmpty()) {
-                    req.setAttribute("badAddGroup", "The Trainer is busy!");
-                } else {
-                    if (!userList.isEmpty()) {
-                        Group group = new Group()
-                                .withGroupName(groupName)
-                                .withTrainer((Trainer) trainer)
-                                .withStudents(userList);
-
-                        GroupsRepositoryPostgres.getInstance().save(group);
-
-                        log.info("Group added = {}", group.getGroupName());
-                        return true;
-                    } else {
-                        req.setAttribute("badAddGroup", "Something went wrong: try again! " +
-                                "No user found!");
-                        log.warn("Error: Group not created = {}", trainer.getLogin());
-                    }
-                }
-            } else {
-                req.setAttribute("badAddGroup", "The trainer is incorrect!");
-            }
-        } catch (NoSuchElementException noSuchElementException) {
-            req.setAttribute("badAddGroup", "The trainer is incorrect!");
-        }
-        return false;
-    }
-
-    public boolean addNewGroupByHibernate(ModelAndView modelAndView, String groupName, String groupTrainer, Set<Student> userList) {
+    public boolean addNewGroup(ModelAndView modelAndView, String groupName, String groupTrainer, Set<Student> userList) {
         try {
             final Optional<? extends User> trainer = dispenserUserWithRole.getUserByLogin(groupTrainer);
             log.info("Trainer info: {}", trainer.get());
@@ -113,19 +73,6 @@ public class AddGroupService {
         Set<Student> userSet = new HashSet<>();
         for (String splittedUser : groupUser.split(splitter)) {
             try {
-                Student user = (Student) UserRepositoryPostgres.getInstance().getUserByLogin(splittedUser.toLowerCase(Locale.ROOT)).get();
-                userSet.add(user);
-            } catch (NoSuchElementException noSuchElementException) {
-                log.warn("Error splitted users for new Group");
-            }
-        }
-        return userSet;
-    }
-
-    public Set<Student> getListOfUniqueUsersFromStringByHibernate(String groupUser, String splitter) {
-        Set<Student> userSet = new HashSet<>();
-        for (String splittedUser : groupUser.split(splitter)) {
-            try {
                 final Optional<? extends User> userByLogin = dispenserUserWithRole.getUserByLogin(splittedUser);
                 if (userByLogin.isPresent()) {
                     if (userByLogin.get() instanceof Student) {
@@ -139,21 +86,8 @@ public class AddGroupService {
         return userSet;
     }
 
+
     public boolean checkGroupName(String groupName) {
-
-        try {
-            final Integer idGroupByName = GroupsRepositoryPostgres.getInstance().getIdGroupByName(groupName);
-            final Optional<Group> group = GroupsRepositoryPostgres.getInstance().find(idGroupByName);
-            if (group.isPresent()) {
-                return true;
-            }
-        } catch (NullPointerException nullPointerException) {
-            log.warn("Error checkGroupName");
-        }
-        return false;
-    }
-
-    public boolean checkGroupNameByHibernate(String groupName) {
         try {
             try {
                 final Optional<Group> byGroupName = groupService.findByGroupName(groupName);

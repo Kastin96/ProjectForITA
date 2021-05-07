@@ -2,7 +2,6 @@ package com.example.controllers.lifecycle;
 
 import com.example.controllerservice.lifecycle.RegistrationService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +30,7 @@ public class RegistrationController {
                                      @RequestParam(name = "name") String name,
                                      @RequestParam(name = "age") Integer age) {
 
-        final boolean isGoodReg = registrationService.registrationStudentByHibernate(login, password, name, age);
+        final boolean isGoodReg = registrationService.registrationStudent(login, password, name, age);
         final ModelAndView modelAndView = new ModelAndView();
 
         if (isGoodReg) {

@@ -3,7 +3,6 @@ package com.example.controllers.groups;
 import com.example.controllerservice.groups.AddGroupService;
 import com.example.users.Student;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,11 +33,11 @@ public class AddGroupController {
         final ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("addgrouppage");
 
-        if (!addGroupService.checkGroupNameByHibernate(groupName)) {
+        if (!addGroupService.checkGroupName(groupName)) {
             String splitter = " ";
-            Set<Student> userList = addGroupService.getListOfUniqueUsersFromStringByHibernate(groupUser, splitter);
+            Set<Student> userList = addGroupService.getListOfUniqueUsersFromString(groupUser, splitter);
 
-            boolean resultAddGroup = addGroupService.addNewGroupByHibernate(modelAndView, groupName, groupTrainer, userList);
+            boolean resultAddGroup = addGroupService.addNewGroup(modelAndView, groupName, groupTrainer, userList);
 
             if (resultAddGroup) {
                 modelAndView.addObject("goodAddGroup", "The group has been successfully created! \n" +

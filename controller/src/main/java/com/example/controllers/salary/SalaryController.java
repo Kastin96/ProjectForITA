@@ -6,7 +6,6 @@ import com.example.controllerservice.salary.SalaryShowService;
 import com.example.users.Trainer;
 import com.example.users.User;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +37,7 @@ public class SalaryController {
                 modelAndView.addObject("salaryList", salaryList);
             }
 
-            BigDecimal averageSalary = averageSalaryCounter.countByHibernate(user);
+            BigDecimal averageSalary = averageSalaryCounter.count(user);
             if (averageSalary != null) {
                 modelAndView.addObject("averageSalary", averageSalary);
             }
@@ -54,13 +53,13 @@ public class SalaryController {
         modelAndView.setViewName("salarylistpage");
 
         if (user instanceof Trainer) {
-            final boolean isAdd = salaryAddService.addByHibernate(user, addSalary);
+            final boolean isAdd = salaryAddService.add(user, addSalary);
 
             if (isAdd) {
                 modelAndView.addObject("salaryAdded", "Salary added to your list!");
                 modelAndView.addObject("salaryList", salaryShowService.getSalaryListByHibernate(user));
 
-                BigDecimal averageSalary = averageSalaryCounter.countByHibernate(user);
+                BigDecimal averageSalary = averageSalaryCounter.count(user);
                 if (averageSalary != null) {
                     modelAndView.addObject("averageSalary", averageSalary);
                 }
