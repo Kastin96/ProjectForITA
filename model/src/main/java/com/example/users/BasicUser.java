@@ -14,29 +14,29 @@ import javax.persistence.Table;
 @ToString(callSuper = true)
 @Entity
 @Table(name = "users")
-public class Administrator extends User {
+public class BasicUser extends User {
 
-    public Administrator withId(Integer id) {
+    public BasicUser withId(Integer id) {
         setId(id);
         return this;
     }
 
-    public Administrator withLogin(String login) {
+    public BasicUser withLogin(String login) {
         setLogin(login);
         return this;
     }
 
-    public Administrator withPassword(String password) {
+    public BasicUser withPassword(String password) {
         setPassword(password);
         return this;
     }
 
-    public Administrator withRole(String role) {
+    public BasicUser withRole(String role) {
         setRole(role);
         return this;
     }
 
-    public Administrator withRoleNumber(Integer role) {
+    public BasicUser withRoleNumber(Integer role) {
         setRoleNumber(role);
         return this;
     }

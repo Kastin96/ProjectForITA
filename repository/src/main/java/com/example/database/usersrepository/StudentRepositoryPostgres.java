@@ -4,8 +4,12 @@ import com.example.users.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class StudentRepositoryPostgres extends AbstractRepositoryPostgres<Student> {
     Logger log = LoggerFactory.getLogger(StudentRepositoryPostgres.class);

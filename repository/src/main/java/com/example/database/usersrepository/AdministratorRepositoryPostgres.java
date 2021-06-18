@@ -4,8 +4,12 @@ import com.example.users.Administrator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class AdministratorRepositoryPostgres extends AbstractRepositoryPostgres<Administrator> {
     Logger log = LoggerFactory.getLogger(AdministratorRepositoryPostgres.class);

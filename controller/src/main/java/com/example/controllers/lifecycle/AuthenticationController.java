@@ -1,17 +1,16 @@
 package com.example.controllers.lifecycle;
 
 import com.example.controllerservice.lifecycle.AuthenticationService;
-import com.example.controllerservice.lifecycle.InitAdmin;
 import com.example.controllerservice.salary.AverageSalaryCounter;
-import com.example.hardcoremetod.HardcoreMethod;
-import com.example.users.*;
+import com.example.users.Administrator;
+import com.example.users.Student;
+import com.example.users.Trainer;
+import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,21 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Optional;
 
-@WebServlet(name = "UserServlet", urlPatterns = "/authentication", initParams = {
-        @WebInitParam(name = "adminLogin", value = "admin"),
-        @WebInitParam(name = "adminPass", value = "admin")})
+@WebServlet(name = "UserServlet", urlPatterns = "/authentication")
 public class AuthenticationController extends HttpServlet {
     Logger log = LoggerFactory.getLogger(AuthenticationController.class);
-
-    @Override
-    public void init(ServletConfig config) {
-        String adminLogin = config.getInitParameter("adminLogin");
-        String adminPass = config.getInitParameter("adminPass");
-
-        InitAdmin.init(adminLogin, adminPass);
-    }
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,7 +32,8 @@ public class AuthenticationController extends HttpServlet {
 
         HttpSession session = req.getSession();
 
-        final Optional<? extends User> userByLogin = AuthenticationService.getUserByLogin(login, password);
+//        final Optional<? extends User> userByLogin = AuthenticationService.getUserByLogin(login, password);
+        final Optional<? extends User> userByLogin = AuthenticationService.getUserByLoginFromHibernate(login, password);
 
         if (userByLogin.isPresent()) {
             final User user = userByLogin.get();
@@ -62,7 +52,8 @@ public class AuthenticationController extends HttpServlet {
             } else if (user instanceof Trainer) {
                 session.setAttribute("isTrainer", true);
                 session.setAttribute("salaryList", ((Trainer) user).getSalaryList());
-                BigDecimal averageSalary = AverageSalaryCounter.count(user);
+//                BigDecimal averageSalary = AverageSalaryCounter.count(user);
+                BigDecimal averageSalary = AverageSalaryCounter.countByHibernate(user);
                 if (averageSalary != null) {
                     session.setAttribute("averageSalary", averageSalary);
                 }

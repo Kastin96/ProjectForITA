@@ -34,8 +34,7 @@ create table groups (
 	foreign key (trainer_id) references users (id)
 );
 
-create table group_users (
-	id serial primary key,
+create table group_users (,
 	user_id integer not null,
 	foreign key (user_id) references users (id),
 	group_id integer not null,

@@ -1,10 +1,8 @@
 package com.example.controllers.salary;
 
 import com.example.controllerservice.salary.AverageSalaryCounter;
-import com.example.salary.AverageSalary;
 import com.example.users.Trainer;
 import com.example.users.User;
-
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -27,7 +25,8 @@ public class AverageSalaryController extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         if (user instanceof Trainer) {
-            BigDecimal averageSalary = AverageSalaryCounter.count(user);
+//            BigDecimal averageSalary = AverageSalaryCounter.count(user);
+            BigDecimal averageSalary = AverageSalaryCounter.countByHibernate(user);
             if (averageSalary != null) {
                 session.setAttribute("averageSalary", averageSalary);
             }

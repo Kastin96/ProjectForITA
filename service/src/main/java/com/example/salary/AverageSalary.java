@@ -5,7 +5,7 @@ import java.util.List;
 
 public class AverageSalary {
 
-    public static BigDecimal getCount(List<Integer> salaryList) {
+    public static BigDecimal count(List<Integer> salaryList) {
         return BigDecimal.valueOf(salaryList.stream()
                 .mapToInt(i -> i)
                 .average()

@@ -1,8 +1,6 @@
 package com.example.controllers.salary;
 
-import com.example.controllers.lifecycle.AuthenticationController;
 import com.example.controllerservice.salary.AverageSalaryCounter;
-import com.example.database.usersrepository.TrainerRepositoryPostgres;
 import com.example.salary.SalaryAddService;
 import com.example.salary.SalaryShowService;
 import com.example.users.Trainer;
@@ -32,11 +30,14 @@ public class SalaryAddController extends HttpServlet {
         User user = (User) session.getAttribute("user");
 
         if (user instanceof Trainer) {
-            final boolean isAdd = SalaryAddService.add(user, addSalary);
+//            final boolean isAdd = SalaryAddService.add(user, addSalary);
+            final boolean isAdd = SalaryAddService.addByHibernate(user, addSalary);
+
             if (isAdd) {
                 session.setAttribute("salaryAdded", "Salary added to your list!");
-                session.setAttribute("salaryList", SalaryShowService.getSalaryList(user));
-                BigDecimal averageSalary = AverageSalaryCounter.count(user);
+                session.setAttribute("salaryList", SalaryShowService.getSalaryListByHibernate(user));
+//                BigDecimal averageSalary = AverageSalaryCounter.count(user);
+                BigDecimal averageSalary = AverageSalaryCounter.countByHibernate(user);
                 if (averageSalary != null) {
                     session.setAttribute("averageSalary", averageSalary);
                 }

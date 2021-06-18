@@ -1,14 +1,19 @@
 package com.example.database.usersrepository;
 
 import com.example.database.DataSource;
-import com.example.groups.Group;
 import com.example.users.Trainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.NoSuchElementException;
 
 public class TrainerRepositoryPostgres extends AbstractRepositoryPostgres<Trainer> {
     Logger log = LoggerFactory.getLogger(TrainerRepositoryPostgres.class);

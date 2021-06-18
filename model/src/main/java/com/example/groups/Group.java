@@ -1,20 +1,44 @@
 package com.example.groups;
 
+import com.example.users.Student;
 import com.example.users.Trainer;
-import com.example.users.User;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
-import java.util.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-@ToString(callSuper = true)
-public class Group extends AbstractGroup {
+@EqualsAndHashCode(callSuper = true, exclude = {"students", "trainer"})
+@ToString(callSuper = true, exclude = {"students", "trainer"})
+@Entity
+@Table(name = "groups")
+public class Group extends AbstractGroup implements Serializable {
+    @Column(name = "group_name")
     private String groupName;
+
+    @ManyToOne()
+    @JoinColumn(name = "trainer_id")
     private Trainer trainer;
-    private Set<User> userList = new LinkedHashSet<>();
+
+    @ManyToMany(mappedBy = "groups", fetch = FetchType.EAGER)
+    @Cascade({CascadeType.SAVE_UPDATE})
+    private Set<Student> students = new LinkedHashSet<>();
 
     public Group withId(Integer id) {
         setId(id);
@@ -31,8 +55,8 @@ public class Group extends AbstractGroup {
         return this;
     }
 
-    public Group withUserList(Set<User> userList) {
-        setUserList(userList);
+    public Group withStudents(Set<Student> students) {
+        setStudents(students);
         return this;
     }
 }

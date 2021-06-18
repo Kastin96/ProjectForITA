@@ -6,8 +6,13 @@ import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 public abstract class AbstractRepositoryPostgres<T extends User> implements Repository<T> {
     Logger log = LoggerFactory.getLogger(AbstractRepositoryPostgres.class);
@@ -71,15 +76,13 @@ public abstract class AbstractRepositoryPostgres<T extends User> implements Repo
     }
 
     @Override
-    public boolean remove(Integer id) {
+    public void remove(Integer id) {
         try (Connection con = DataSource.getInstance().getConnection();
              PreparedStatement ps = con.prepareStatement(REMOVE_FROM_USERS_BY_ID)) {
             ps.setInt(1, id);
             ps.executeUpdate();
-            return true;
         } catch (SQLException sqlException) {
             log.error("Error removing from database");
-            return false;
         }
     }
 
