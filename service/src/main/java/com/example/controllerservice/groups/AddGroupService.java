@@ -12,6 +12,9 @@ import com.example.users.Trainer;
 import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,10 +24,19 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
+@Service
 public class AddGroupService {
-    private final static Logger log = LoggerFactory.getLogger(AddGroupService.class);
+    private final Logger log = LoggerFactory.getLogger(AddGroupService.class);
 
-    public static boolean addNewGroup(HttpServletRequest req, String groupName, String groupTrainer, Set<Student> userList) {
+    @Autowired
+    private GroupsRepositoryHibernate groupsRepository;
+    @Autowired
+    private StudentRepositoryHibernate studentRepository;
+    @Autowired
+    private BasicUserService basicUserService;
+
+
+    public boolean addNewGroup(HttpServletRequest req, String groupName, String groupTrainer, Set<Student> userList) {
 
         try {
             User trainer = TrainerRepositoryPostgres.getInstance().getPersonByLogin(groupTrainer).get();
@@ -58,49 +70,49 @@ public class AddGroupService {
         return false;
     }
 
-    public static boolean addNewGroupByHibernate(HttpServletRequest req, String groupName, String groupTrainer, Set<Student> userList) {
+    public boolean addNewGroupByHibernate(ModelAndView modelAndView, String groupName, String groupTrainer, Set<Student> userList) {
         try {
-            final Optional<? extends User> trainer = BasicUserService.findUserWithRoleByLogin(groupTrainer);
+            final Optional<? extends User> trainer = basicUserService.findUserWithRoleByLogin(groupTrainer);
             if (trainer.isPresent()) {
                 if (trainer.get() instanceof Trainer) {
                     if (((Trainer) trainer.get()).getGroup() != null) {
-                        req.setAttribute("badAddGroup", "The Trainer is busy!");
+                        modelAndView.addObject("badAddGroup", "The Trainer is busy!");
                     } else {
                         if (!userList.isEmpty()) {
                             Group group = new Group()
                                     .withGroupName(groupName)
                                     .withTrainer((Trainer) trainer.get());
-                            GroupsRepositoryHibernate.getInstance().save(group);
+                            groupsRepository.save(group);
 
-                            final Optional<Group> byGroupName = GroupsRepositoryHibernate.getInstance().findByGroupName(groupName);
+                            final Optional<Group> byGroupName = groupsRepository.findByGroupName(groupName);
 
                             if (byGroupName.isPresent()) {
                                 for (Student student : userList) {
                                     final Set<Group> groups = student.getGroups();
                                     groups.add(byGroupName.get());
 
-                                    StudentRepositoryHibernate.getInstance().save(student);
+                                    studentRepository.save(student);
                                 }
                             }
                             log.info("Group added = {}", group.getGroupName());
                             return true;
                         } else {
-                            req.setAttribute("badAddGroup", "Something went wrong: try again! " +
+                            modelAndView.addObject("badAddGroup", "Something went wrong: try again! " +
                                     "No user found!");
                             log.warn("Error: Group not created = {}", trainer.get().getLogin());
                         }
                     }
                 } else {
-                    req.setAttribute("badAddGroup", "The trainer is incorrect!");
+                    modelAndView.addObject("badAddGroup", "The trainer is incorrect!");
                 }
             }
         } catch (NoSuchElementException | NoResultException exception) {
-            req.setAttribute("badAddGroup", "The trainer is incorrect!");
+            modelAndView.addObject("badAddGroup", "The trainer is incorrect!");
         }
         return false;
     }
 
-    public static Set<Student> getListOfUniqueUsersFromString(String groupUser, String splitter) {
+    public Set<Student> getListOfUniqueUsersFromString(String groupUser, String splitter) {
         Set<Student> userSet = new HashSet<>();
         for (String splittedUser : groupUser.split(splitter)) {
             try {
@@ -113,11 +125,11 @@ public class AddGroupService {
         return userSet;
     }
 
-    public static Set<Student> getListOfUniqueUsersFromStringByHibernate(String groupUser, String splitter) {
+    public Set<Student> getListOfUniqueUsersFromStringByHibernate(String groupUser, String splitter) {
         Set<Student> userSet = new HashSet<>();
         for (String splittedUser : groupUser.split(splitter)) {
             try {
-                final Optional<? extends User> userByLogin = BasicUserService.findUserWithRoleByLogin(splittedUser);
+                final Optional<? extends User> userByLogin = basicUserService.findUserWithRoleByLogin(splittedUser);
                 if (userByLogin.isPresent()) {
                     if (userByLogin.get() instanceof Student) {
                         userSet.add((Student) userByLogin.get());
@@ -130,7 +142,7 @@ public class AddGroupService {
         return userSet;
     }
 
-    public static boolean checkGroupName(String groupName) {
+    public boolean checkGroupName(String groupName) {
 
         try {
             final Integer idGroupByName = GroupsRepositoryPostgres.getInstance().getIdGroupByName(groupName);
@@ -144,10 +156,10 @@ public class AddGroupService {
         return false;
     }
 
-    public static boolean checkGroupNameByHibernate(String groupName) {
+    public boolean checkGroupNameByHibernate(String groupName) {
         try {
             try {
-                final Optional<Group> byGroupName = GroupsRepositoryHibernate.getInstance().findByGroupName(groupName);
+                final Optional<Group> byGroupName = groupsRepository.findByGroupName(groupName);
                 if (byGroupName.isPresent()) {
                     return true;
                 }

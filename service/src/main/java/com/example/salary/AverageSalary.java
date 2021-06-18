@@ -1,11 +1,14 @@
 package com.example.salary;
 
+import org.springframework.stereotype.Service;
+
 import java.math.BigDecimal;
 import java.util.List;
 
+@Service
 public class AverageSalary {
 
-    public static BigDecimal count(List<Integer> salaryList) {
+    public BigDecimal count(List<Integer> salaryList) {
         return BigDecimal.valueOf(salaryList.stream()
                 .mapToInt(i -> i)
                 .average()

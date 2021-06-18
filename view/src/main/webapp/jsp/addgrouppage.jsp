@@ -25,7 +25,7 @@
             </li>
         </ul>
         <hr>
-        <form action="addgrouppage" method="post">
+        <form action="addgroup" method="post">
             <div class="mb-3">
                 Enter group details : <input name="groupName" type="text" required placeholder="Group name">
                 <input name="groupTrainer" type="text" required placeholder="Trainer's name">

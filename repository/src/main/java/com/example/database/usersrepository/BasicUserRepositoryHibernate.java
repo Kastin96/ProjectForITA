@@ -1,6 +1,7 @@
 package com.example.database.usersrepository;
 
 import com.example.users.BasicUser;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -10,22 +11,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.Optional;
 
+@Component
 public class BasicUserRepositoryHibernate extends AbstractRepositoryHibernate<BasicUser> {
-    private static volatile BasicUserRepositoryHibernate instance;
-
-    public BasicUserRepositoryHibernate() {
-    }
-
-    public static BasicUserRepositoryHibernate getInstance() {
-        if (instance == null) {
-            synchronized (BasicUserRepositoryHibernate.class) {
-                if (instance == null) {
-                    instance = new BasicUserRepositoryHibernate();
-                }
-            }
-        }
-        return instance;
-    }
 
     @Override
     protected TypedQuery<BasicUser> getQuery() {

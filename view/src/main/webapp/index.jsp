@@ -15,19 +15,14 @@
         <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}">Home</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/mygroups">My Groups</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="${pageContext.request.contextPath}/logout">Logout</a>
-    </li>
+        <a class="nav-link"  href="${pageContext.request.contextPath}/authentication">Sign in</a>
 </ul>
-<div class="mb-3">
-    <ul class="list-group">
-      <li class="list-group-item active" aria-current="true">Student information:</li>
-      <li class="list-group-item">Login: <%= session.getAttribute("login") %></li>
-      <li class="list-group-item">Name: <%= session.getAttribute("name") %></li>
-      <li class="list-group-item">Age: <%= session.getAttribute("age") %></li>
-    </ul>
-</div>
+<hr>
+<form>
+    <div class="mb-3">
+        How did you get here?
+    </div>
+</form>
+<hr>
 </body>
 </html>

@@ -1,25 +1,14 @@
 package com.example.database.usersrepository;
 
 import com.example.users.Administrator;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.TypedQuery;
 
+@Slf4j
+@Component
 public class AdministratorRepositoryHibernate extends AbstractRepositoryHibernate<Administrator> {
-    private static volatile AdministratorRepositoryHibernate instance;
-
-    public AdministratorRepositoryHibernate() {
-    }
-
-    public static AdministratorRepositoryHibernate getInstance() {
-        if (instance == null) {
-            synchronized (AdministratorRepositoryHibernate.class) {
-                if (instance == null) {
-                    instance = new AdministratorRepositoryHibernate();
-                }
-            }
-        }
-        return instance;
-    }
 
     @Override
     protected TypedQuery<Administrator> getQuery() {

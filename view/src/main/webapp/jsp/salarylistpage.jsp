@@ -1,4 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ru">
     <head>
@@ -26,7 +27,7 @@
             </li>
         </ul>
         <div class="mb-3">
-            <form action="addsalary" method="post">
+            <form action="salarylist" method="post">
                 <ul class="list-group">
                     <li class="list-group-item active" aria-current="true">Add salary:</li>
                     <li class="list-group-item">
@@ -37,16 +38,12 @@
             </form>
         </div>
         <div class="mb-3">
-            <form action="countaveragesalary" method="post">
-                <ul class="list-group">
-                    <li class="list-group-item active" aria-current="true">Your average salary:</li>
-                    <li class="list-group-item">
-                        <% if (session.getAttribute("averageSalary") != null) { %>
-                            <%= session.getAttribute("averageSalary")%>
-                        <% } %>
-                    </li>
-                </ul>
-            </form>
+            <ul class="list-group">
+                <li class="list-group-item active" aria-current="true">Your average salary:</li>
+                <li class="list-group-item">
+                    <c:out value="${averageSalary}" />
+                </li>
+            </ul>
         </div>
         <div class="mb-3">
             <ul class="list-group">

@@ -1,46 +1,45 @@
 package com.example.controllers.lifecycle;
 
 import com.example.controllerservice.lifecycle.RegistrationService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 
-@WebServlet(urlPatterns = "/registration")
-public class RegistrationController extends HttpServlet {
-    Logger log = LoggerFactory.getLogger(RegistrationController.class);
+@Controller
+@RequestMapping(path = "/registration")
+public class RegistrationController {
+    @Autowired
+    private RegistrationService registrationService;
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        HttpSession session = req.getSession();
+    @GetMapping
+    public ModelAndView showRegistrationPage() {
+        final ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("registration");
+        return modelAndView;
+    }
 
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        String name = req.getParameter("name");
-        Integer age = Integer.parseInt(req.getParameter("age"));
+    @PostMapping()
+    public ModelAndView registration(@RequestParam(name = "login") String login,
+                                     @RequestParam(name = "password") String password,
+                                     @RequestParam(name = "name") String name,
+                                     @RequestParam(name = "age") Integer age) {
 
-//        final boolean isGoodReg = RegistrationService.registrationStudentByPostgres(login, password, name, age);
-        final boolean isGoodReg = RegistrationService.registrationStudentByHibernate(login, password, name, age);
+        final boolean isGoodReg = registrationService.registrationStudentByHibernate(login, password, name, age);
+        final ModelAndView modelAndView = new ModelAndView();
 
         if (isGoodReg) {
-            req.setAttribute("goodRegistration", "Registration was successful!");
-            log.info("New Student added = {}", login);
-
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/signin");
-            requestDispatcher.forward(req, resp);
+            modelAndView.addObject("goodRegistration", "Registration was successful!");
+            modelAndView.setViewName("authentication");
         } else {
-            req.setAttribute("badRegistration", "This login is already in use!");
-
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/reg");
-            requestDispatcher.forward(req, resp);
+            modelAndView.addObject("badRegistration", "This login is already in use!");
+            modelAndView.setViewName("registration");
         }
+
+        return modelAndView;
     }
 }

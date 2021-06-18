@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +29,7 @@ import java.util.Set;
 @ToString(callSuper = true, exclude = {"students", "trainer"})
 @Entity
 @Table(name = "groups")
+@Component
 public class Group extends AbstractGroup implements Serializable {
     @Column(name = "group_name")
     private String groupName;

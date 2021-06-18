@@ -2,34 +2,36 @@ package com.example.controllers.groups;
 
 import com.example.controllerservice.groups.MyGroupService;
 import com.example.users.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.List;
 
+@Controller
+@RequestMapping(path = "/mygroups")
+public class MyGroupController {
+    @Autowired
+    private MyGroupService myGroupService;
 
-@WebServlet(urlPatterns = "/mygroupspage")
-public class MyGroupController extends HttpServlet {
 
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        User user = (User) session.getAttribute("user");
-//        final List<String> groupNameList = MyGroupService.getGroupNameList(user);
-        final List<String> groupNameList = MyGroupService.getGroupNameListByHibernate(user);
+    @GetMapping()
+    public ModelAndView showMyGroups(HttpSession session) {
+        final ModelAndView modelAndView = new ModelAndView();
+        final User user = (User) session.getAttribute("user");
+        modelAndView.setViewName("mygrouppage");
 
+        final List<String> groupNameList = myGroupService.getGroupNameListByHibernate(user);
         if (groupNameList.isEmpty()) {
-            req.setAttribute("notFoundGroup", "You are not a member of any group!");
+            modelAndView.addObject("notFoundGroup", "You are not a member of any group!");
+        } else {
+            modelAndView.addObject("myGroupNamesListResult", groupNameList);
         }
 
-        req.setAttribute("myGroupNamesListResult", groupNameList);
-
-        getServletContext().getRequestDispatcher("/mygroups").forward(req, resp);
+        return modelAndView;
     }
 
 

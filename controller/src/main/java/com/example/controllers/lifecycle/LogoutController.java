@@ -1,31 +1,23 @@
 package com.example.controllers.lifecycle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 
-@WebServlet(urlPatterns = "/logout")
-public class LogoutController extends HttpServlet {
-    Logger log = LoggerFactory.getLogger(LogoutController.class);
+@Controller
+public class LogoutController {
 
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-
-        log.info("User logged out: ={}", session.getAttribute("login"));
+    @GetMapping("/logout")
+    protected ModelAndView logOut(HttpSession session) {
+        final ModelAndView modelAndView = new ModelAndView();
+        modelAndView.clear();
         session.invalidate();
 
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/");
-        requestDispatcher.forward(req, resp);
+        modelAndView.setViewName("authentication");
+        return modelAndView;
     }
 
 }

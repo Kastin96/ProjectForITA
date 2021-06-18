@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -24,18 +26,19 @@
 <hr>
 <form action="registration" method="post">
     <div class="mb-3">
-        Enter user details : <input name="login" type="text" required placeholder="Login">
+        Enter user details :
+        <input name="login" type="text" required placeholder="Login">
         <input name="password" type="password" required placeholder="Password">
         <input name="name" type="text" required placeholder="Name">
         <input name="age" type="number" min="0" required placeholder="Age">
         <input type="submit">
         <div>
-            <% if (request.getAttribute("badRegistration") != null) { %>
-            <hr>
-            <div class="alert alert-danger" role="alert">
-                <%= request.getAttribute("badRegistration")%>
-            </div>
-            <% } %>
+            <c:if test="${not empty badRegistration}">
+                <hr>
+                <div class="alert alert-danger" role="alert">
+                    <c:out value="${badRegistration}"/>
+                </div>
+            </c:if>
         </div>
     </div>
 

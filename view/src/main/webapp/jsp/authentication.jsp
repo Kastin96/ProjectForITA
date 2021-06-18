@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ru">
     <head>
@@ -16,7 +18,7 @@
                 <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}">SignIn</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/reg">Registration</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/registration">Registration</a>
             </li>
         </ul>
         <hr>
@@ -27,20 +29,20 @@
                 <input type="password" name="password" placeholder="Password" autocomplete="on">
                 <input type="submit" value="Sign in">
                 <div>
-                    <% if (request.getAttribute("badAuthentication") != null) { %>
+                    <c:if test="${not empty badAuthentication}">
                         <hr>
                         <div class="alert alert-danger" role="alert">
-                            <%= request.getAttribute("badAuthentication")%>
+                            <c:out value="${badAuthentication}"/>
                         </div>
-                    <% } %>
+                    </c:if>
                 </div>
                 <div>
-                    <% if (request.getAttribute("goodRegistration") != null) { %>
+                    <c:if test="${not empty goodRegistration}">
                         <hr>
                         <div class="alert alert-success" role="alert">
-                            <%= request.getAttribute("goodRegistration")%>
+                            <c:out value="${goodRegistration}"/>
                         </div>
-                    <% } %>
+                    </c:if>
                 </div>
             </div>
         </form>

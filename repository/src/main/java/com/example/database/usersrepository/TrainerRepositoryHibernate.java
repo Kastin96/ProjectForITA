@@ -1,25 +1,12 @@
 package com.example.database.usersrepository;
 
 import com.example.users.Trainer;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.TypedQuery;
 
+@Component
 public class TrainerRepositoryHibernate extends AbstractRepositoryHibernate<Trainer> {
-    private static volatile TrainerRepositoryHibernate instance;
-
-    public TrainerRepositoryHibernate() {
-    }
-
-    public static TrainerRepositoryHibernate getInstance() {
-        if (instance == null) {
-            synchronized (TrainerRepositoryHibernate.class) {
-                if (instance == null) {
-                    instance = new TrainerRepositoryHibernate();
-                }
-            }
-        }
-        return instance;
-    }
 
     @Override
     protected TypedQuery<Trainer> getQuery() {

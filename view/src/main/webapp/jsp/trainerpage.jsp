@@ -1,3 +1,5 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ru">
     <head>
@@ -28,9 +30,9 @@
         <div class="mb-3">
             <ul class="list-group">
               <li class="list-group-item active" aria-current="true">Trainer information:</li>
-              <li class="list-group-item">Login: <%= session.getAttribute("login") %></li>
-              <li class="list-group-item">Name: <%= session.getAttribute("name") %></li>
-              <li class="list-group-item">Age: <%= session.getAttribute("age") %></li>
+              <li class="list-group-item">Login: <c:out value="${user.login}"/></li>
+              <li class="list-group-item">Name: <c:out value="${user.fullName}"/></li>
+              <li class="list-group-item">Age: <c:out value="${user.age}"/></li>
             </ul>
         </div>
         <hr>

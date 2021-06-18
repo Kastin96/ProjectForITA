@@ -1,6 +1,9 @@
 package com.example.database.groupsrepository;
 
 import com.example.groups.Group;
+import com.example.users.Student;
+import com.example.users.Trainer;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -12,22 +15,8 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class GroupsRepositoryHibernate extends AbstractGroupRepositoryHibernate<Group> {
-    private static volatile GroupsRepositoryHibernate instance;
-
-    public GroupsRepositoryHibernate() {
-    }
-
-    public static GroupsRepositoryHibernate getInstance() {
-        if (instance == null) {
-            synchronized (GroupsRepositoryHibernate.class) {
-                if (instance == null) {
-                    instance = new GroupsRepositoryHibernate();
-                }
-            }
-        }
-        return instance;
-    }
 
     @Override
     protected TypedQuery<Group> getQuery() {
@@ -63,6 +52,46 @@ public class GroupsRepositoryHibernate extends AbstractGroupRepositoryHibernate<
         return result;
     }
 
+    public Optional<List<Group>> findAllGroupByUser(Student student) {
+        Optional<List<Group>> result;
+        final EntityManager entityManager = helper.getEntityManager();
+        final EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        final CriteriaQuery<Group> criteriaQuery = criteriaBuilder.createQuery(Group.class);
+        final Root<Group> groupRoot = criteriaQuery.from(Group.class);
+
+        criteriaQuery.select(groupRoot).where(criteriaBuilder.isMember(student, groupRoot.get("students")));
+
+        result = Optional.ofNullable(entityManager.createQuery(criteriaQuery).getResultList());
+
+        transaction.commit();
+        entityManager.close();
+
+        return result;
+    }
+
+    public Optional<List<Group>> findAllGroupByUser(Trainer trainer) {
+        Optional<List<Group>> result;
+        final EntityManager entityManager = helper.getEntityManager();
+        final EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+
+        final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        final CriteriaQuery<Group> criteriaQuery = criteriaBuilder.createQuery(Group.class);
+        final Root<Group> groupRoot = criteriaQuery.from(Group.class);
+
+        criteriaQuery.select(groupRoot).where(criteriaBuilder.equal(groupRoot.get("trainer"), trainer));
+
+        result = Optional.ofNullable(entityManager.createQuery(criteriaQuery).getResultList());
+
+        transaction.commit();
+        entityManager.close();
+
+        return result;
+    }
+
     public Optional<Group> findByGroupName(String groupName) {
         Optional<Group> result;
         final EntityManager entityManager = helper.getEntityManager();
@@ -71,9 +100,9 @@ public class GroupsRepositoryHibernate extends AbstractGroupRepositoryHibernate<
 
         final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         final CriteriaQuery<Group> criteriaQuery = criteriaBuilder.createQuery(Group.class);
-        final Root<Group> userRoot = criteriaQuery.from(Group.class);
+        final Root<Group> groupRoot = criteriaQuery.from(Group.class);
 
-        criteriaQuery.select(userRoot).where(criteriaBuilder.equal(userRoot.get("groupName"), groupName));
+        criteriaQuery.select(groupRoot).where(criteriaBuilder.equal(groupRoot.get("groupName"), groupName));
 
         result = Optional.ofNullable(entityManager.createQuery(criteriaQuery).getSingleResult());
 
