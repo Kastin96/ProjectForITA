@@ -35,13 +35,14 @@ public class StudentRepositoryPostgres extends AbstractRepositoryPostgres<Studen
     protected List<Student> getPersons(ResultSet rs) throws SQLException {
         List<Student> result = new ArrayList<>();
         while (rs.next()) {
-            result.add(new Student()
-                    .withId(rs.getInt("id"))
-                    .withLogin(rs.getString("login"))
-                    .withPassword(rs.getString("password"))
-                    .withFullName(rs.getString("full_name"))
-                    .withAge(rs.getInt("age"))
-                    .withRole(getRoleByID(rs.getInt("id"))));
+            result.add(Student.builder()
+                    .id(rs.getInt("id"))
+                    .login(rs.getString("login"))
+                    .password(rs.getString("password"))
+                    .fullName(rs.getString("full_name"))
+                    .age(rs.getInt("age"))
+                    .role(getRoleByID(rs.getInt("id")))
+                    .build());
         }
         return result;
     }

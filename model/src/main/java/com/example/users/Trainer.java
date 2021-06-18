@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.stereotype.Component;
@@ -30,6 +31,7 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @Component
+@SuperBuilder
 public class Trainer extends User {
 
     @Column(name = "full_name")
@@ -48,49 +50,4 @@ public class Trainer extends User {
     @JoinColumn(name = "id", referencedColumnName = "trainer_id", insertable = false, updatable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Group group;
-
-    public Trainer withId(Integer id) {
-        setId(id);
-        return this;
-    }
-
-    public Trainer withLogin(String login) {
-        setLogin(login);
-        return this;
-    }
-
-    public Trainer withPassword(String password) {
-        setPassword(password);
-        return this;
-    }
-
-    public Trainer withRole(String role) {
-        setRole(role);
-        return this;
-    }
-
-    public Trainer withRoleNumber(Integer role) {
-        setRoleNumber(role);
-        return this;
-    }
-
-    public Trainer withFullName(String fullName) {
-        setFullName(fullName);
-        return this;
-    }
-
-    public Trainer withSalaryList(List<Integer> salaryList) {
-        setSalaryList(salaryList);
-        return this;
-    }
-
-    public Trainer withGroup(Group group) {
-        setGroup(group);
-        return this;
-    }
-
-    public Trainer withAge(Integer age) {
-        setAge(age);
-        return this;
-    }
 }

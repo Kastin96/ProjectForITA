@@ -14,7 +14,7 @@
     <body>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}">Home</a>
+                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/home">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/mygroups">My Groups</a>

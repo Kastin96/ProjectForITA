@@ -5,7 +5,6 @@ import com.example.controllerservice.groups.ShowGroupService;
 import com.example.groups.Group;
 import com.example.users.User;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +31,7 @@ public class MyGroupController {
         final User user = (User) session.getAttribute("user");
         modelAndView.setViewName("mygrouppage");
 
-        final List<String> groupNameList = myGroupService.getGroupNameListByHibernate(user);
+        final List<String> groupNameList = myGroupService.getGroupNameList(user);
         if (groupNameList.isEmpty()) {
             modelAndView.addObject("notFoundGroup", "You are not a member of any group!");
         } else {
@@ -50,8 +49,8 @@ public class MyGroupController {
         List<String> userNameList;
 
         try {
-            userNameList = showGroupService.getUserNameListFromHibernate(groupName);
-            final Optional<Group> groupByName = showGroupService.getGroupByNameFromHibernate(groupName);
+            userNameList = showGroupService.getUserNameList(groupName);
+            final Optional<Group> groupByName = showGroupService.getGroupByName(groupName);
 
             if (groupByName.isPresent()) {
                 final Group group = groupByName.get();

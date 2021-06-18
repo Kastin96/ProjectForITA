@@ -51,11 +51,12 @@ public class GroupsRepositoryPostgres implements Repository<Group> {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return Optional.of(new Group()
-                        .withId(rs.getInt("id"))
-                        .withGroupName(rs.getString("group_name"))
-                        .withTrainer(getTrainer(rs))
-                        .withStudents(getUserSetByGroupId(rs.getInt("id"))));
+                return Optional.of(Group.builder()
+                        .id(rs.getInt("id"))
+                        .groupName(rs.getString("group_name"))
+                        .trainer(getTrainer(rs))
+                        .students(getUserSetByGroupId(rs.getInt("id")))
+                        .build());
             }
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();

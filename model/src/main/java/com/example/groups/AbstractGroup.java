@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,7 @@ import javax.persistence.MappedSuperclass;
 @EqualsAndHashCode()
 @ToString()
 @MappedSuperclass
+@SuperBuilder
 public abstract class AbstractGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

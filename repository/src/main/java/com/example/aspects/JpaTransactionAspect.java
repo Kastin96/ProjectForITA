@@ -27,12 +27,12 @@ public class JpaTransactionAspect {
         if (!transaction.isActive()){
             transaction.begin();
         }
-        log.info("The transaction has been created for: {}", joinPoint.getSignature());
+        log.info("$ - The transaction has been created for: {}", joinPoint.getSignature());
 
         Object result = joinPoint.proceed();
 
         transaction.commit();
-        log.info("The transaction is closed for: {}", joinPoint.getSignature());
+        log.info("$ - The transaction is closed for: {}", joinPoint.getSignature());
         return result;
     }
 

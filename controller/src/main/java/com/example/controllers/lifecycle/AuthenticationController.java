@@ -7,7 +7,6 @@ import com.example.users.Student;
 import com.example.users.Trainer;
 import com.example.users.User;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.math.BigDecimal;
 import java.util.Optional;
 
 @Controller
@@ -39,7 +37,7 @@ public class AuthenticationController {
                                             @RequestParam(name = "password") String password, HttpSession session) {
         final ModelAndView modelAndView = new ModelAndView();
 
-        final Optional<? extends User> userByLogin = authService.getUserByLoginFromHibernate(login, password);
+        final Optional<? extends User> userByLogin = authService.getUserByLogin(login, password);
 
         if (userByLogin.isPresent()) {
             final User user = userByLogin.get();

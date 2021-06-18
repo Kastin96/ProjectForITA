@@ -1,13 +1,10 @@
 package com.example.controllerservice.salary;
 
-import com.example.database.hibernate.TrainerRepositoryHibernate;
-import com.example.database.postgres.TrainerRepositoryPostgres;
 import com.example.repositoryaccess.TrainerService;
 import com.example.salary.AverageSalary;
 import com.example.users.Trainer;
 import com.example.users.User;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -21,10 +18,6 @@ public class AverageSalaryCounter {
     private AverageSalary averageSalary;
 
     public BigDecimal count(User user) {
-        return TrainerRepositoryPostgres.getInstance().getAverageSalary(user.getId());
-    }
-
-    public BigDecimal countByHibernate(User user) {
         final Optional<Trainer> trainer = trainerService.find(user.getId());
         if (trainer.isPresent()) {
             final List<Integer> salaryList = trainer.get().getSalaryList();
@@ -32,6 +25,6 @@ public class AverageSalaryCounter {
                 return averageSalary.count(salaryList);
             }
         }
-        return count(user);
+        return null;
     }
 }

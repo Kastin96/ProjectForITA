@@ -12,13 +12,15 @@
                 crossorigin="anonymous"></script>
     </head>
     <body>
-        <hr>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}">SignIn</a>
+                <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}">Main</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="${pageContext.request.contextPath}/registration">Registration</a>
+                <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/authentication">Sign in</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="${pageContext.request.contextPath}/registration">Registration</a>
             </li>
         </ul>
         <hr>
