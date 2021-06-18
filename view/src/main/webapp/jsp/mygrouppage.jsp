@@ -38,7 +38,7 @@
             </li>
         </ul>
         <div class="mb-3">
-            <form action="showgroupspage" method="post">
+            <form action="mygroups" method="post">
                 <ul class="list-group">
                     <li class="list-group-item active" aria-current="true">Show group details: </li>
                     <li class="list-group-item">

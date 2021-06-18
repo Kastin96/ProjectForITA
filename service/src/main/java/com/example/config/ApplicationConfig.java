@@ -25,9 +25,10 @@ import java.util.Properties;
 @PropertySource("classpath:database.properties")
 @ComponentScan(basePackages = "com.example")
 @EnableAspectJAutoProxy
-//@EnableJpaRepositories(basePackages = "com.example.repositories")
+//@EnableJpaRepositories(basePackages = "com.example")
 @EnableWebMvc
 public class ApplicationConfig implements WebMvcConfigurer {
+
     @Value("${driver}")
     private String driver;
     @Value("${url}")

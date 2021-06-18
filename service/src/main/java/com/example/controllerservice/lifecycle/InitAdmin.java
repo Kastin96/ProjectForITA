@@ -1,6 +1,6 @@
 package com.example.controllerservice.lifecycle;
 
-import com.example.database.usersrepository.AdministratorRepositoryPostgres;
+import com.example.database.postgres.AdministratorRepositoryPostgres;
 import com.example.users.Administrator;
 
 public class InitAdmin {

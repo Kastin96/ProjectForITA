@@ -1,4 +1,4 @@
-package com.example.database.usersrepository;
+package com.example.database.postgres;
 
 import com.example.users.Administrator;
 import org.slf4j.Logger;

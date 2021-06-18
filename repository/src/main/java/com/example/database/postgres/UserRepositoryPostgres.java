@@ -1,6 +1,7 @@
-package com.example.database.usersrepository;
+package com.example.database.postgres;
 
 import com.example.database.DataSource;
+import com.example.database.Roles;
 import com.example.users.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

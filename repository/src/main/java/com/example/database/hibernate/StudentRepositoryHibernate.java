@@ -1,12 +1,13 @@
-package com.example.database.usersrepository;
+package com.example.database.hibernate;
 
+import com.example.dao.StudentRepository;
 import com.example.users.Student;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.TypedQuery;
 
 @Component
-public class StudentRepositoryHibernate extends AbstractRepositoryHibernate<Student> {
+public class StudentRepositoryHibernate extends AbstractRepositoryHibernate<Student> implements StudentRepository {
 
     @Override
     protected TypedQuery<Student> getQuery() {

@@ -1,17 +1,19 @@
 package com.example.controllerservice.lifecycle;
 
-import com.example.database.usersrepository.BasicUserRepositoryHibernate;
-import com.example.database.usersrepository.UserRepositoryPostgres;
+import com.example.controllerservice.basicuser.DispenserUserWithRole;
+import com.example.repositoryaccess.BasicUserService;
+import com.example.database.postgres.UserRepositoryPostgres;
+import com.example.users.BasicUser;
 import com.example.users.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class AuthenticationService {
-    @Autowired
-    private BasicUserRepositoryHibernate basicUserRepository;
+    private DispenserUserWithRole dispenserUserWithRole;
 
     public Optional<? extends User> getUserByLogin(String login, String password) {
 
@@ -28,8 +30,7 @@ public class AuthenticationService {
 
     public Optional<? extends User> getUserByLoginFromHibernate(String login, String password) {
 
-        final Optional<? extends User> user = UserRepositoryPostgres.getInstance().getUserByLogin(login);
-//        final Optional<BasicUser> user = basicUserRepository.findByLogin(login);
+        final Optional<? extends User> user = dispenserUserWithRole.getUserByLogin(login);
         if (user.isPresent()) {
             if (user.get().getLogin().equalsIgnoreCase(login)) {
                 if (user.get().getPassword().equalsIgnoreCase(password)) {

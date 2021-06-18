@@ -2,6 +2,7 @@ package com.example.controllers.groups;
 
 import com.example.controllerservice.groups.AddGroupService;
 import com.example.users.Student;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,9 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/addgroup")
+@AllArgsConstructor
 public class AddGroupController {
-    @Autowired
+
     private AddGroupService addGroupService;
 
     @GetMapping
@@ -41,8 +43,6 @@ public class AddGroupController {
             if (resultAddGroup) {
                 modelAndView.addObject("goodAddGroup", "The group has been successfully created! \n" +
                         "Added students: " + userList.size());
-            } else {
-                modelAndView.addObject("badAddGroup", "No available trainer with this name has been found!!");
             }
         } else {
             modelAndView.addObject("badAddGroup", "The group name is already taken!");
